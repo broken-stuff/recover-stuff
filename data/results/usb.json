@@ -2,92 +2,347 @@
   "deleted": {
     "title": "Recover Deleted Files from a USB Flash Drive",
     "metaDescription": "Deleted files on a USB flash drive can often be recovered with PhotoRec if you stop using it. Safe step-by-step guide for beginners.",
-    "summary": "When you delete a file from a USB drive, the data usually stays until new files overwrite it. Most flash drives do not use TRIM, so recovery chances are often good if you act quickly. Every new file you save lowers the odds.",
+    "summary": "When you delete a file from a USB drive, the drive usually just forgets where the file was. The data itself stays until new files overwrite it. Most flash drives do not use TRIM (a feature that tells a drive to wipe deleted space), so recovery chances are often good if you act quickly. Every new file you save lowers the odds.",
     "risk": 2,
-    "riskNote": "Scanning from a copy is safe, but saving anything new to the drive can overwrite the deleted files.",
+    "riskNote": "Scanning from a copy is safe, but saving anything new to the drive can overwrite the deleted files for good.",
     "successOdds": "High",
     "stopFirst": [
-      "Stop saving or copying anything to the USB drive.",
-      "Do not install recovery software onto the USB drive.",
-      "Do not format the drive, even if Windows asks you to."
+      "Stop saving or copying anything to the USB drive. New files can overwrite the deleted ones.",
+      "Do not install recovery software onto the USB drive for the same reason.",
+      "Do not format the drive, even if Windows asks you to. Formatting makes recovery harder."
     ],
     "steps": [
-      {"title": "Unplug and stop", "detail": "Safely eject the drive and put it aside. Do not use it again until recovery is done."},
-      {"title": "Check the Recycle Bin and backups", "detail": "Files deleted from a USB drive usually skip the Recycle Bin, but check anyway, along with cloud or backup copies."},
-      {"title": "Make an image", "detail": "Plug the drive into a computer and use ddrescue to copy the whole drive to a file on another disk. Type the USB drive first and the image file second; swapping them erases the drive."},
-      {"title": "Try TestDisk first", "detail": "Run TestDisk on the image and use its undelete function. It can often bring back files with their original names and folders."},
-      {"title": "Use PhotoRec next", "detail": "If TestDisk does not find them, run PhotoRec on the image. It recovers files by type and works even after the file list is gone."},
-      {"title": "Save to a different drive", "detail": "Choose a folder on your computer or another drive as the destination, never the USB stick itself."},
-      {"title": "Sort and check", "detail": "PhotoRec names files with numbers. Sort by type and open samples to make sure they work."}
+      {
+        "title": "Unplug and stop",
+        "detail": "Every new file you save can overwrite a deleted one. Unplugging keeps the deleted files where they are.",
+        "how": [
+          "Windows: click the small arrow in the taskbar near the clock, click the USB icon and choose Eject. Mac: drag the drive icon to the Trash (it turns into an Eject button) or right-click it > Eject.",
+          "Wait for the message that it is safe to remove, then pull it out.",
+          "Put it somewhere safe and do not use it again until recovery is done."
+        ]
+      },
+      {
+        "title": "Check the Recycle Bin and backups",
+        "detail": "Free and risk-free. Files deleted from a USB drive often skip the bin, but a copy may exist elsewhere.",
+        "how": [
+          "Windows: open the Recycle Bin on the desktop, look for your file, right-click it and choose Restore.",
+          "Mac: click the Trash in the Dock, right-click the file and choose Put Back.",
+          "Check cloud services (OneDrive, iCloud, Google Drive) and email attachments for copies.",
+          "Check your phone, other computers and old backup drives."
+        ]
+      },
+      {
+        "title": "Make an image of the USB drive",
+        "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Doing this first protects you if the drive starts failing. Type the USB drive first and the destination second; swapping them erases the USB drive.",
+        "how": [
+          "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Try TestDisk first",
+        "detail": "TestDisk can often bring back deleted files with their original names and folders. It is the quickest option.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose your partition, press `Advanced`, then `Undelete`. Deleted files show in red. Press `c` to copy a file, then pick a folder on a different drive.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Use PhotoRec next",
+        "detail": "If TestDisk cannot find your files, PhotoRec searches the drive's contents directly. It works even when the file list is gone, but names are lost.",
+        "how": [
+          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
+          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
+          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
+          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the USB drive itself, never on the drive you are scanning.",
+          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
+      },
+      {
+        "title": "Save to a different drive",
+        "detail": "Saving recovered files back onto the USB drive would overwrite files you have not recovered yet.",
+        "how": [
+          "When the tool asks where to save, choose a folder on your computer's main drive or another external drive.",
+          "Make sure it has at least as much free space as the USB drive.",
+          "Never pick the USB drive or its image file as the destination.",
+          "Check the free space first. Windows: open This PC. Mac: right-click the drive > Get Info."
+        ]
+      },
+      {
+        "title": "Sort and check",
+        "detail": "PhotoRec names files with numbers, so you have to look at them yourself.",
+        "how": [
+          "Open the folder PhotoRec or TestDisk saved into. PhotoRec makes folders called `recup_dir.1`, `recup_dir.2` and so on with numbered file names.",
+          "Windows: click Sort by > Type in File Explorer. Mac: click View > as List, then click the Kind column.",
+          "Double-click a few files of each type. A photo that shows, a document that opens or a video that plays means it worked.",
+          "Files that will not open, or look blank or all gray, are damaged or already erased. Open a few more before deciding."
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["cgsecurity-forum", "dfir-training"],
-    "callPro": "If the drive is unstable, disconnects while copying, or the files are critical and scans find nothing, stop and ask a professional.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "dfir-training"
+    ],
+    "callPro": "If the drive disconnects while copying, or critical files do not turn up, ask a professional.",
     "faq": [
-      {"q": "Why can I recover deleted files from a flash drive?", "a": "Deleting usually just removes the file's listing. The data stays on the drive until something new is written over it."},
-      {"q": "Do deleted USB files go to the Recycle Bin?", "a": "On Windows, usually not: files deleted from flash drives are removed right away. A Mac may keep them in the Trash until you empty it, so check there."}
+      {
+        "q": "Why can I recover deleted files from a flash drive?",
+        "a": "Deleting usually just removes the file's entry from the list. The data stays on the drive until something new is written over it."
+      },
+      {
+        "q": "Do deleted USB files go to the Recycle Bin?",
+        "a": "On Windows, usually not: they are removed right away. A Mac may keep them in the Trash until you empty it, so check there."
+      }
     ]
   },
   "formatted": {
     "title": "Recover Files from a Formatted USB Drive",
     "metaDescription": "Formatted a USB flash drive by mistake? A quick format often leaves data recoverable. Learn the safe order: image first, then TestDisk or PhotoRec.",
-    "summary": "A quick format only wipes the file list, so much of the data is usually still on the USB drive. A full format on Windows Vista and later writes zeros over the whole drive, and that data is gone for good. Recovery works best if you have not copied anything new onto it.",
+    "summary": "A quick format only wipes the file list (the index of what is stored where), so much of the data is usually still on the USB drive. A full format on Windows Vista and later writes zeros over the whole drive, and that data is gone for good. Recovery works best if you have not copied anything new onto it.",
     "risk": 2,
-    "riskNote": "The scans are safe when run on a copy, but writing new files or formatting again reduces what can come back.",
+    "riskNote": "The scans are safe when run on a copy, but saving new files or formatting again reduces what can come back.",
     "successOdds": "Varies",
     "stopFirst": [
-      "Do not copy new files onto the drive.",
-      "Do not format it again or change its file system.",
+      "Do not copy new files onto the drive. They overwrite old ones.",
+      "Do not format it again or change its file system (the way it is organized).",
       "Do not install recovery software onto the USB drive."
     ],
     "steps": [
-      {"title": "Stop using the drive", "detail": "Eject it and do not write anything more. If you made a quick format, the old data is probably still there."},
-      {"title": "Image the drive", "detail": "Use ddrescue to copy the whole USB drive into an image file on another disk, and work on that image from now on. Type the USB drive first and the image file second; swapping them erases the drive."},
-      {"title": "Try TestDisk to find the old partition", "detail": "Run TestDisk on the image and use Analyse. If the old layout is found, you can list and copy files with names and folders."},
-      {"title": "Run PhotoRec if needed", "detail": "If TestDisk cannot find the old structure, PhotoRec can pull out photos, documents and videos by their contents."},
-      {"title": "Save to another drive", "detail": "Pick a destination folder on a different disk with enough space."},
-      {"title": "Review and organize", "detail": "Open some recovered files. If many are broken, the drive may have been fully formatted or heavily reused."}
+      {
+        "title": "Stop using the drive",
+        "detail": "If you did a quick format, the old data is probably still there. Anything you write now could replace it.",
+        "how": [
+          "Windows: click the small arrow near the clock, click the USB icon and choose Eject. Mac: right-click the drive icon > Eject.",
+          "Do not open, rename or save anything on it.",
+          "If you remember choosing 'Quick Format' (Windows) or 'Erase' (Mac), the odds are better. Note that for later."
+        ]
+      },
+      {
+        "title": "Make an image of the USB drive",
+        "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. From now on you work only on the copy. Type the USB drive first and the destination second; swapping them erases the USB drive.",
+        "how": [
+          "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Find the old partition",
+        "detail": "A partition is a section of the drive that holds your files. TestDisk can often find the old layout from before the format.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`. If a partition appears, press `p` to list its files, then `c` to copy them to a different drive.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Run PhotoRec if needed",
+        "detail": "If TestDisk cannot find the old layout, PhotoRec pulls out photos, documents and videos by their contents. File names will be lost.",
+        "how": [
+          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
+          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
+          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
+          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the USB drive itself, never on the drive you are scanning.",
+          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
+      },
+      {
+        "title": "Save to another drive",
+        "detail": "Recovered files go on a different disk so nothing is overwritten.",
+        "how": [
+          "Pick a folder on your computer's main drive or another external drive.",
+          "Check there is enough free space. Windows: open This PC. Mac: right-click the drive > Get Info.",
+          "Never choose the USB drive or the image file as the destination."
+        ]
+      },
+      {
+        "title": "Review and organize",
+        "detail": "Opening samples tells you whether the drive was quick-formatted or fully wiped.",
+        "how": [
+          "Open the recovered folder. PhotoRec makes `recup_dir.1`, `recup_dir.2` and so on.",
+          "Windows: click Sort by > Type. Mac: View > as List.",
+          "Open a few files of each type.",
+          "If most are broken or blank, the drive was probably fully formatted or heavily reused."
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["cgsecurity-forum", "dfir-training", "brett-shavers"],
-    "callPro": "If the drive was fully formatted, repartitioned many times, or you need legal-grade results, a professional may do better than DIY.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "dfir-training",
+      "brett-shavers"
+    ],
+    "callPro": "If the drive was fully formatted or reused a lot, or you need legal-grade results, a professional may do better.",
     "faq": [
-      {"q": "Is a quick format recoverable?", "a": "Often yes. A quick format clears the file list but leaves most of the data in place until it is overwritten."},
-      {"q": "Does a full format erase everything?", "a": "On Windows Vista and later, yes: a full format writes zeros over the drive, so the old data cannot come back. Quick formats are often recoverable."}
+      {
+        "q": "Is a quick format recoverable?",
+        "a": "Often yes. A quick format clears the file list but leaves most of the data in place until it is overwritten."
+      },
+      {
+        "q": "Does a full format erase everything?",
+        "a": "On Windows Vista and later, yes: a full format writes zeros over the drive, so the old data cannot come back. Quick formats are often recoverable."
+      }
     ]
   },
   "not-detected": {
     "title": "USB Flash Drive Not Detected or Not Showing",
     "metaDescription": "USB drive not showing up? Try simple checks first, image it if it appears, and learn when a broken connector or dead controller needs a pro.",
-    "summary": "A USB drive may not appear because of a bad port, a missing drive letter, damaged files, a worn connector or a failed controller chip. Many cases are simple to check. Real hardware failure is harder and often needs a specialist.",
+    "summary": "A USB drive may not appear because of a bad port, a missing drive letter, damaged files, a worn connector or a failed controller (the small chip that runs the drive). Many cases are simple to check. Real hardware failure is harder and often needs a specialist.",
     "risk": 3,
     "riskNote": "Basic checks are safe, but forcing a damaged connector or soldering without experience can break the drive for good.",
     "successOdds": "Varies",
     "stopFirst": [
-      "Do not click Format if Windows offers it.",
+      "Do not click Format if Windows offers it. That wipes the file list.",
       "Do not keep bending or wiggling the plug.",
       "Do not use heat, glue or a soldering iron on it."
     ],
     "steps": [
-      {"title": "Try another port and computer", "detail": "Plug the drive into a different USB port, ideally directly on the computer, then try a different computer."},
-      {"title": "Look in Disk Management", "detail": "On Windows, open Disk Management. On a Mac, use Disk Utility. A drive with no letter or a RAW label may still hold your data."},
-      {"title": "Inspect the connector", "detail": "Check for a bent, loose or cracked plug. A broken connector can sometimes be re-soldered, but leave that to a repair shop or lab."},
-      {"title": "Image whatever works", "detail": "If the drive appears even briefly, use ddrescue to copy it to another disk right away. Type the USB drive first and the destination second; swapping them erases the drive."},
-      {"title": "Recover from the copy", "detail": "Run TestDisk on the image to find a lost partition, then PhotoRec for file contents."},
-      {"title": "Know the limits", "detail": "If the drive never appears, or shows as 0 MB or an unknown device, the controller or memory chip is likely failing."}
+      {
+        "title": "Try another port and computer",
+        "detail": "A bad port or driver is a common cause, and this check is harmless.",
+        "how": [
+          "Unplug the drive and plug it into a different USB port, ideally on the back of a desktop.",
+          "Do not use a USB hub or extension cable for this test.",
+          "Try a different computer.",
+          "If a window offers to format or scan, click Cancel."
+        ]
+      },
+      {
+        "title": "Look in Disk Management or Disk Utility",
+        "detail": "These built-in tools list every drive, even ones with no drive letter or an unknown format (shown as RAW, meaning the computer cannot read how it is organized).",
+        "how": [
+          "Windows: right-click the Start button and choose Disk Management. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
+          "Look for a drive of the right size. A drive with no letter, or labelled RAW or Unallocated, may still hold your files.",
+          "Do not click Initialize, Format or Delete Volume. Just write down what you see.",
+          "If nothing of the right size appears, go to the next step."
+        ],
+        "learn": [
+          "glossary"
+        ]
+      },
+      {
+        "title": "Inspect the connector",
+        "detail": "A bent, loose or cracked plug is a hardware fault. Software cannot fix it.",
+        "how": [
+          "Unplug the drive and hold it in good light.",
+          "Look at the metal plug for bends, cracks or a wobble where it joins the case.",
+          "Gently check if the plug moves. If it does, stop.",
+          "Leave any soldering repair to a repair shop or lab."
+        ]
+      },
+      {
+        "title": "Make an image of the USB drive",
+        "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Even if it appears for a moment, copy it at once because it may not appear again. Type the USB drive first and the destination second; swapping them erases the USB drive.",
+        "how": [
+          "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Recover from the copy",
+        "detail": "The copy may hold a damaged partition (a section of the drive). TestDisk can find it, and PhotoRec can pull out files if it cannot.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`. If a partition shows, press `p` and copy files to another drive. If not, run PhotoRec on the image.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Know the limits",
+        "detail": "If the drive never appears, or shows 0 MB or an unknown device, the controller or memory chip is likely failing. A lab can sometimes read the memory chip directly.",
+        "how": [
+          "Decide how valuable the files are. If they cannot be replaced, stop experimenting.",
+          "Search for data recovery labs near you. Look for a free evaluation and a 'no data, no fee' promise.",
+          "Describe your exact problem and ask for a price range before you send anything.",
+          "Pack the device in an anti-static bag or bubble wrap and ship it only after you agree on terms."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["cgsecurity-forum", "dfir-training"],
-    "callPro": "If the drive is not detected on any computer, or the plug is broken, ask a professional, who may use a chip-off or monolithic recovery.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "dfir-training"
+    ],
+    "callPro": "If it is not detected on any computer, or the plug is broken, ask a professional.",
     "faq": [
-      {"q": "Why does my USB drive show 0 bytes?", "a": "The controller often cannot read the memory chip properly. This is usually a hardware fault and not fixable with software."},
-      {"q": "Can a broken USB plug be fixed?", "a": "Sometimes, by soldering on a new connector, but it takes skill and a slip can destroy the data, so leave it to a repair shop or lab."}
+      {
+        "q": "Why does my USB drive show 0 bytes?",
+        "a": "The controller often cannot read the memory chip properly. This is usually a hardware fault that software cannot fix."
+      },
+      {
+        "q": "Can a broken USB plug be fixed?",
+        "a": "Sometimes, by soldering on a new connector, but it takes skill and a slip can destroy the data. Leave it to a repair shop or lab."
+      }
     ]
   },
   "no-power": {
     "title": "USB Flash Drive Dead or No Light",
     "metaDescription": "USB drive with no light or no response? Rule out ports and cables, then learn when a failed controller means chip-off recovery by a professional.",
-    "summary": "A USB drive that does nothing, with no light and no sound, may have a broken connector, a short or a failed controller. First rule out the port and computer. If it is dead everywhere, it may need hardware-level work.",
+    "summary": "A USB drive that does nothing, with no light, may have a broken connector, a short circuit or a failed controller (the chip that runs it). First rule out the port and computer. If it is dead everywhere, it may need hardware-level work.",
     "risk": 4,
     "riskNote": "A drive that is hot or shorted can be damaged more by repeated plugging, and DIY soldering is easy to get wrong.",
     "successOdds": "Low",
@@ -97,19 +352,100 @@
       "Do not open the case or touch the chips with a soldering iron."
     ],
     "steps": [
-      {"title": "Test the port", "detail": "Plug in another USB device to confirm the port and computer work, then try the drive in other ports and computers."},
-      {"title": "Check for a light or warmth", "detail": "Many drives have a light, so note whether it comes on. If the drive gets hot, unplug it right away, because heat can mean a short circuit."},
-      {"title": "Inspect the plug", "detail": "Look for bent metal, cracks, loose parts or dirt. Gently clean dust with a dry soft brush, not liquid."},
-      {"title": "Image if it responds at all", "detail": "If it shows up even briefly, copy it with ddrescue before doing anything else. Type the USB drive first and the destination second; swapping them erases the drive."},
-      {"title": "Run recovery on the copy", "detail": "Use TestDisk and PhotoRec on the image."},
-      {"title": "Consider a professional", "detail": "If it stays dead, a lab can sometimes read the memory directly, but results vary. Many small drives are 'monolith' designs with the chip and controller sealed in one piece, which need special tools."}
+      {
+        "title": "Test the port",
+        "detail": "The problem may be the port or computer, not the drive.",
+        "how": [
+          "Plug in a USB device that works, such as a mouse, to the same port.",
+          "If that device works, the port is fine. If not, try other ports.",
+          "Then plug the drive into other ports and a second computer.",
+          "Do this once per port, not repeatedly."
+        ]
+      },
+      {
+        "title": "Check for a light or warmth",
+        "detail": "A light shows power is reaching the drive. Heat means a possible short circuit.",
+        "how": [
+          "Plug the drive in and look for an LED (small light) on it.",
+          "Touch it gently with a finger after a few seconds. If it feels hot, unplug it at once.",
+          "Note whether it lights up, stays dark or gets warm.",
+          "If it is hot, do not plug it in again."
+        ]
+      },
+      {
+        "title": "Inspect the plug",
+        "detail": "Dirt, bends and cracks stop the contacts from touching.",
+        "how": [
+          "Unplug the drive and look at the metal plug in good light.",
+          "Look for bent metal, cracks, loose parts and dust.",
+          "Brush dust away with a dry soft brush. Do not use liquid.",
+          "If the plug is cracked or loose, stop."
+        ]
+      },
+      {
+        "title": "Make an image of the USB drive",
+        "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If it shows up even briefly, copy it before doing anything else. Type the USB drive first and the destination second; swapping them erases the USB drive.",
+        "how": [
+          "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Run recovery on the copy",
+        "detail": "The copy lets you search for lost files without touching the damaged drive again.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`, and copy any files to another drive. If nothing shows, run PhotoRec on the image.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Consider a professional",
+        "detail": "If it stays dead, a lab can sometimes read the memory chip directly, but results vary. Many small drives are monolith designs (chip and controller sealed in one piece), which need special tools.",
+        "how": [
+          "Decide how valuable the files are. If they cannot be replaced, stop experimenting.",
+          "Search for data recovery labs near you. Look for a free evaluation and a 'no data, no fee' promise.",
+          "Describe your exact problem and ask for a price range before you send anything.",
+          "Pack the device in an anti-static bag or bubble wrap and ship it only after you agree on terms."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["dfir-training", "nist-cftt"],
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "dfir-training",
+      "nist-cftt"
+    ],
     "callPro": "A drive that is dead on every computer usually needs chip-off or soldering repair by a professional.",
     "faq": [
-      {"q": "Is a dead USB drive always lost?", "a": "No. If the memory chip is fine, a specialist can sometimes read it directly, though that costs time and money."},
-      {"q": "Can I fix a broken USB connector myself?", "a": "It is possible with soldering skills, but a mistake can destroy the data, so leave it to a repair shop or lab for anything important."}
+      {
+        "q": "Is a dead USB drive always lost?",
+        "a": "No. If the memory chip is fine, a specialist can sometimes read it directly, though that costs time and money."
+      },
+      {
+        "q": "Can I fix a broken USB connector myself?",
+        "a": "It is possible with soldering skills, but a mistake can destroy the data. Leave it to a repair shop or lab for anything important."
+      }
     ]
   },
   "liquid-fire": {
@@ -117,7 +453,7 @@
     "metaDescription": "Washed or burned a USB flash drive? Do not plug it in or heat-dry it. Learn the safest way to handle it and when to call a professional.",
     "summary": "USB flash drives are fairly tough, and some survive a wash. Liquid, heat or fire can still corrode the board or short the chip. Plugging it in before it is clean and dry can cause a short that ruins it.",
     "risk": 4,
-    "riskNote": "Powering on a wet or contaminated drive can short it, and heating it can damage the memory chip.",
+    "riskNote": "Powering on a wet or dirty drive can short it, and heating it can damage the memory chip.",
     "successOdds": "Varies",
     "stopFirst": [
       "Do not plug it in while it is wet or dirty.",
@@ -125,76 +461,324 @@
       "Do not scrub the contacts or open the case."
     ],
     "steps": [
-      {"title": "Keep it unplugged", "detail": "Do not try the drive in a computer, even if it looks fine."},
-      {"title": "Do not rinse or clean it", "detail": "If it got salt water, mud or a sugary drink on it, leave it as it is. Cleaning off residue safely takes lab tools, so a professional should do it."},
-      {"title": "Air dry only after clean water", "detail": "If it only got fresh water, for example in the washing machine, let it dry at room temperature for several days with the plug facing down. After salt water, sugary drinks, mud or fire, skip this and go to a professional."},
-      {"title": "Inspect before using", "detail": "Look for rust, residue, cracks or burn marks. If any are present, do not plug it in."},
-      {"title": "Image right away if it works", "detail": "If it looks clean and dry and shows up, copy it immediately with ddrescue to another disk. Type the USB drive first and the destination second; swapping them erases the drive."},
-      {"title": "Recover from the copy", "detail": "Use TestDisk and PhotoRec on the image."}
+      {
+        "title": "Keep it unplugged",
+        "detail": "Power on a wet drive is what causes damage. Looking fine is not proof it is safe.",
+        "how": [
+          "Leave the drive out of every computer, charger and USB port.",
+          "Pick it up by the sides, not the metal plug.",
+          "Lay it on a clean towel."
+        ]
+      },
+      {
+        "title": "Do not rinse or clean it",
+        "detail": "Cleaning leftovers off safely needs lab tools. Rinsing can push dirt and salt deeper in.",
+        "how": [
+          "If it got salt water, mud, soda or another sugary drink on it, leave it exactly as it is.",
+          "Do not rinse, wipe, scrub or brush it.",
+          "Put it in a clean, dry bag or box.",
+          "Go straight to the professional step."
+        ]
+      },
+      {
+        "title": "Air dry only after clean water",
+        "detail": "Clean fresh water leaves nothing behind, so letting it dry by itself is safe. Heat is not, and anything other than clean water needs a lab.",
+        "how": [
+          "Use this step only if the drive got clean fresh water, for example in the washing machine.",
+          "Stand it plug-end down on a clean towel at room temperature.",
+          "Leave it for several days. Do not use a hair dryer, oven, microwave or rice.",
+          "After salt water, sugary drinks, mud or fire, skip this and go to a professional."
+        ]
+      },
+      {
+        "title": "Inspect before using",
+        "detail": "Corrosion and burns tell you not to plug it in.",
+        "how": [
+          "Look at the metal plug and body in good light.",
+          "Look for rust, green or white residue, cracks and burn marks.",
+          "If you see any of these, do not plug it in.",
+          "If it looks clean and dry after several days, go on to the copy."
+        ]
+      },
+      {
+        "title": "Make an image of the USB drive",
+        "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If it looks clean and dry and shows up, copy it right away. Type the USB drive first and the destination second; swapping them erases the USB drive.",
+        "how": [
+          "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Recover from the copy",
+        "detail": "TestDisk and PhotoRec search the copy for your files, so the fragile drive is not used again.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`, and copy found files to another drive. If nothing shows, run PhotoRec on the image.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Get professional help",
+        "detail": "Burns, corrosion or a drive that will not appear after drying call for a lab. Labs have tools to clean the board and read the chip safely.",
+        "how": [
+          "Decide how valuable the files are. If they cannot be replaced, stop experimenting.",
+          "Search for data recovery labs near you. Look for a free evaluation and a 'no data, no fee' promise.",
+          "Describe your exact problem and ask for a price range before you send anything.",
+          "Pack the device in an anti-static bag or bubble wrap and ship it only after you agree on terms."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["cgsecurity-forum", "dfir-training"],
-    "callPro": "If the drive is burned, cracked, corroded or does not show up after drying, stop and contact a professional rather than plugging it in again.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "dfir-training"
+    ],
+    "callPro": "If it is burned, cracked, corroded or not detected after drying, stop and call a professional.",
     "faq": [
-      {"q": "Can a USB drive survive the washing machine?", "a": "Often yes, if it is fully dried before use. Waiting several days is safer than plugging it in right away."},
-      {"q": "Is heat drying safe for a flash drive?", "a": "No. Heat can damage the memory chip and the solder joints."}
+      {
+        "q": "Can a USB drive survive the washing machine?",
+        "a": "Often yes, if it is fully dried before use. Waiting several days is safer than plugging it in right away."
+      },
+      {
+        "q": "Is heat drying safe for a flash drive?",
+        "a": "No. Heat can damage the memory chip and the solder joints."
+      }
     ]
   },
   "corrupted": {
     "title": "Fix a Corrupted USB Flash Drive Without Data Loss",
     "metaDescription": "USB drive says RAW, asks to format, or files will not open? Image it first, then use TestDisk and PhotoRec. Do not format or run chkdsk yet.",
-    "summary": "A corrupted USB drive has damaged file information, often after being pulled out too early or from a worn memory. The files are often still there. Making a copy before any repair keeps your options open.",
+    "summary": "A corrupted USB drive has damaged file system information (the index of what is stored where). It often shows as RAW, meaning the computer cannot read how it is organized, usually after being pulled out too early or from worn memory. The files are often still there. Making a copy before any repair keeps your options open.",
     "risk": 3,
     "riskNote": "Formatting or running chkdsk can overwrite the information you need, and a failing drive may get worse with each use.",
     "successOdds": "Medium",
     "stopFirst": [
-      "Do not click Format when Windows asks you to.",
+      "Do not click Format when Windows asks you to. That wipes the index you need.",
       "Do not run chkdsk or any 'repair' prompt before making an image.",
       "Do not install recovery software onto the USB drive."
     ],
     "steps": [
-      {"title": "Stop and unplug", "detail": "Do not click anything that offers to repair or format the drive."},
-      {"title": "Image the drive", "detail": "Use ddrescue to copy the full drive to a file on another disk; it also shows you any unreadable areas. Type the USB drive first and the image file second; swapping them erases the drive."},
-      {"title": "Try TestDisk on the image", "detail": "Use Analyse to find the lost partition or repair the boot sector. If your folders appear, you can copy the files out."},
-      {"title": "Use PhotoRec if folders are lost", "detail": "PhotoRec recovers files by type from the image, though names and folders are not kept."},
-      {"title": "Save to a different drive", "detail": "Write all recovered files to your computer or another drive."},
-      {"title": "Fix the USB last", "detail": "After everything is safe, format the flash drive. If it keeps corrupting, replace it, since flash memory wears out."},
-      {"title": "Test for fakes later", "detail": "A drive that keeps failing may be fake-capacity. After recovery, test it with f3 or h2testw, which write test data and should only be used on a drive you have emptied."}
+      {
+        "title": "Stop and unplug",
+        "detail": "Prompts that offer to repair or format change the drive. Declining them keeps your files safe.",
+        "how": [
+          "If a window says you need to format the disk, click Cancel.",
+          "Windows: eject from the arrow near the clock. Mac: right-click the drive > Eject.",
+          "Do not click Check Disk, Scan and Fix, or First Aid yet."
+        ]
+      },
+      {
+        "title": "Make an image of the USB drive",
+        "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. This also shows which areas are unreadable. Type the USB drive first and the destination second; swapping them erases the USB drive.",
+        "how": [
+          "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Try TestDisk on the image",
+        "detail": "A partition is a section of the drive. TestDisk can find a lost one or repair a damaged boot sector (the part that says how the drive starts).",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`. If your folders appear, press `p` to browse and `c` to copy files to a different drive. Do not choose `Write`.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Use PhotoRec if folders are lost",
+        "detail": "PhotoRec recovers files by type from the image. Names and folders are not kept.",
+        "how": [
+          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
+          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
+          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
+          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the USB drive itself, never on the drive you are scanning.",
+          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
+      },
+      {
+        "title": "Save to a different drive",
+        "detail": "Saving back onto the USB drive would overwrite your files.",
+        "how": [
+          "Choose a folder on your computer or another external drive.",
+          "Make sure there is enough free space.",
+          "Open a few files to make sure they work."
+        ]
+      },
+      {
+        "title": "Fix the USB last",
+        "detail": "Only after your files are safe is it fine to wipe the drive. Flash memory wears out, so a drive that keeps corrupting should be replaced.",
+        "how": [
+          "Windows: right-click the drive in File Explorer > Format > Start. Mac: Disk Utility > select the drive > Erase.",
+          "This erases everything, so check your recovered files first.",
+          "If the drive keeps corrupting later, buy a new one and stop using this one."
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec", "f3", "h2testw"],
-    "resources": ["cgsecurity-forum", "sleuthkit-autopsy"],
-    "callPro": "If the imaging keeps failing, the drive disconnects, or it reports the wrong size, stop and consult a professional.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "sleuthkit-autopsy"
+    ],
+    "callPro": "If copying keeps failing, the drive disconnects or it shows the wrong size, stop and ask a professional.",
     "faq": [
-      {"q": "Why does my USB say I need to format the disk?", "a": "The file system information is damaged. Your files may still be present, so do not format until you have a copy."},
-      {"q": "Could my flash drive be fake?", "a": "Possibly. Counterfeit drives claim more space than they have and corrupt data. Test with f3 or h2testw after you recover your files."}
+      {
+        "q": "Why does my USB say I need to format the disk?",
+        "a": "The file system information is damaged. Your files may still be present, so do not format until you have a copy."
+      },
+      {
+        "q": "Is it safe to run chkdsk on a corrupted USB drive?",
+        "a": "Not before you have a copy. Chkdsk changes the drive and can delete data it cannot fix."
+      }
     ]
   },
   "encrypted": {
     "title": "Recover Data from an Encrypted USB Drive",
     "metaDescription": "Locked USB drive from BitLocker To Go, VeraCrypt or a hardware PIN? Without the key recovery is not realistic. Learn where keys are often saved.",
-    "summary": "Encrypted USB drives scramble data so it cannot be read without the password or recovery key. If you do not have either, recovery is not realistic. Many people can find the key in a Microsoft account or a password manager.",
+    "summary": "Encrypted USB drives scramble data so it cannot be read without the password or recovery key (a long code saved when encryption was turned on). If you have neither, recovery is not realistic. Many people can find the key in a Microsoft account or a password manager.",
     "risk": 3,
     "riskNote": "Wrong resets or an erase on a hardware-encrypted stick can destroy the key and make the data permanently unreadable.",
     "successOdds": "Varies",
     "stopFirst": [
       "Do not reset the drive or keep guessing its PIN. Many keypad drives wipe themselves after a set number of wrong tries.",
-      "Do not format it to get access.",
+      "Do not format it to get access. That erases the data.",
       "Do not use tools that claim to crack or guess encryption."
     ],
     "steps": [
-      {"title": "Identify the type", "detail": "Windows BitLocker To Go shows a lock icon, VeraCrypt uses a separate app, and some drives have a keypad or vendor software."},
-      {"title": "Find the key", "detail": "For BitLocker, check your Microsoft account recovery keys, a work or school account, a printout or a saved text file."},
-      {"title": "Search your passwords", "detail": "Check your password manager, notes and emails for the drive's password."},
-      {"title": "Unlock normally", "detail": "Use the right tool and key on a working computer, then copy files to another drive."},
-      {"title": "Image if the drive is damaged", "detail": "Only if you have the key: use ddrescue to copy the encrypted drive, then unlock the copy. This works for BitLocker or VeraCrypt, not keypad drives. Type the USB drive first and the destination second; swapping them erases the drive."},
-      {"title": "Run recovery after unlocking", "detail": "If files are missing, use TestDisk or PhotoRec on the unlocked volume or its image."}
+      {
+        "title": "Identify the type",
+        "detail": "How it was locked decides where the key is.",
+        "how": [
+          "Plug the drive in. Windows: a padlock on the drive icon in File Explorer means BitLocker To Go.",
+          "A drive with a keypad on its case uses hardware encryption.",
+          "A drive holding a program or file called VeraCrypt uses VeraCrypt.",
+          "Check the drive's label or box for a vendor name and look up its manual."
+        ],
+        "learn": [
+          "glossary"
+        ]
+      },
+      {
+        "title": "Find the key",
+        "detail": "BitLocker recovery keys are usually saved online or printed.",
+        "how": [
+          "BitLocker: sign in at account.microsoft.com/devices/recoverykey with your Microsoft account. Also check any work or school account.",
+          "Look for a printout, or a text file on another drive or in email.",
+          "A BitLocker key is 48 digits in 8 groups.",
+          "Match the key ID on the lock screen to the one shown online."
+        ]
+      },
+      {
+        "title": "Search your passwords",
+        "detail": "The password is often in a manager, notes or an email.",
+        "how": [
+          "Search your password manager for the drive name, BitLocker or VeraCrypt.",
+          "Search email and notes for 'recovery key'.",
+          "Check old documents and sticky notes."
+        ]
+      },
+      {
+        "title": "Unlock normally",
+        "detail": "Once you have the key, unlocking is the safe way in.",
+        "how": [
+          "Plug the drive into a working computer.",
+          "Windows (BitLocker): double-click the drive, click More options > Enter recovery key, type it and click Unlock.",
+          "VeraCrypt: open the VeraCrypt app, click Select Device, pick the drive, click Mount and enter the password.",
+          "Copy the files to another drive."
+        ]
+      },
+      {
+        "title": "Make an image of the USB drive",
+        "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Only do this if you have the key and the drive is damaged. It works for BitLocker or VeraCrypt, not keypad drives, and you unlock the copy afterwards. Type the USB drive first and the destination second; swapping them erases the USB drive.",
+        "how": [
+          "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Run recovery after unlocking",
+        "detail": "If files are missing, TestDisk and PhotoRec can search the unlocked volume or its image.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Point TestDisk or PhotoRec at the unlocked drive or image, choose `Analyse` and `Quick Search`, and copy files to another drive.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["dfir-training", "brett-shavers"],
-    "callPro": "If the drive is both encrypted and physically failing, or uses hardware encryption and the controller has died, stop and ask a professional, and expect that it may not be possible.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "dfir-training",
+      "brett-shavers"
+    ],
+    "callPro": "If the drive is encrypted and failing, or its hardware controller has died, ask a professional and expect it may not be possible.",
     "faq": [
-      {"q": "Can I recover files from a locked USB without the password?", "a": "Realistically no. Good encryption cannot be bypassed, and anyone who promises otherwise should be treated with caution."},
-      {"q": "Where is my BitLocker key stored?", "a": "Often in your Microsoft account online, in a work or school account, on a printout or in a file you saved earlier."}
+      {
+        "q": "Can I recover files from a locked USB without the password?",
+        "a": "Realistically no. Good encryption cannot be bypassed, and anyone who promises otherwise should be treated with caution."
+      },
+      {
+        "q": "Where is my BitLocker key stored?",
+        "a": "Often in your Microsoft account online, in a work or school account, on a printout or in a file you saved earlier."
+      }
     ]
   }
 }

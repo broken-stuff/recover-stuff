@@ -2,36 +2,125 @@
   "deleted": {
     "title": "Recover Deleted Photos from an SD or microSD Card",
     "metaDescription": "Deleted photos or videos from an SD or microSD card can often be recovered with PhotoRec. Stop shooting, then follow this safe step-by-step guide.",
-    "summary": "When you delete files from an SD card, the data usually stays until new photos or videos overwrite it. SD cards do not use TRIM in most cameras and readers, so recovery odds are often good. The most important step is to stop using the card.",
+    "summary": "When you delete files from an SD card, the card usually just forgets where they were. The photos and videos stay until new ones overwrite them. SD cards do not use TRIM (a feature that wipes deleted space) in most cameras and readers, so recovery odds are often good. The most important step is to stop using the card.",
     "risk": 2,
     "riskNote": "Scanning a copy is safe, but taking even a few more photos can overwrite what you want back.",
     "successOdds": "High",
     "stopFirst": [
-      "Stop taking photos or videos with the card right now.",
+      "Stop taking photos or videos with the card right now. New ones can overwrite the old.",
       "Do not install recovery software onto the card.",
       "Do not format the card, even if the camera or phone asks you to."
     ],
     "steps": [
-      {"title": "Remove the card", "detail": "Turn off the camera or phone and take the card out. Even just leaving it in can sometimes write small files."},
-      {"title": "Check backups", "detail": "Look for cloud backups, a second memory card slot, or copies on your phone or computer."},
-      {"title": "Use a card reader", "detail": "Plug the card into a computer with a USB card reader. On a full-size SD card or adapter, slide the lock switch down to Lock so the computer treats it as read-only, though some readers ignore it."},
-      {"title": "Image the card", "detail": "Use ddrescue to copy the whole card to an image file on your computer, then work from the image. Type the card first and the image file second; swapping them erases the card."},
-      {"title": "Try TestDisk", "detail": "Run TestDisk on the image to look for deleted files with their names. This is quick and worth trying."},
-      {"title": "Run PhotoRec", "detail": "PhotoRec can recover photos and videos, including many camera RAW formats, even if the file list is gone."},
-      {"title": "Save somewhere else", "detail": "Pick a folder on your computer or another drive as the destination. Never save back onto the card."}
+      {
+        "title": "Remove the card",
+        "detail": "Even leaving the card in a powered-on device can save small files onto it.",
+        "how": [
+          "Turn the camera or phone off.",
+          "Open the card door or tray and take the card out. A microSD card may need a pin or fingernail.",
+          "Do not put it back in any device until recovery is finished."
+        ]
+      },
+      {
+        "title": "Check backups",
+        "detail": "A backup can save you the whole recovery.",
+        "how": [
+          "Phone: open Google Photos, iCloud Photos or OneDrive and check the Recently Deleted or Trash area.",
+          "Camera with two card slots: check the second card.",
+          "Check your computer and any old backup drives for copies you imported earlier."
+        ]
+      },
+      {
+        "title": "Use a card reader and lock the card",
+        "detail": "A card reader lets the computer read the card without the camera or phone writing to it. Locking the card tells the computer to treat it as read-only, which protects your photos.",
+        "how": [
+          "Take the card out of the camera or phone. A microSD card sits in a small slot or tray, so use a pin or fingernail if needed.",
+          "Full-size SD card or a microSD adapter: slide the small lock switch on the side down to the Lock position, before you plug it in. A plain microSD card has no switch.",
+          "Put the card in a USB card reader and plug it into the computer. Some readers ignore the lock, so still do not save anything to the card.",
+          "If a window offers to format the card, click Cancel. Never click Format."
+        ]
+      },
+      {
+        "title": "Make an image of the SD card",
+        "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Do this before trying any recovery tool. Type the SD card first and the destination second; swapping them erases the SD card.",
+        "how": [
+          "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Try TestDisk",
+        "detail": "TestDisk can list deleted files with their original names. It is quick and worth a try.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose your partition, then `Advanced` and `Undelete`. Deleted files show in red. Press `c` to copy one and pick a folder on a different drive.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Run PhotoRec",
+        "detail": "PhotoRec finds photos and videos, including many camera RAW formats (the untouched files some cameras save), even if the file list is gone.",
+        "how": [
+          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
+          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
+          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
+          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the card itself, never on the drive you are scanning.",
+          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
+      },
+      {
+        "title": "Save somewhere else",
+        "detail": "If you save back onto the card, you could overwrite photos you have not recovered yet.",
+        "how": [
+          "When asked for a destination, pick a folder on your computer's main drive or another external drive.",
+          "Make sure it has more free space than the card's size.",
+          "Never choose the card or its image file as the destination.",
+          "Then open a few photos to check them. Windows: double-click them. Mac: press Space on a file for a preview."
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["cgsecurity-forum", "dfir-training"],
-    "callPro": "If the card is unstable, disconnects during copying, or the photos are irreplaceable and scans find nothing, stop and consult a professional.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "dfir-training"
+    ],
+    "callPro": "If the card disconnects during copying, or irreplaceable photos do not turn up, stop and ask a professional.",
     "faq": [
-      {"q": "Can I recover photos I deleted from a camera card?", "a": "Often yes, if you stopped using the card. Photos are usually still on it until new ones overwrite them."},
-      {"q": "Does taking more photos hurt my chances?", "a": "Yes. New pictures can be written over the deleted ones, so stop using the card immediately."}
+      {
+        "q": "Can I recover photos I deleted from a camera card?",
+        "a": "Often yes, if you stopped using the card. Photos are usually still on it until new ones overwrite them."
+      },
+      {
+        "q": "Does taking more photos hurt my chances?",
+        "a": "Yes. New pictures can be written over the deleted ones, so stop using the card immediately."
+      }
     ]
   },
   "formatted": {
     "title": "Recover Photos from a Formatted SD or microSD Card",
     "metaDescription": "Formatted an SD or microSD card by mistake? A quick format usually leaves photos recoverable. Image first, then use TestDisk and PhotoRec.",
-    "summary": "Formatting in most cameras clears the file list but leaves most photos on the card. Formatting in a phone, a full format in Windows, or a camera's 'low-level' or 'secure' format often erases the data and lowers the odds.",
+    "summary": "Formatting in most cameras clears the file list (the index of what is stored where) but leaves most photos on the card. Formatting in a phone, a full format in Windows, or a camera's 'low-level' or 'secure' format often erases the data and lowers the odds.",
     "risk": 2,
     "riskNote": "Recovery scans are safe on a copy, but taking new photos or formatting again overwrites the old data.",
     "successOdds": "Varies",
@@ -41,52 +130,218 @@
       "Do not install recovery software onto the card."
     ],
     "steps": [
-      {"title": "Remove the card", "detail": "Switch off the device and take the card out so nothing new is written."},
-      {"title": "Connect with a card reader", "detail": "Use a USB card reader on a computer. On a full-size SD card or adapter, slide the lock switch down to Lock so the computer treats it as read-only, though some readers ignore it."},
-      {"title": "Image the card", "detail": "Use ddrescue to copy the entire card to a file on another disk, then do all later work on the copy. Type the card first and the image file second; swapping them erases the card."},
-      {"title": "Look for the old layout", "detail": "Run TestDisk on the image and use Analyse. It may find the old partition and let you copy files with names."},
-      {"title": "Scan with PhotoRec", "detail": "If TestDisk cannot, PhotoRec pulls out photos, videos and documents by their contents."},
-      {"title": "Save to another drive", "detail": "Recover to a folder on your computer, then open sample files to confirm they are intact."}
+      {
+        "title": "Remove the card",
+        "detail": "Anything the device writes now can overwrite the old photos.",
+        "how": [
+          "Switch the camera or phone off.",
+          "Take the card out. A microSD card may need a pin or fingernail.",
+          "Do not put it back in the device."
+        ]
+      },
+      {
+        "title": "Connect with a card reader and lock the card",
+        "detail": "A card reader lets the computer read the card without the camera or phone writing to it. Locking the card tells the computer to treat it as read-only, which protects your photos.",
+        "how": [
+          "Take the card out of the camera or phone. A microSD card sits in a small slot or tray, so use a pin or fingernail if needed.",
+          "Full-size SD card or a microSD adapter: slide the small lock switch on the side down to the Lock position, before you plug it in. A plain microSD card has no switch.",
+          "Put the card in a USB card reader and plug it into the computer. Some readers ignore the lock, so still do not save anything to the card.",
+          "If a window offers to format the card, click Cancel. Never click Format."
+        ]
+      },
+      {
+        "title": "Make an image of the SD card",
+        "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. All later work is on the copy. Type the SD card first and the destination second; swapping them erases the SD card.",
+        "how": [
+          "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Look for the old layout",
+        "detail": "A partition is a section of the card that holds your files. TestDisk can often find the layout from before the format.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`. If a partition shows, press `p` to list its files and `c` to copy them to a different drive.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Scan with PhotoRec",
+        "detail": "If TestDisk cannot find the old layout, PhotoRec pulls out photos, videos and documents by their contents. File names are lost.",
+        "how": [
+          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
+          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
+          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
+          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the card itself, never on the drive you are scanning.",
+          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
+      },
+      {
+        "title": "Save to another drive and check",
+        "detail": "Saving on a different disk keeps the card safe, and opening samples proves the photos are not damaged.",
+        "how": [
+          "Recover to a folder on your computer or another external drive.",
+          "Open the recovered folder. PhotoRec makes `recup_dir.1`, `recup_dir.2` and so on.",
+          "Windows: double-click photos to open them. Mac: select one and press Space.",
+          "Photos that open fine are good. Gray or broken ones are damaged."
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["cgsecurity-forum", "dfir-training"],
-    "callPro": "If the card was fully formatted, reused heavily after formatting, or the images fail to copy, a professional may help, but chances are lower.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "dfir-training"
+    ],
+    "callPro": "If the card was fully formatted, reused heavily, or will not copy, a professional may help, but chances are lower.",
     "faq": [
-      {"q": "Do formatted SD cards keep my photos?", "a": "Usually a quick format does. Most photos remain until new ones are written, so recovery is often possible."},
-      {"q": "Should I format the card again to fix it?", "a": "Not until your files are safely recovered. Another format can overwrite more data."}
+      {
+        "q": "Do formatted SD cards keep my photos?",
+        "a": "Usually a quick format does. Most photos remain until new ones are written, so recovery is often possible."
+      },
+      {
+        "q": "Should I format the card again to fix it?",
+        "a": "Not until your files are safely recovered. Another format can overwrite more data."
+      }
     ]
   },
   "not-detected": {
     "title": "SD or microSD Card Not Detected or Not Reading",
     "metaDescription": "SD or microSD card not showing up? Try a different reader, check the lock switch, and learn when a dead card needs professional chip-level help.",
-    "summary": "A card may not show up because of a dirty or bad reader, a missing drive letter, damaged file information, or a failed controller. Many cases are fixed by changing the reader. If the card is truly dead, only a specialist can try chip-level recovery.",
+    "summary": "A card may not show up because of a dirty or bad reader, a missing drive letter, damaged file information, or a failed controller (the tiny chip that runs the card). Many cases are fixed by changing the reader. If the card is truly dead, only a specialist can try chip-level recovery.",
     "risk": 3,
     "riskNote": "Simple checks are safe, but accepting a format prompt or forcing a damaged card can destroy what is left.",
     "successOdds": "Varies",
     "stopFirst": [
       "Do not click Format when the computer or camera asks.",
-      "Do not bend, force or clean the card contacts with anything abrasive.",
+      "Do not bend, force or clean the card contacts with anything rough.",
       "Do not keep inserting and removing it many times."
     ],
     "steps": [
-      {"title": "Try another reader", "detail": "Use a different USB card reader and port, ideally on another computer. Many 'dead' cards are really bad readers."},
-      {"title": "Look in Disk Management", "detail": "On Windows use Disk Management, on Mac use Disk Utility. A card with no drive letter or showing RAW may still hold your data."},
-      {"title": "Clean gently", "detail": "Wipe the gold contacts with a dry, soft lint-free cloth. Do not use liquid."},
-      {"title": "Image if it responds", "detail": "If the card shows up at all, copy it right away with ddrescue, because failing cards often get worse. Type the card first and the destination second; swapping them erases the card."},
-      {"title": "Recover from the image", "detail": "Run TestDisk and PhotoRec on the copy, saving to another drive."}
+      {
+        "title": "Try another reader",
+        "detail": "A faulty reader or adapter is a very common cause. It is a free, safe test.",
+        "how": [
+          "Plug the card into a different USB card reader, in a different USB port.",
+          "microSD: also try a different SD adapter.",
+          "Try another computer. If a window offers to format, click Cancel.",
+          "Check the lock switch on a full-size SD card is not stuck halfway."
+        ]
+      },
+      {
+        "title": "Look in Disk Management or Disk Utility",
+        "detail": "These tools list every drive, even one with no drive letter or an unreadable format (shown as RAW).",
+        "how": [
+          "Windows: right-click the Start button and choose Disk Management. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
+          "Look for a drive about the size of your card.",
+          "Do not click Initialize, Format or Delete. Just note what appears.",
+          "A card with no letter or showing RAW may still hold your files."
+        ],
+        "learn": [
+          "glossary"
+        ]
+      },
+      {
+        "title": "Clean gently",
+        "detail": "Dust or film on the gold contacts can stop the reader seeing the card.",
+        "how": [
+          "Take the card out of the reader.",
+          "Wipe the gold contacts with a dry, soft, lint-free cloth.",
+          "Do not use liquid, erasers or a knife.",
+          "Try the reader again once."
+        ]
+      },
+      {
+        "title": "Make an image of the SD card",
+        "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If the card appears at all, copy it right away, because failing cards often get worse. Type the SD card first and the destination second; swapping them erases the SD card.",
+        "how": [
+          "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Recover from the image",
+        "detail": "The copy may hold a damaged partition (a section of the card). TestDisk can find it, and PhotoRec can pull out photos if it cannot.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`. If a partition shows, press `p` and copy files to a different drive. If not, run PhotoRec on the image.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Ask a professional if it never appears",
+        "detail": "If no reader detects the card, or it shows a tiny size such as 0 MB, the controller or memory has likely failed. Most microSD cards are sealed monolith chips (chip and controller in one piece), which need a lab with flash recovery tools.",
+        "how": [
+          "Decide how valuable the files are. If they cannot be replaced, stop experimenting.",
+          "Search for data recovery labs near you. Look for a free evaluation and a 'no data, no fee' promise.",
+          "Describe your exact problem and ask for a price range before you send anything.",
+          "Pack the device in an anti-static bag or bubble wrap and ship it only after you agree on terms."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["cgsecurity-forum", "dfir-training"],
-    "callPro": "If no reader detects the card, or it reports a tiny size such as 0 MB, the controller or memory has likely failed and needs a lab with flash recovery tools, since most microSD cards are sealed monolith chips.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "dfir-training"
+    ],
+    "callPro": "If no reader detects the card, or it shows 0 MB, a lab with flash recovery tools is your only option.",
     "faq": [
-      {"q": "Why does my microSD card show nothing in the reader?", "a": "The reader, adapter or card contacts may be bad, or the card's controller may have failed. Try a different reader first."},
-      {"q": "Can a dead SD card be recovered?", "a": "Sometimes, by labs that read the memory directly, often by soldering to tiny test points on monolith cards. It is costly and not guaranteed."}
+      {
+        "q": "Why does my microSD card show nothing in the reader?",
+        "a": "The reader, adapter or card contacts may be bad, or the card's controller may have failed. Try a different reader first."
+      },
+      {
+        "q": "Can a dead SD card be recovered?",
+        "a": "Sometimes, by labs that read the memory directly, often by soldering to tiny test points on monolith cards. It is costly and not guaranteed."
+      }
     ]
   },
   "no-power": {
     "title": "SD or microSD Card Dead and Not Responding",
     "metaDescription": "SD or microSD card completely dead? Rule out the reader and adapter, then learn why a failed controller needs a lab with special flash recovery tools.",
-    "summary": "A card cannot show a light or sound, so a dead card just does not respond anywhere. Check the reader, adapter and contacts first. If it is still dead, the controller is likely broken and the data can only be read with special equipment.",
+    "summary": "A card has no light or sound, so a dead card simply does not respond anywhere. Check the reader, adapter and contacts first. If it is still dead, the controller (the tiny chip that runs the card) is likely broken, and the data can only be read with special equipment.",
     "risk": 4,
     "riskNote": "A cracked or shorted card can be damaged further by repeated tries, and DIY opening or soldering destroys it.",
     "successOdds": "Low",
@@ -96,18 +351,98 @@
       "Do not format it if it briefly appears and asks."
     ],
     "steps": [
-      {"title": "Swap the reader and adapter", "detail": "For a microSD card, test a different adapter as well as a different reader. Test the reader with another card to be sure."},
-      {"title": "Check the card visually", "detail": "Look for cracks, bent plastic, burn marks or missing contacts. If damaged, stop here."},
-      {"title": "Try a second computer", "detail": "Use a different computer and operating system if you can."},
-      {"title": "Image if it responds", "detail": "If the card appears even once, immediately copy it with ddrescue to another disk. Type the card first and the destination second; swapping them erases the card."},
-      {"title": "Recover from the copy", "detail": "Use TestDisk and PhotoRec on the image."}
+      {
+        "title": "Swap the reader and adapter",
+        "detail": "Most 'dead' cards are really a bad reader or adapter.",
+        "how": [
+          "Test your reader with a different card you know works. If that fails too, the reader is the problem.",
+          "microSD: try another SD adapter.",
+          "Try a different USB port.",
+          "Do this once or twice, not repeatedly."
+        ]
+      },
+      {
+        "title": "Check the card visually",
+        "detail": "Physical damage means more tries could do harm.",
+        "how": [
+          "Hold the card in good light.",
+          "Look for cracks, bent plastic, burn marks and missing or scratched gold contacts.",
+          "If you see damage, stop and go to the professional step."
+        ]
+      },
+      {
+        "title": "Try a second computer",
+        "detail": "A different computer or operating system sometimes reads what the first cannot.",
+        "how": [
+          "Plug the card into a different computer, ideally with a different operating system.",
+          "Windows: right-click the Start button and choose Disk Management. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
+          "If a window offers to format the card, click Cancel."
+        ]
+      },
+      {
+        "title": "Make an image of the SD card",
+        "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If the card appears even once, copy it immediately. Type the SD card first and the destination second; swapping them erases the SD card.",
+        "how": [
+          "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Recover from the copy",
+        "detail": "TestDisk and PhotoRec search the copy for your files so the fragile card is left alone.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`, and copy files to another drive. If nothing shows, run PhotoRec on the image.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Ask a professional if it stays dead",
+        "detail": "If the card is dead in every reader, a controller or monolith chip failure (chip and controller sealed in one piece) usually needs a lab with special flash recovery tools.",
+        "how": [
+          "Decide how valuable the files are. If they cannot be replaced, stop experimenting.",
+          "Search for data recovery labs near you. Look for a free evaluation and a 'no data, no fee' promise.",
+          "Describe your exact problem and ask for a price range before you send anything.",
+          "Pack the device in an anti-static bag or bubble wrap and ship it only after you agree on terms."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["dfir-training", "nist-cftt"],
-    "callPro": "If the card is dead in every reader, a controller or monolith chip failure usually needs a lab with special flash recovery tools.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "dfir-training",
+      "nist-cftt"
+    ],
+    "callPro": "If the card is dead in every reader, a lab with flash recovery tools is your only option.",
     "faq": [
-      {"q": "Is a dead microSD card always lost?", "a": "No, but DIY options are limited. If the memory chip is intact, a lab with special tools may read it."},
-      {"q": "Could it just be my card reader?", "a": "Yes, that is common. Try a different reader and adapter before giving up."}
+      {
+        "q": "Is a dead microSD card always lost?",
+        "a": "No, but DIY options are limited. If the memory chip is intact, a lab with special tools may read it."
+      },
+      {
+        "q": "Could it just be my card reader?",
+        "a": "Yes, that is common. Try a different reader and adapter before giving up."
+      }
     ]
   },
   "liquid-fire": {
@@ -115,7 +450,7 @@
     "metaDescription": "SD or microSD card went through the wash or got hot? Do not plug it in or heat-dry it. Learn the safest steps and when to call a professional.",
     "summary": "Many SD cards are rated water resistant, and some survive being washed. Liquid, heat or fire can still corrode the contacts or damage the chip. Plugging in a wet or dirty card can short it.",
     "risk": 4,
-    "riskNote": "Powering a wet or contaminated card can short it, and heat can permanently damage the memory chip.",
+    "riskNote": "Powering a wet or dirty card can short it, and heat can permanently damage the memory chip.",
     "successOdds": "Varies",
     "stopFirst": [
       "Do not put the card in a camera, phone or reader while it is wet.",
@@ -123,25 +458,114 @@
       "Do not scrub the contacts or take the card apart."
     ],
     "steps": [
-      {"title": "Keep it out of devices", "detail": "Do not test it in any device until it is fully dry and you have inspected it."},
-      {"title": "Do not rinse or clean it", "detail": "If it got salt water, mud or soda on it, leave it as it is. Cleaning off residue safely takes lab tools, so a professional should do it."},
-      {"title": "Air dry only after clean water", "detail": "If it only got fresh water, let it dry for several days at room temperature on a clean towel, with no heat. After salt water, soda, mud or fire, skip this and go to a professional."},
-      {"title": "Inspect it", "detail": "Look for corrosion, residue, cracks and warping. If you see any, do not insert it."},
-      {"title": "Image it first", "detail": "If it looks clean and shows up in a reader, copy it at once with ddrescue to another disk. Type the card first and the destination second; swapping them erases the card."},
-      {"title": "Recover from the image", "detail": "Use TestDisk and PhotoRec on the copy."}
+      {
+        "title": "Keep it out of devices",
+        "detail": "A wet card in a powered device can short out.",
+        "how": [
+          "Do not put the card in any camera, phone or reader.",
+          "Handle it by the edges, not the gold contacts.",
+          "Lay it on a clean towel."
+        ]
+      },
+      {
+        "title": "Do not rinse or clean it",
+        "detail": "Cleaning off residue safely takes lab tools. Rinsing can push salt and dirt deeper.",
+        "how": [
+          "If it got salt water, mud, soda or another sugary drink on it, leave it exactly as it is.",
+          "Do not rinse, wipe or brush it.",
+          "Put it in a clean, dry bag or box.",
+          "Go straight to the professional step."
+        ]
+      },
+      {
+        "title": "Air dry only after clean water",
+        "detail": "Clean fresh water leaves nothing behind, so air drying is safe. Heat damages the chip, and other liquids leave residue that needs a lab.",
+        "how": [
+          "Use this step only if the card got clean fresh water, for example in the washing machine.",
+          "Lay it flat on a clean towel at room temperature, with no heat and no hair dryer, oven, microwave or rice.",
+          "Leave it for several days.",
+          "After salt water, soda, mud or fire, skip this and go to a professional."
+        ]
+      },
+      {
+        "title": "Inspect it",
+        "detail": "Corrosion and warping mean it is not safe to insert.",
+        "how": [
+          "Look at the gold contacts and body in good light.",
+          "Look for green or white corrosion, residue, cracks and warping.",
+          "If you see any, do not insert it."
+        ]
+      },
+      {
+        "title": "Make an image of the SD card",
+        "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If it looks clean and dry and shows up in a reader, copy it at once. Type the SD card first and the destination second; swapping them erases the SD card.",
+        "how": [
+          "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Recover from the image",
+        "detail": "The copy lets you search for photos without using the fragile card again.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`, and copy found files to another drive. If nothing shows, run PhotoRec on the image.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Get professional help if needed",
+        "detail": "If the card is burned, corroded, bent or not detected after drying, a lab can clean and read it safely.",
+        "how": [
+          "Decide how valuable the files are. If they cannot be replaced, stop experimenting.",
+          "Search for data recovery labs near you. Look for a free evaluation and a 'no data, no fee' promise.",
+          "Describe your exact problem and ask for a price range before you send anything.",
+          "Pack the device in an anti-static bag or bubble wrap and ship it only after you agree on terms."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["dfir-training", "nist-cftt"],
-    "callPro": "If the card is burned, corroded, bent or still not detected after drying, stop and contact a professional rather than trying again.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "dfir-training",
+      "nist-cftt"
+    ],
+    "callPro": "If it is burned, corroded, bent or not detected after drying, stop and call a professional.",
     "faq": [
-      {"q": "Can an SD card survive the washing machine?", "a": "Often yes, if fully dried before use. Waiting several days is safer than rushing."},
-      {"q": "Is it safe to dry a card with heat?", "a": "No. Heat can damage the memory chip and its connections."}
+      {
+        "q": "Can an SD card survive the washing machine?",
+        "a": "Often yes, if fully dried before use. Waiting several days is safer than rushing."
+      },
+      {
+        "q": "Is it safe to dry a card with heat?",
+        "a": "No. Heat can damage the memory chip and its connections."
+      }
     ]
   },
   "corrupted": {
     "title": "Fix a Corrupted SD or microSD Card Without Losing Photos",
     "metaDescription": "SD card says unreadable, RAW or asks to format? Image it first, then use TestDisk and PhotoRec. Skip format and chkdsk until your files are safe.",
-    "summary": "A card can become corrupted when removed during a write, when power dies, or when it wears out. The photos are often still there even if the camera shows an error. Making a copy before any repair keeps your options open.",
+    "summary": "A card can become corrupted when removed during a write, when power dies, or when it wears out. Its file system (the index of what is stored where) is damaged, so the camera may call it unreadable or RAW. The photos are often still there. Making a copy before any repair keeps your options open.",
     "risk": 3,
     "riskNote": "Formatting, chkdsk or the camera's 'repair' prompts can overwrite the information needed to get your files back.",
     "successOdds": "Medium",
@@ -151,26 +575,105 @@
       "Do not take more photos with the card."
     ],
     "steps": [
-      {"title": "Stop and remove the card", "detail": "Turn off the camera and take the card out. Avoid any prompt to fix or format it."},
-      {"title": "Use a card reader", "detail": "Put the card in a USB reader. On a full-size SD card or adapter, slide the lock switch down to Lock so the computer treats it as read-only, though some readers ignore it."},
-      {"title": "Image the card", "detail": "Use ddrescue to copy the card to an image file on another disk; it handles bad spots without stopping. Type the card first and the image file second; swapping them erases the card."},
-      {"title": "Try TestDisk", "detail": "Run TestDisk on the image to repair the partition or boot sector, or to browse the files."},
-      {"title": "Use PhotoRec", "detail": "If folders are lost, PhotoRec recovers photos and videos by type from the image."},
-      {"title": "Save to a different drive", "detail": "Recover only to your computer or another disk, never the card."},
-      {"title": "Check the card for fakes", "detail": "Once recovered, test the card with f3 or h2testw. These write test data, so only run them after your files are safe. A fake-capacity card often gets corrupted."}
+      {
+        "title": "Stop and remove the card",
+        "detail": "Repair prompts change the card. Declining them keeps your photos safe.",
+        "how": [
+          "Turn the camera or phone off.",
+          "Take the card out. A microSD card may need a pin or fingernail.",
+          "If any message offered to format or fix it, do not accept it."
+        ]
+      },
+      {
+        "title": "Use a card reader and lock the card",
+        "detail": "A card reader lets the computer read the card without the camera or phone writing to it. Locking the card tells the computer to treat it as read-only, which protects your photos.",
+        "how": [
+          "Take the card out of the camera or phone. A microSD card sits in a small slot or tray, so use a pin or fingernail if needed.",
+          "Full-size SD card or a microSD adapter: slide the small lock switch on the side down to the Lock position, before you plug it in. A plain microSD card has no switch.",
+          "Put the card in a USB card reader and plug it into the computer. Some readers ignore the lock, so still do not save anything to the card.",
+          "If a window offers to format the card, click Cancel. Never click Format."
+        ]
+      },
+      {
+        "title": "Make an image of the SD card",
+        "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. ddrescue handles bad spots without stopping. Type the SD card first and the destination second; swapping them erases the SD card.",
+        "how": [
+          "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Try TestDisk",
+        "detail": "A partition is a section of the card. TestDisk can repair a damaged partition or boot sector (the part that says how the card starts), or let you browse files.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`. If your folders appear, press `p` to browse and `c` to copy files to a different drive. Do not choose `Write`.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Use PhotoRec",
+        "detail": "If folders are lost, PhotoRec recovers photos and videos by type from the image. Names are not kept.",
+        "how": [
+          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
+          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
+          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
+          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the card itself, never on the drive you are scanning.",
+          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
+      },
+      {
+        "title": "Save to a different drive",
+        "detail": "Saving back onto the card would overwrite photos.",
+        "how": [
+          "Recover only to your computer or another external disk.",
+          "Open a few photos to confirm they work.",
+          "Do not reuse the card until everything is safe."
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec", "f3", "h2testw"],
-    "resources": ["cgsecurity-forum", "sleuthkit-autopsy"],
-    "callPro": "If the card disconnects often, reports the wrong size, or imaging fails, stop and ask a professional.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "sleuthkit-autopsy"
+    ],
+    "callPro": "If the card keeps disconnecting, shows the wrong size, or copying fails, stop and ask a professional.",
     "faq": [
-      {"q": "Why does my camera say the card needs formatting?", "a": "The file system is damaged or unreadable. Your photos may still be on the card, so do not format yet."},
-      {"q": "Could my SD card be counterfeit?", "a": "It might be, especially if the price was too good. Fake cards claim more space than they have, so test with f3 or h2testw after recovery."}
+      {
+        "q": "Why does my camera say the card needs formatting?",
+        "a": "The file system is damaged or unreadable. Your photos may still be on the card, so do not format yet."
+      },
+      {
+        "q": "Is it safe to run chkdsk on a corrupted card?",
+        "a": "Not before you have a copy. Chkdsk changes the card and can delete data it cannot fix."
+      }
     ]
   },
   "encrypted": {
     "title": "Recover Data from an Encrypted SD or microSD Card",
     "metaDescription": "Encrypted SD or microSD card from a phone or VeraCrypt? Without the key recovery is not realistic. Learn where keys and backups are often kept.",
-    "summary": "Some phones, cameras and apps encrypt memory cards, tying them to a device, a password or a key. If you do not have the key, recovery is not realistically possible. If you do, the data can usually be unlocked on the right device.",
+    "summary": "Some phones, cameras and apps encrypt memory cards, tying them to a device, a password or a key (a secret code that unlocks the data). If you do not have the key, recovery is not realistically possible. If you do, the data can usually be unlocked on the right device.",
     "risk": 3,
     "riskNote": "Resetting the phone, formatting the card or tapping 'Forget' on it in Android settings can delete the key and make the data unreadable for good.",
     "successOdds": "Varies",
@@ -180,19 +683,98 @@
       "Do not install recovery software onto the card."
     ],
     "steps": [
-      {"title": "Identify the encryption", "detail": "Find out if it was locked by a phone's card encryption, a VeraCrypt volume, BitLocker To Go, or a camera or vendor app."},
-      {"title": "Keep the original device", "detail": "Some Android phones tie the key to the phone. Keep the phone and its lock-screen PIN or password."},
-      {"title": "Find the password or key", "detail": "Search your password manager, notes and emails. For BitLocker, check your Microsoft account for a recovery key."},
-      {"title": "Unlock with the right tool", "detail": "Use the same app or system that encrypted it, then copy files to another drive."},
-      {"title": "Image if the card is damaged", "detail": "Only useful if you can still unlock it, with the key or the original phone. Use ddrescue to copy the card first. Type the card first and the destination second; swapping them erases the card."},
-      {"title": "Recover after unlocking", "detail": "Use TestDisk or PhotoRec on the unlocked volume if files are missing."}
+      {
+        "title": "Identify the encryption",
+        "detail": "How it was locked decides which tool and key you need.",
+        "how": [
+          "Think about where the card was used: an Android phone that encrypted it, a camera app, or a program like VeraCrypt or BitLocker To Go.",
+          "Plug it into a Windows computer. A padlock on the drive icon means BitLocker To Go.",
+          "A card the computer says is unreadable and which an Android phone encrypted must be unlocked in that phone.",
+          "Write down what you find."
+        ],
+        "learn": [
+          "glossary"
+        ]
+      },
+      {
+        "title": "Keep the original device",
+        "detail": "Some Android phones tie the key to the phone itself.",
+        "how": [
+          "Do not sell, wipe or reset the phone the card was used in.",
+          "Keep its lock-screen PIN or password handy.",
+          "Do not tap Forget or Format on the card in the phone's storage settings."
+        ]
+      },
+      {
+        "title": "Find the password or key",
+        "detail": "The key is often saved somewhere you can search.",
+        "how": [
+          "Search your password manager, notes and email for the card, the app name or 'recovery key'.",
+          "BitLocker: sign in at account.microsoft.com/devices/recoverykey with the Microsoft account you used.",
+          "Check printouts and files saved earlier."
+        ]
+      },
+      {
+        "title": "Unlock with the right tool",
+        "detail": "Using the same app or system that encrypted it is the safe way to open it.",
+        "how": [
+          "Android: put the card back in the original phone and enter the lock-screen PIN or password.",
+          "BitLocker To Go: double-click the card in File Explorer, click More options > Enter recovery key and click Unlock.",
+          "VeraCrypt: open the app, click Select Device, pick the card, click Mount and enter the password.",
+          "Copy the files to another drive."
+        ]
+      },
+      {
+        "title": "Make an image of the SD card",
+        "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Only useful if you can still unlock it, with the key or the original phone. Type the SD card first and the destination second; swapping them erases the SD card.",
+        "how": [
+          "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Recover after unlocking",
+        "detail": "If files are missing after unlocking, TestDisk and PhotoRec can search the unlocked volume.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
+          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
+          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Point TestDisk or PhotoRec at the unlocked card or its image, choose `Analyse` and `Quick Search`, and copy files to another drive.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["dfir-training", "brett-shavers"],
-    "callPro": "If the card is both encrypted and damaged, or you lost the key, a professional can only say whether anything is possible, and often it is not.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "dfir-training",
+      "brett-shavers"
+    ],
+    "callPro": "If the card is encrypted and damaged, or the key is lost, a professional can only say if anything is possible. Often it is not.",
     "faq": [
-      {"q": "Can I read an encrypted SD card without the key?", "a": "Realistically no. Modern encryption with a strong password cannot be guessed or bypassed, so be wary of anyone who says otherwise."},
-      {"q": "Will a new phone read my encrypted card?", "a": "Often not, if the key was tied to the old phone. Keep the old device until you have copied your files."}
+      {
+        "q": "Can I read an encrypted SD card without the key?",
+        "a": "Realistically no. Modern encryption with a strong password cannot be guessed or bypassed, so be wary of anyone who says otherwise."
+      },
+      {
+        "q": "Will a new phone read my encrypted card?",
+        "a": "Often not, if the key was tied to the old phone. Keep the old device until you have copied your files."
+      }
     ]
   }
 }
