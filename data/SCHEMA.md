@@ -10,8 +10,8 @@ resource ids: ncfi, fbi-rcfl, brett-shavers, dfir-training, nist-cftt, sleuthkit
 
 ## data/catalog.json
 {
-  "devices":  [{ "id","name","icon"(single emoji),"blurb"(<=90 chars) }],
-  "symptoms": [{ "id","name","icon","blurb"(<=90 chars),"devices":[device ids] }],
+  "devices":  [{ "id","name","icon"(path to pixel-art SVG, e.g. "assets/icons/usb.svg", relative to site root),"blurb"(<=90 chars) }],
+  "symptoms": [{ "id","name","icon"(SVG path as above),"blurb"(<=90 chars),"devices":[device ids] }],
   "tools":    { "<id>": { "name","url","docsUrl","desc"(<=140 chars),"os":["Windows","macOS","Linux"],"cost":"Free"|"Free (open source)"|"Paid" } },
   "resources":{ "<id>": { "name","url","desc"(<=140 chars),"type":"Training"|"Reference"|"Community"|"Expert"|"Lab" } }
 }

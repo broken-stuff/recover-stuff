@@ -3,31 +3,31 @@
     {
       "id": "hdd",
       "name": "Hard drive (internal HDD)",
-      "icon": "💽",
+      "icon": "assets/icons/hdd.svg",
       "blurb": "Spinning magnetic disk inside a desktop or laptop. Often recoverable if you act early."
     },
     {
       "id": "ssd",
       "name": "SSD (SATA and NVMe)",
-      "icon": "⚡",
+      "icon": "assets/icons/ssd.svg",
       "blurb": "Flash-based internal drive. Deleted data can be hard to get back because of TRIM."
     },
     {
       "id": "usb",
       "name": "USB flash drive",
-      "icon": "🔌",
+      "icon": "assets/icons/usb.svg",
       "blurb": "Small thumb drive plugged into a USB port. Simple to image and often easy to rescue."
     },
     {
       "id": "sd",
       "name": "SD / microSD card",
-      "icon": "📸",
+      "icon": "assets/icons/sd.svg",
       "blurb": "Memory card from cameras, phones and drones. Usually recoverable with the right tools."
     },
     {
       "id": "external",
       "name": "External / portable drive",
-      "icon": "🧳",
+      "icon": "assets/icons/external.svg",
       "blurb": "Hard drive or SSD in a USB case. Read the guide before taking it out of the case."
     }
   ],
@@ -35,56 +35,56 @@
     {
       "id": "deleted",
       "name": "Deleted files",
-      "icon": "🗑️",
+      "icon": "assets/icons/deleted.svg",
       "blurb": "Files were removed or emptied from the trash. The data may still be on the drive.",
       "devices": ["hdd", "ssd", "usb", "sd", "external"]
     },
     {
       "id": "formatted",
       "name": "Accidentally formatted",
-      "icon": "🧹",
+      "icon": "assets/icons/formatted.svg",
       "blurb": "You formatted the drive by mistake. A quick format often leaves files, except on SSDs.",
       "devices": ["hdd", "ssd", "usb", "sd", "external"]
     },
     {
       "id": "not-detected",
       "name": "Not detected / not showing up",
-      "icon": "🔍",
+      "icon": "assets/icons/not-detected.svg",
       "blurb": "Your computer does not see the drive at all. The cause may be cable, port or power.",
       "devices": ["hdd", "ssd", "usb", "sd", "external"]
     },
     {
       "id": "clicking",
       "name": "Clicking or grinding noises",
-      "icon": "🔊",
+      "icon": "assets/icons/clicking.svg",
       "blurb": "A repeated click or grind from a spinning drive. Power it off now to limit damage.",
       "devices": ["hdd", "external"]
     },
     {
       "id": "no-power",
       "name": "Won't power on / dead",
-      "icon": "🪫",
+      "icon": "assets/icons/no-power.svg",
       "blurb": "The drive shows no lights, no spin or no response when connected.",
       "devices": ["hdd", "ssd", "usb", "sd", "external"]
     },
     {
       "id": "liquid-fire",
       "name": "Water, fire or physical damage",
-      "icon": "🔥",
+      "icon": "assets/icons/liquid-fire.svg",
       "blurb": "The drive was wet, burned, dropped or crushed. Do not power it on again.",
       "devices": ["hdd", "ssd", "usb", "sd", "external"]
     },
     {
       "id": "corrupted",
       "name": "Corrupted / RAW / asks to format",
-      "icon": "🧩",
+      "icon": "assets/icons/corrupted.svg",
       "blurb": "Windows or macOS says the drive needs formatting or shows as RAW.",
       "devices": ["hdd", "ssd", "usb", "sd", "external"]
     },
     {
       "id": "encrypted",
       "name": "Encrypted or locked",
-      "icon": "🔐",
+      "icon": "assets/icons/encrypted.svg",
       "blurb": "The drive asks for a password or key, such as BitLocker, FileVault or VeraCrypt.",
       "devices": ["hdd", "ssd", "usb", "sd", "external"]
     }
