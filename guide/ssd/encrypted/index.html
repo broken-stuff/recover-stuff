@@ -6,7 +6,7 @@
 <title>Recover Data from an Encrypted SSD | Recover Stuff</title>
 <meta name="description" content="Encrypted SSDs need the password or recovery key. Find BitLocker, FileVault or VeraCrypt keys and learn why brute force is not a real option.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/ssd/encrypted/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="Recover Data from an Encrypted SSD | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"SSD (SATA and NVMe)","item":"https://broken-stuff.github.io/recover-stuff/guide/ssd/"},{"@type":"ListItem","position":3,"name":"Encrypted or locked","item":"https://broken-stuff.github.io/recover-stuff/guide/ssd/encrypted/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Recover Data from an Encrypted SSD","description":"If your SSD is protected with BitLocker, FileVault, VeraCrypt or built-in hardware encryption, the data is scrambled without the key. Without the password or recovery key, recovery is not realistically possible. The good news is that keys are often stored somewhere you can find.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/encrypted/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Identify the encryption type","text":"Look for BitLocker on Windows, FileVault on Mac, VeraCrypt volumes, or a hardware password set in the BIOS or drive utility.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/encrypted/#steps-h"},{"@type":"HowToStep","position":2,"name":"Find the recovery key","text":"For BitLocker, sign in at your Microsoft account's recovery key page or check work or school accounts, printouts and USB keys. For FileVault, check iCloud or the key you saved; on newer Macs the SSD is built in and can only be unlocked in that Mac.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/encrypted/#steps-h"},{"@type":"HowToStep","position":3,"name":"Check password managers","text":"Search your password manager, notes, emails and old documents for the password or key.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/encrypted/#steps-h"},{"@type":"HowToStep","position":4,"name":"Unlock on a working system","text":"Connect the SSD to a computer running the same type of encryption and unlock it normally with the key. Copy the files to another drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/encrypted/#steps-h"},{"@type":"HowToStep","position":5,"name":"Image before risky actions","text":"Only if you have the key and the drive is also failing: image it with ddrescue first. Type the SSD first and the destination second; swapping them erases your data. A drive locked with a hardware password must be unlocked before it can be copied.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/encrypted/#steps-h"},{"@type":"HowToStep","position":6,"name":"Recover from the unlocked copy","text":"Once unlocked, use TestDisk or PhotoRec on the unlocked volume if files are missing.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/encrypted/#steps-h"}]}</script>
@@ -63,7 +63,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

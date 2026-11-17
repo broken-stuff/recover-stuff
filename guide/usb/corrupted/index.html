@@ -6,7 +6,7 @@
 <title>Fix a Corrupted USB Flash Drive Without Data Loss | Recover Stuff</title>
 <meta name="description" content="USB drive says RAW, asks to format, or files will not open? Image it first, then use TestDisk and PhotoRec. Do not format or run chkdsk yet.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/usb/corrupted/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="Fix a Corrupted USB Flash Drive Without Data Loss | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"USB flash drive","item":"https://broken-stuff.github.io/recover-stuff/guide/usb/"},{"@type":"ListItem","position":3,"name":"Corrupted / RAW / asks to format","item":"https://broken-stuff.github.io/recover-stuff/guide/usb/corrupted/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Fix a Corrupted USB Flash Drive Without Data Loss","description":"A corrupted USB drive has damaged file information, often after being pulled out too early or from a worn memory. The files are often still there. Making a copy before any repair keeps your options open.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/corrupted/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"},{"@type":"HowToTool","name":"F3 (Fight Flash Fraud)"},{"@type":"HowToTool","name":"H2testw"}],"step":[{"@type":"HowToStep","position":1,"name":"Stop and unplug","text":"Do not click anything that offers to repair or format the drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/corrupted/#steps-h"},{"@type":"HowToStep","position":2,"name":"Image the drive","text":"Use ddrescue to copy the full drive to a file on another disk; it also shows you any unreadable areas. Type the USB drive first and the image file second; swapping them erases the drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/corrupted/#steps-h"},{"@type":"HowToStep","position":3,"name":"Try TestDisk on the image","text":"Use Analyse to find the lost partition or repair the boot sector. If your folders appear, you can copy the files out.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/corrupted/#steps-h"},{"@type":"HowToStep","position":4,"name":"Use PhotoRec if folders are lost","text":"PhotoRec recovers files by type from the image, though names and folders are not kept.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/corrupted/#steps-h"},{"@type":"HowToStep","position":5,"name":"Save to a different drive","text":"Write all recovered files to your computer or another drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/corrupted/#steps-h"},{"@type":"HowToStep","position":6,"name":"Fix the USB last","text":"After everything is safe, format the flash drive. If it keeps corrupting, replace it, since flash memory wears out.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/corrupted/#steps-h"},{"@type":"HowToStep","position":7,"name":"Test for fakes later","text":"A drive that keeps failing may be fake-capacity. After recovery, test it with f3 or h2testw, which write test data and should only be used on a drive you have emptied.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/corrupted/#steps-h"}]}</script>
@@ -67,7 +67,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

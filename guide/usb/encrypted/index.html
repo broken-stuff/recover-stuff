@@ -6,7 +6,7 @@
 <title>Recover Data from an Encrypted USB Drive | Recover Stuff</title>
 <meta name="description" content="Locked USB drive from BitLocker To Go, VeraCrypt or a hardware PIN? Without the key recovery is not realistic. Learn where keys are often saved.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/usb/encrypted/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="Recover Data from an Encrypted USB Drive | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"USB flash drive","item":"https://broken-stuff.github.io/recover-stuff/guide/usb/"},{"@type":"ListItem","position":3,"name":"Encrypted or locked","item":"https://broken-stuff.github.io/recover-stuff/guide/usb/encrypted/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Recover Data from an Encrypted USB Drive","description":"Encrypted USB drives scramble data so it cannot be read without the password or recovery key. If you do not have either, recovery is not realistic. Many people can find the key in a Microsoft account or a password manager.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/encrypted/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Identify the type","text":"Windows BitLocker To Go shows a lock icon, VeraCrypt uses a separate app, and some drives have a keypad or vendor software.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/encrypted/#steps-h"},{"@type":"HowToStep","position":2,"name":"Find the key","text":"For BitLocker, check your Microsoft account recovery keys, a work or school account, a printout or a saved text file.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/encrypted/#steps-h"},{"@type":"HowToStep","position":3,"name":"Search your passwords","text":"Check your password manager, notes and emails for the drive's password.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/encrypted/#steps-h"},{"@type":"HowToStep","position":4,"name":"Unlock normally","text":"Use the right tool and key on a working computer, then copy files to another drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/encrypted/#steps-h"},{"@type":"HowToStep","position":5,"name":"Image if the drive is damaged","text":"Only if you have the key: use ddrescue to copy the encrypted drive, then unlock the copy. This works for BitLocker or VeraCrypt, not keypad drives. Type the USB drive first and the destination second; swapping them erases the drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/encrypted/#steps-h"},{"@type":"HowToStep","position":6,"name":"Run recovery after unlocking","text":"If files are missing, use TestDisk or PhotoRec on the unlocked volume or its image.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/encrypted/#steps-h"}]}</script>
@@ -63,7 +63,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

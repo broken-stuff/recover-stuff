@@ -6,7 +6,7 @@
 <title>Recover Files from a Formatted USB Drive | Recover Stuff</title>
 <meta name="description" content="Formatted a USB flash drive by mistake? A quick format often leaves data recoverable. Learn the safe order: image first, then TestDisk or PhotoRec.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/usb/formatted/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="Recover Files from a Formatted USB Drive | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"USB flash drive","item":"https://broken-stuff.github.io/recover-stuff/guide/usb/"},{"@type":"ListItem","position":3,"name":"Accidentally formatted","item":"https://broken-stuff.github.io/recover-stuff/guide/usb/formatted/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Recover Files from a Formatted USB Drive","description":"A quick format only wipes the file list, so much of the data is usually still on the USB drive. A full format on Windows Vista and later writes zeros over the whole drive, and that data is gone for good. Recovery works best if you have not copied anything new onto it.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/formatted/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Stop using the drive","text":"Eject it and do not write anything more. If you made a quick format, the old data is probably still there.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/formatted/#steps-h"},{"@type":"HowToStep","position":2,"name":"Image the drive","text":"Use ddrescue to copy the whole USB drive into an image file on another disk, and work on that image from now on. Type the USB drive first and the image file second; swapping them erases the drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/formatted/#steps-h"},{"@type":"HowToStep","position":3,"name":"Try TestDisk to find the old partition","text":"Run TestDisk on the image and use Analyse. If the old layout is found, you can list and copy files with names and folders.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/formatted/#steps-h"},{"@type":"HowToStep","position":4,"name":"Run PhotoRec if needed","text":"If TestDisk cannot find the old structure, PhotoRec can pull out photos, documents and videos by their contents.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/formatted/#steps-h"},{"@type":"HowToStep","position":5,"name":"Save to another drive","text":"Pick a destination folder on a different disk with enough space.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/formatted/#steps-h"},{"@type":"HowToStep","position":6,"name":"Review and organize","text":"Open some recovered files. If many are broken, the drive may have been fully formatted or heavily reused.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/formatted/#steps-h"}]}</script>
@@ -63,7 +63,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

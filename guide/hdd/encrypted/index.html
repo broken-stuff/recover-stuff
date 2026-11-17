@@ -6,7 +6,7 @@
 <title>Recover Data From an Encrypted Hard Drive | Recover Stuff</title>
 <meta name="description" content="Locked out of a BitLocker, FileVault or other encrypted hard drive? Find your recovery key first. Without the key or password, recovery is not realistic.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/hdd/encrypted/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="Recover Data From an Encrypted Hard Drive | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"Hard drive (internal HDD)","item":"https://broken-stuff.github.io/recover-stuff/guide/hdd/"},{"@type":"ListItem","position":3,"name":"Encrypted or locked","item":"https://broken-stuff.github.io/recover-stuff/guide/hdd/encrypted/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Recover Data From an Encrypted Hard Drive","description":"Encryption scrambles your data so that only the right password or recovery key can unlock it. If the drive is healthy and you have the key, getting files back is usually simple. Without it, recovery is not realistic, and anyone promising otherwise should not be trusted.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/encrypted/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"smartmontools"},{"@type":"HowToTool","name":"CrystalDiskInfo"}],"step":[{"@type":"HowToStep","position":1,"name":"Work out which encryption it is","text":"On Windows it is often BitLocker, and on a Mac it is FileVault. Others include VeraCrypt, or LUKS on Linux. Each has its own unlock method.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/encrypted/#steps-h"},{"@type":"HowToStep","position":2,"name":"Find your recovery key","text":"BitLocker keys are often saved to your Microsoft account (account.microsoft.com/devices/recoverykey), a work or school account, a printout, or a USB stick. FileVault can use your Apple Account or a recovery key you saved.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/encrypted/#steps-h"},{"@type":"HowToStep","position":3,"name":"Check old notes and password managers","text":"Search email, password managers, printed pages, and cloud storage for a long number or phrase. A recovery key is usually a 48-digit number for BitLocker.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/encrypted/#steps-h"},{"@type":"HowToStep","position":4,"name":"Unlock a healthy drive and copy the files","text":"Use the key to unlock the drive in the normal system, then copy your files to a different drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/encrypted/#steps-h"},{"@type":"HowToStep","position":5,"name":"If the drive is also failing, image it first","text":"Only worth it if you have the key. Use ddrescue to copy the encrypted drive to another drive and unlock the copy later. Type the failing drive first and the destination second; swapping them erases your data.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/encrypted/#steps-h"},{"@type":"HowToStep","position":6,"name":"Accept the limit if no key exists","text":"Without the password or recovery key, modern encryption cannot be reasonably broken. Recovery tools like PhotoRec will only return scrambled data.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/encrypted/#steps-h"}]}</script>
@@ -63,7 +63,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

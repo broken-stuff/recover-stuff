@@ -6,7 +6,7 @@
 <title>Fix a Corrupted or Unreadable External Hard Drive | Recover Stuff</title>
 <meta name="description" content="External hard drive shows RAW, asks to format, or has read errors? Image it with ddrescue first, then recover files with TestDisk or PhotoRec on the copy.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/external/corrupted/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="Fix a Corrupted or Unreadable External Hard Drive | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"External / portable drive","item":"https://broken-stuff.github.io/recover-stuff/guide/external/"},{"@type":"ListItem","position":3,"name":"Corrupted / RAW / asks to format","item":"https://broken-stuff.github.io/recover-stuff/guide/external/corrupted/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Fix a Corrupted or Unreadable External Hard Drive","description":"Corruption often follows pulling the cable without ejecting, a power cut, or failing parts. The files may still be there. Do not run repair tools on the original first, because they can change data.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/corrupted/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"ddrescueview"},{"@type":"HowToTool","name":"HDDSuperClone"},{"@type":"HowToTool","name":"smartmontools"},{"@type":"HowToTool","name":"CrystalDiskInfo"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Stop using the drive","text":"Eject it safely if you can. Check whether it is making noises. If it clicks or grinds, read the clicking guide instead.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/corrupted/#steps-h"},{"@type":"HowToStep","position":2,"name":"Check its health","text":"Use CrystalDiskInfo or smartmontools to read the SMART report. Some USB cases hide SMART, so a missing report does not mean it is fine.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/corrupted/#steps-h"},{"@type":"HowToStep","position":3,"name":"Try a different cable and port","text":"A bad cable can mimic corruption. Plug directly into the computer, not through a hub, and keep the drive in its case, because many WD drives encrypt data through the case's board.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/corrupted/#steps-h"},{"@type":"HowToStep","position":4,"name":"Get a destination drive","text":"You need a different drive at least as big as the damaged one for the image.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/corrupted/#steps-h"},{"@type":"HowToStep","position":5,"name":"Image with ddrescue","text":"GNU ddrescue (or HDDSuperClone on Linux) copies the drive, skipping unreadable spots and returning to them later; keep its map file. Type the damaged drive first and the destination second; swapping them erases your data.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/corrupted/#steps-h"},{"@type":"HowToStep","position":6,"name":"Recover from the image","text":"Run TestDisk on the image to rebuild partitions or list files, then PhotoRec if needed. Never work on the original.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/corrupted/#steps-h"}]}</script>
@@ -71,7 +71,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

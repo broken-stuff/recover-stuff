@@ -6,7 +6,7 @@
 <title>External Hard Drive Clicking, Grinding or Beeping | Recover Stuff</title>
 <meta name="description" content="External hard drive clicking, grinding or beeping? It is likely mechanical failure. Learn what not to do, why not to open it, and when to get help.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/external/clicking/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="External Hard Drive Clicking, Grinding or Beeping | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"External / portable drive","item":"https://broken-stuff.github.io/recover-stuff/guide/external/"},{"@type":"ListItem","position":3,"name":"Clicking or grinding noises","item":"https://broken-stuff.github.io/recover-stuff/guide/external/clicking/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"External Hard Drive Clicking, Grinding or Beeping","description":"Clicking, grinding or beeping from the drive inside usually means the read/write heads or motor are failing. Each time you power it on, the damage can grow, and portable drives are easily hurt by drops.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/clicking/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"HDDSuperClone"},{"@type":"HowToTool","name":"ddrescueview"},{"@type":"HowToTool","name":"smartmontools"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Unplug it now","text":"Disconnect the drive. Note what you heard: clicking, grinding, beeping, or nothing.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/clicking/#steps-h"},{"@type":"HowToStep","position":2,"name":"Judge how much the data matters","text":"If the files are irreplaceable, the safest choice is a professional with a cleanroom. If you accept the risk, continue carefully.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/clicking/#steps-h"},{"@type":"HowToStep","position":3,"name":"Be careful about the enclosure","text":"Do not remove the drive from its case. Many WD portables, and some other brands, have USB built onto the drive, and many WD drives encrypt data through the case's board. Removing it can make data unreadable even if the drive is fine.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/clicking/#steps-h"},{"@type":"HowToStep","position":4,"name":"Try one careful connection with good power","text":"Use one good cable plus the drive's own power adapter or Y-cable if it has one, since weak USB power can cause clicking. If it spins and appears, image it right away with HDDSuperClone (Linux) or ddrescue onto a different healthy drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/clicking/#steps-h"},{"@type":"HowToStep","position":5,"name":"Get the copy direction right","text":"In ddrescue or HDDSuperClone, the clicking drive is the source and the healthy drive is the destination. Swapping them erases your data, so check twice before you start.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/clicking/#steps-h"},{"@type":"HowToStep","position":6,"name":"Recover from the image","text":"Run TestDisk or PhotoRec on the image, not on the original drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/clicking/#steps-h"},{"@type":"HowToStep","position":7,"name":"Stop at the first relapse","text":"If the clicking returns or it vanishes, power off. More attempts reduce what a professional can save.","url":"https://broken-stuff.github.io/recover-stuff/guide/external/clicking/#steps-h"}]}</script>
@@ -69,7 +69,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>
