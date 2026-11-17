@@ -1,0 +1,143 @@
+{
+  "devices": [
+    { "id": "hdd", "name": "Hard drive (internal HDD)", "icon": "💽", "blurb": "Spinning magnetic disk inside a desktop or laptop. Often recoverable if you act early." },
+    { "id": "ssd", "name": "SSD (SATA and NVMe)", "icon": "⚡", "blurb": "Flash-based internal drive. Deleted data can be hard to get back because of TRIM." },
+    { "id": "usb", "name": "USB flash drive", "icon": "🔌", "blurb": "Small thumb drive plugged into a USB port. Simple to image and often easy to rescue." },
+    { "id": "sd", "name": "SD / microSD card", "icon": "📸", "blurb": "Memory card from cameras, phones and drones. Usually recoverable with the right tools." },
+    { "id": "external", "name": "External / portable drive", "icon": "🧳", "blurb": "Hard drive or SSD in a USB case. Read the guide before taking it out of the case." }
+  ],
+  "symptoms": [
+    { "id": "deleted", "name": "Deleted files", "icon": "🗑️", "blurb": "Files were removed or emptied from the trash. The data may still be on the drive.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
+    { "id": "formatted", "name": "Accidentally formatted", "icon": "🧹", "blurb": "You formatted the drive by mistake. A quick format often leaves files, except on SSDs.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
+    { "id": "not-detected", "name": "Not detected / not showing up", "icon": "🔍", "blurb": "Your computer does not see the drive at all. The cause may be cable, port or power.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
+    { "id": "clicking", "name": "Clicking or grinding noises", "icon": "🔊", "blurb": "A repeated click or grind from a spinning drive. Power it off now to limit damage.", "devices": ["hdd", "external"] },
+    { "id": "no-power", "name": "Won't power on / dead", "icon": "🪫", "blurb": "The drive shows no lights, no spin or no response when connected.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
+    { "id": "liquid-fire", "name": "Water, fire or physical damage", "icon": "🔥", "blurb": "The drive was wet, burned, dropped or crushed. Do not power it on again.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
+    { "id": "corrupted", "name": "Corrupted / RAW / asks to format", "icon": "🧩", "blurb": "Windows or macOS says the drive needs formatting or shows as RAW.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
+    { "id": "encrypted", "name": "Encrypted or locked", "icon": "🔐", "blurb": "The drive asks for a password or key, such as BitLocker, FileVault or VeraCrypt.", "devices": ["hdd", "ssd", "usb", "sd", "external"] }
+  ],
+  "tools": {
+    "testdisk": {
+      "name": "TestDisk",
+      "url": "https://www.cgsecurity.org/wiki/TestDisk",
+      "docsUrl": "https://www.cgsecurity.org/wiki/TestDisk_Step_By_Step",
+      "desc": "Free open-source tool that finds lost partitions and repairs boot sectors so files can be read again.",
+      "os": ["Windows", "macOS", "Linux"],
+      "cost": "Free (open source)"
+    },
+    "photorec": {
+      "name": "PhotoRec",
+      "url": "https://www.cgsecurity.org/wiki/PhotoRec",
+      "docsUrl": "https://www.cgsecurity.org/wiki/PhotoRec_Step_By_Step",
+      "desc": "Free open-source file carver that recovers files by signature, even when the file system is damaged.",
+      "os": ["Windows", "macOS", "Linux"],
+      "cost": "Free (open source)"
+    },
+    "ddrescue": {
+      "name": "GNU ddrescue",
+      "url": "https://www.gnu.org/software/ddrescue/",
+      "docsUrl": "https://www.gnu.org/software/ddrescue/manual/ddrescue_manual.html",
+      "desc": "Copies a failing drive to an image file, retrying bad areas so you work from a copy, not the original.",
+      "os": ["Linux", "macOS"],
+      "cost": "Free (open source)"
+    },
+    "ddrescueview": {
+      "name": "ddrescueview",
+      "url": "https://sourceforge.net/projects/ddrescueview/",
+      "docsUrl": "https://sourceforge.net/projects/ddrescueview/",
+      "desc": "Free graphical viewer that shows which parts of a ddrescue image are good, bad or still unread.",
+      "os": ["Windows", "Linux"],
+      "cost": "Free (open source)"
+    },
+    "hddsuperclone": {
+      "name": "HDDSuperClone",
+      "url": "https://github.com/thesourcerer8/hddsuperclone",
+      "docsUrl": "https://hddsuperclone.com/",
+      "desc": "Linux tool for cloning a failing drive sector by sector, with options that skip and retry bad areas.",
+      "os": ["Linux"],
+      "cost": "Free (open source)"
+    },
+    "smartmontools": {
+      "name": "smartmontools",
+      "url": "https://www.smartmontools.org/",
+      "docsUrl": "https://www.smartmontools.org/wiki/Documentation",
+      "desc": "Free open-source suite that reads S.M.A.R.T. health data from drives to show early signs of failure.",
+      "os": ["Windows", "macOS", "Linux"],
+      "cost": "Free (open source)"
+    },
+    "crystaldiskinfo": {
+      "name": "CrystalDiskInfo",
+      "url": "https://crystalmark.info/en/software/crystaldiskinfo/",
+      "docsUrl": "https://crystalmark.info/en/software/crystaldiskinfo/",
+      "desc": "Free Windows app that shows a drive's S.M.A.R.T. health status, temperature and other key attributes.",
+      "os": ["Windows"],
+      "cost": "Free (open source)"
+    },
+    "f3": {
+      "name": "F3 (Fight Flash Fraud)",
+      "url": "https://github.com/AltraMayor/f3",
+      "docsUrl": "https://fight-flash-fraud.readthedocs.io/",
+      "desc": "Free open-source tool that tests flash drives and cards for fake capacity, so you know what they really hold.",
+      "os": ["macOS", "Linux"],
+      "cost": "Free (open source)"
+    },
+    "h2testw": {
+      "name": "H2testw",
+      "url": "https://www.heise.de/download/product/h2testw-50539",
+      "docsUrl": "https://www.heise.de/download/product/h2testw-50539",
+      "desc": "Free Windows tool that fills a drive with test data and checks it, to reveal fake capacity or bad memory.",
+      "os": ["Windows"],
+      "cost": "Free"
+    }
+  },
+  "resources": {
+    "ncfi": {
+      "name": "National Computer Forensics Institute (NCFI)",
+      "url": "https://www.ncfi.usss.gov/",
+      "desc": "US Secret Service training center for law enforcement. A reference only; not a consumer recovery service.",
+      "type": "Training"
+    },
+    "fbi-rcfl": {
+      "name": "FBI Regional Computer Forensics Laboratory (RCFL)",
+      "url": "https://www.fbi.gov/about/partnerships/rcfl",
+      "desc": "FBI-run labs that serve law enforcement cases. A reference only; not a consumer recovery service.",
+      "type": "Lab"
+    },
+    "brett-shavers": {
+      "name": "Brett Shavers",
+      "url": "https://brettshavers.com/",
+      "desc": "Personal site of a digital forensics and incident response author and expert, with articles and books.",
+      "type": "Expert"
+    },
+    "dfir-training": {
+      "name": "DFIR.training",
+      "url": "https://www.dfir.training/",
+      "desc": "Digital forensics and incident response training and resources, run by Brett Shavers.",
+      "type": "Training"
+    },
+    "nist-cftt": {
+      "name": "NIST Computer Forensics Tool Testing (CFTT)",
+      "url": "https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt",
+      "desc": "NIST program that tests forensic tools against defined requirements and publishes the results.",
+      "type": "Reference"
+    },
+    "sleuthkit-autopsy": {
+      "name": "The Sleuth Kit / Autopsy",
+      "url": "https://www.sleuthkit.org/",
+      "desc": "Open-source digital forensics toolkit and its Autopsy graphical interface, used to analyze disk images.",
+      "type": "Reference"
+    },
+    "hddguru-forum": {
+      "name": "HDD Guru Forums",
+      "url": "https://forum.hddguru.com/",
+      "desc": "Community forum for hard drive hardware, firmware, data recovery and HDD-related questions.",
+      "type": "Community"
+    },
+    "cgsecurity-forum": {
+      "name": "CGSecurity Forum",
+      "url": "https://forum.cgsecurity.org/",
+      "desc": "Official community forum for TestDisk and PhotoRec, where users ask questions and share results.",
+      "type": "Community"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{"devices":[
+{"id":"hdd","name":"Hard drive","icon":"💽","blurb":"Spinning internal drive in a desktop or laptop."},
+{"id":"ssd","name":"SSD","icon":"⚡","blurb":"Fast flash-based internal drive."},
+{"id":"usb","name":"USB stick","icon":"🔌","blurb":"Thumb drive or flash stick."},
+{"id":"sd","name":"SD / memory card","icon":"📷","blurb":"Camera, phone or drone card."},
+{"id":"external","name":"External drive","icon":"🗄️","blurb":"Portable or desktop drive that plugs in by USB."}],
+"symptoms":[
+{"id":"deleted","name":"I deleted files","icon":"🗑️","blurb":"Files were removed by accident.","devices":["hdd","ssd","usb","sd","external"]},
+{"id":"clicking","name":"It clicks or beeps","icon":"🔊","blurb":"Strange noises from the drive.","devices":["hdd","external"]},
+{"id":"formatted","name":"I formatted it","icon":"🧹","blurb":"Drive was wiped or reformatted.","devices":["hdd","ssd","usb","sd","external"]}],
+"tools":{
+"testdisk":{"name":"TestDisk","url":"https://www.cgsecurity.org/wiki/TestDisk","docsUrl":"https://www.cgsecurity.org/testdisk.pdf","desc":"Repairs lost partitions and can undelete files on many file systems.","os":["Windows","macOS","Linux"],"cost":"Free (open source)"},
+"photorec":{"name":"PhotoRec","url":"https://www.cgsecurity.org/wiki/PhotoRec","docsUrl":"https://www.cgsecurity.org/wiki/PhotoRec_Step_By_Step","desc":"Recovers photos, documents and more by scanning for file signatures.","os":["Windows","macOS","Linux"],"cost":"Free (open source)"},
+"ddrescue":{"name":"GNU ddrescue","url":"https://www.gnu.org/software/ddrescue/","docsUrl":"https://www.gnu.org/software/ddrescue/manual/ddrescue_manual.html","desc":"Copies as much data as possible from a failing drive into an image file.","os":["Linux","macOS"],"cost":"Free (open source)"}},
+"resources":{
+"ncfi":{"name":"NCFI Training","url":"https://www.ncfi.usss.gov/","desc":"Free government digital forensics training and reference material.","type":"Training"},
+"hddguru-forum":{"name":"HDDGuru Forum","url":"https://forum.hddguru.com/","desc":"Community of data recovery engineers answering drive questions.","type":"Community"}}}
