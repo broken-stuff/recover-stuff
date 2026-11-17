@@ -1,0 +1,83 @@
+{
+  "id": "use-testdisk",
+  "title": "How to use TestDisk to copy files off a drive",
+  "metaDescription": "Beginner walkthrough of TestDisk: open the drive or image, find the partition, browse its files and copy them to a different drive safely.",
+  "intro": "TestDisk is a free tool that looks for lost partitions (the sections a drive is divided into) and can show the files inside them. It runs in a text screen, so you use the arrow keys and Enter instead of a mouse. For beginners, the safest way to use it is to look at files and copy them out.",
+  "timeNeeded": "20-60 minutes",
+  "youNeed": [
+    "The drive, or better, an image file of it (see the image guide)",
+    "A different drive with enough free space to hold the files you recover",
+    "Windows, or a Linux live USB",
+    "Patience with a text-only screen"
+  ],
+  "sections": [
+    {
+      "heading": "Step 1: Get TestDisk",
+      "body": "TestDisk is free and made by CGSecurity.",
+      "steps": [
+        "Windows: go to cgsecurity.org, open the TestDisk download page, and download the Windows zip file. Right-click it and choose Extract All. Open the extracted folder, right-click testdisk_win.exe and choose Run as administrator.",
+        "Linux live USB: open the Terminal (Ctrl+Alt+T) and type: sudo apt update   then: sudo apt install testdisk   and press Enter after each. If it is not found, first run: sudo add-apt-repository universe",
+        "To open it on Linux, type: sudo testdisk /path/to/drive.img   to work on an image file. Or type: sudo testdisk   and pick the drive from a list.",
+        "On Windows, TestDisk lists the connected drives when it starts. If you want to use an image file there, open the TestDisk folder, click the address bar at the top, type cmd and press Enter, then type: testdisk_win.exe followed by the full path to the image file"
+      ],
+      "warning": "Use the image file whenever you have one. Working on the real failing drive is riskier."
+    },
+    {
+      "heading": "Step 2: Start a log and choose the disk",
+      "body": "Navigation: arrow keys move, Enter confirms, q goes back or quits.",
+      "steps": [
+        "At the first screen choose Create and press Enter. This makes a log file. It is safe.",
+        "Select the disk or image you want to examine from the list, then choose Proceed and press Enter.",
+        "Pick the partition table type. TestDisk usually guesses correctly. Most modern drives are Intel/PC (older, MBR) or EFI GPT (newer). Accept the highlighted choice and press Enter."
+      ]
+    },
+    {
+      "heading": "Step 3: Analyse and search",
+      "steps": [
+        "Choose Analyse and press Enter. This shows the partitions it sees now.",
+        "Choose Quick Search and press Enter. Wait while it scans. This is only reading.",
+        "A list of found partitions appears. Highlight the one that looks right (the size and file system type are shown, such as NTFS or FAT32). If your files are not there, try Deeper Search later."
+      ]
+    },
+    {
+      "heading": "Step 4: Look at and copy your files",
+      "steps": [
+        "With the partition highlighted, press P (the letter, not the Enter key). This lists the files inside it.",
+        "Use the up and down arrows to move, and Enter to go into a folder. Use the .. entry at the top to go back.",
+        "Highlight a file or folder you want and press C (copy). Files in red were deleted but may be recoverable.",
+        "TestDisk will ask where to copy to. Navigate to a folder on the OTHER drive, not the one you are reading from, then press C again to confirm. On a Linux live USB, other drives are inside /media/ubuntu (Linux Mint: /media/mint); select .. to move up a level.",
+        "Repeat for the other files. When done, press q repeatedly to leave."
+      ],
+      "warning": "Always copy to a different drive. Copying onto the same drive can overwrite the very data you are trying to save."
+    },
+    {
+      "heading": "Deleted files on a partition that still works",
+      "body": "If the drive still opens but you deleted files from it, the Undelete tool is quicker than a partition search. It works on NTFS, FAT and exFAT drives, the usual types on Windows, USB sticks and memory cards.",
+      "steps": [
+        "After choosing the disk and partition table type (Step 2), choose Advanced and press Enter.",
+        "Highlight the partition that held your files, then choose Undelete at the bottom and press Enter.",
+        "Deleted files and folders show in red. Highlight one and press c to copy it, or press : to select several and then C to copy them all.",
+        "Move to a folder on a different drive and press C to confirm."
+      ],
+      "warning": "Do not use the other Advanced options, such as Boot, Superblock or Type, unless you know what they do. Some of them write to the drive."
+    },
+    {
+      "heading": "What not to do",
+      "body": "Avoid the Write option unless you understand it. It changes the partition table, which is the drive's map, and a wrong write can make recovery harder. As a beginner, only browse and copy files out. If the files do not appear, try PhotoRec next."
+    }
+  ],
+  "faq": [
+    {
+      "q": "I only see a blank list when I press P. What now?",
+      "a": "The file system may be damaged. Go back, try Deeper Search, or switch to PhotoRec, which finds files without needing the partition to be healthy."
+    },
+    {
+      "q": "Does browsing files change the drive?",
+      "a": "No. Analyse, Quick Search, listing files and copying all only read. Changes happen if you choose Write, so skip it."
+    },
+    {
+      "q": "Why do some files show in red?",
+      "a": "Red means the file was deleted. It can often be copied out if the space has not been reused, but the contents may be partly damaged."
+    }
+  ]
+}

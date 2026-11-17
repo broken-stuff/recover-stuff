@@ -22,6 +22,9 @@ const readJSON = (p) => {
 };
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const isStr = (v) => typeof v === 'string' && v.trim().length > 0;
+// escape first, then turn `backtick` spans into <code>
+const rich = (s) => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>');
+const plain = (s) => String(s).replace(/`([^`]+)`/g, '$1');
 
 // ---------- load ----------
 const catalog = readJSON(join(DATA, 'catalog.json'));
@@ -33,6 +36,18 @@ else for (const f of readdirSync(resultsDir).filter((f) => f.endsWith('.json')).
   const j = readJSON(join(resultsDir, f));
   if (j) results[f.replace(/\.json$/, '')] = j;
 }
+
+// how-to pages (optional folder)
+const howtoDir = join(DATA, 'howto');
+const howto = {};
+if (existsSync(howtoDir)) {
+  for (const f of readdirSync(howtoDir).filter((f) => f.endsWith('.json')).sort()) {
+    const j = readJSON(join(howtoDir, f));
+    if (j) howto[f.replace(/\.json$/, '')] = j;
+  }
+} else console.warn(`No ${howtoDir} folder: skipping how-to pages and "learn" chips.`);
+const HOWTO_ORDER = ['live-usb', 'image-drive', 'use-testdisk', 'use-photorec', 'check-health', 'find-a-pro', 'glossary'];
+const howtoIds = Object.keys(howto).sort((a, b) => (HOWTO_ORDER.indexOf(a) + 1 || 99) - (HOWTO_ORDER.indexOf(b) + 1 || 99) || a.localeCompare(b));
 
 // ---------- validate ----------
 const devIds = new Set((catalog.devices || []).map((d) => d.id));
@@ -63,12 +78,39 @@ for (const [dev, syms] of Object.entries(results)) {
     if (!ODDS.includes(r.successOdds)) err(`${w}: bad successOdds`);
     if (!Array.isArray(r.stopFirst) || !r.stopFirst.length || !r.stopFirst.every(isStr)) err(`${w}: stopFirst invalid`);
     if (!Array.isArray(r.steps) || !r.steps.length || !r.steps.every((s) => s && isStr(s.title) && isStr(s.detail))) err(`${w}: steps invalid`);
+    else r.steps.forEach((st, i) => {
+      if (!Array.isArray(st.how) || !st.how.length || !st.how.every(isStr)) err(`${w} step ${i + 1}: "how" must be a non-empty array of strings`);
+      if (st.learn !== undefined) {
+        if (!Array.isArray(st.learn)) err(`${w} step ${i + 1}: "learn" must be an array`);
+        else if (howtoIds.length) for (const id of st.learn) if (!howto[id]) err(`${w} step ${i + 1}: unknown learn id "${id}"`);
+      }
+    });
     if (!Array.isArray(r.faq) || !r.faq.length || !r.faq.every((f) => f && isStr(f.q) && isStr(f.a))) err(`${w}: faq invalid`);
     if (!Array.isArray(r.tools)) err(`${w}: tools must be array`);
     else for (const t of r.tools) if (!tools[t]) err(`${w}: unknown tool id "${t}"`);
     if (!Array.isArray(r.resources)) err(`${w}: resources must be array`);
     else for (const t of r.resources) if (!resources[t]) err(`${w}: unknown resource id "${t}"`);
   }
+}
+for (const [id, h] of Object.entries(howto)) {
+  const w = `howto/${id}.json`;
+  if (h.id !== id) err(`${w}: id must be "${id}"`);
+  for (const k of ['title', 'metaDescription', 'intro']) if (!isStr(h[k])) err(`${w}: missing ${k}`);
+  if (id === 'glossary') {
+    if (!Array.isArray(h.terms) || !h.terms.length || !h.terms.every((t) => t && isStr(t.term) && isStr(t.def))) err(`${w}: terms invalid`);
+    continue;
+  }
+  if (!isStr(h.timeNeeded)) err(`${w}: missing timeNeeded`);
+  if (!Array.isArray(h.youNeed) || !h.youNeed.every(isStr)) err(`${w}: youNeed invalid`);
+  if (!Array.isArray(h.sections) || !h.sections.length) err(`${w}: sections invalid`);
+  else h.sections.forEach((sec, i) => {
+    if (!sec || !isStr(sec.heading)) err(`${w} section ${i + 1}: missing heading`);
+    else {
+      for (const k of ['body', 'warning']) if (sec[k] !== undefined && !isStr(sec[k])) err(`${w} section ${i + 1}: bad ${k}`);
+      if (sec.steps !== undefined && (!Array.isArray(sec.steps) || !sec.steps.every(isStr))) err(`${w} section ${i + 1}: bad steps`);
+    }
+  });
+  if (h.faq !== undefined && (!Array.isArray(h.faq) || !h.faq.every((f) => f && isStr(f.q) && isStr(f.a)))) err(`${w}: faq invalid`);
 }
 if (!Object.keys(results).length) err('No result files found');
 if (errors.length) {
@@ -78,7 +120,7 @@ if (errors.length) {
 
 // ---------- merged guide.json ----------
 const devices = catalog.devices.filter((d) => results[d.id] && Object.keys(results[d.id]).length);
-const guide = { site: SITE, devices, symptoms: catalog.symptoms, tools, resources, results };
+const guide = { site: SITE, devices, symptoms: catalog.symptoms, tools, resources, results, howto: Object.fromEntries(howtoIds.map((id) => [id, howto[id].title])) };
 const write = (rel, content) => {
   const p = join(OUT, rel);
   mkdirSync(dirname(p), { recursive: true });
@@ -134,7 +176,7 @@ ${body}
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> ${esc(DISCLAIMER)}</p>
   <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
-  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
+  ${howtoIds.length ? `<p class="small foot-links"><a href="${rel}guide/how-to/">Guides</a>${howto.glossary ? ` · <a href="${rel}guide/how-to/glossary/">Glossary</a>` : ''}</p>\n  ` : ''}<p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="${rel}assets/js/app.js" defer></script>
 </body>
@@ -169,6 +211,11 @@ function resCard(id) {
   return `<article class="card res"><span class="tag">${esc(r.type)}</span><h3><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.name)}</a></h3><p>${esc(r.desc)}</p></article>`;
 }
 
+function learnChips(ids, rel) {
+  const list = (ids || []).filter((id) => howto[id]);
+  return list.length ? `<p class="learn">${list.map((id) => `<a class="learn-chip" href="${rel}guide/how-to/${id}/">Guide: ${esc(howto[id].title)}</a>`).join('')}</p>` : '';
+}
+
 function resultBody(d, s, r, rel) {
   const dv = dev(d), sy = symMap[s];
   const key = `${d}/${s}`;
@@ -182,12 +229,13 @@ function resultBody(d, s, r, rel) {
 <section class="stop" aria-labelledby="stop-h"><h2 id="stop-h"><span aria-hidden="true">✋</span> Stop! Don't do this first</h2><ul>${r.stopFirst.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></section>
 <section aria-labelledby="steps-h"><h2 id="steps-h">Your steps</h2>
 <div class="progress"><div class="bar" role="progressbar" aria-label="Steps completed" aria-valuemin="0" aria-valuemax="${r.steps.length}" aria-valuenow="0"><span style="width:0%"></span></div><span class="count" aria-live="polite">0 of ${r.steps.length} done</span></div>
-<ol class="steps">${r.steps.map((st, i) => `<li><label><input type="checkbox" data-i="${i}"><span class="box" aria-hidden="true"></span><span class="txt"><strong>${esc(st.title)}</strong><span>${esc(st.detail)}</span></span></label></li>`).join('')}</ol>
+<ol class="steps">${r.steps.map((st, i) => `<li><label><input type="checkbox" data-i="${i}"><span class="box" aria-hidden="true"></span><span class="txt"><strong>${esc(st.title)}</strong><span>${rich(st.detail)}</span></span></label>
+<details class="how"><summary>Show me how</summary><ol>${st.how.map((h) => `<li>${rich(h)}</li>`).join('')}</ol></details>${learnChips(st.learn, rel)}</li>`).join('')}</ol>
 <div class="win" hidden role="status"><strong>Mission complete! 🎉</strong> Check your recovered files open properly, then back them up in two places.</div>
 </section>
 ${r.tools.length ? `<section aria-labelledby="tools-h"><h2 id="tools-h">Tools you'll use</h2><div class="grid">${r.tools.map(toolCard).join('')}</div></section>` : ''}
 ${r.resources.length ? `<section aria-labelledby="res-h"><h2 id="res-h">Learn from the experts</h2><div class="grid">${r.resources.map(resCard).join('')}</div></section>` : ''}
-<section class="pro" aria-labelledby="pro-h"><h2 id="pro-h"><span aria-hidden="true">🧑‍🔧</span> When to call a pro</h2><p>${esc(r.callPro)}</p></section>
+<section class="pro" aria-labelledby="pro-h"><h2 id="pro-h"><span aria-hidden="true">🧑‍🔧</span> When to call a pro</h2><p>${esc(r.callPro)}</p><p class="findpro"><a href="${rel}guide/how-to/find-a-pro/">How to find a trustworthy pro →</a></p></section>
 <section aria-labelledby="faq-h"><h2 id="faq-h">Questions people ask</h2><div class="faq">${r.faq.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</div></section>
 <p class="disclaimer inline"><strong>Before you start:</strong> ${esc(DISCLAIMER)}</p>
 <p class="actions"><a class="btn" href="${rel}guide/${d}/">← Other problems with this device</a> <a class="btn ghost" href="${rel}?d=${d}&amp;s=${s}">Open in the interactive guide</a> <a class="btn ghost" href="${rel}">Start over</a></p>
@@ -233,7 +281,7 @@ for (const dv of devices) {
       {
         '@context': 'https://schema.org', '@type': 'HowTo', name: r.title, description: r.summary, url,
         tool: r.tools.map((t) => ({ '@type': 'HowToTool', name: tools[t].name })),
-        step: r.steps.map((st, i) => ({ '@type': 'HowToStep', position: i + 1, name: st.title, text: st.detail, url: `${url}#steps-h` })),
+        step: r.steps.map((st, i) => ({ '@type': 'HowToStep', position: i + 1, name: st.title, text: [plain(st.detail), ...st.how.map(plain)].join(' '), url: `${url}#steps-h` })),
       },
       {
         '@context': 'https://schema.org', '@type': 'FAQPage',
@@ -245,6 +293,63 @@ for (const dv of devices) {
       body: resultBody(dv.id, s, r, '../../../'), step: 3, ld,
     }));
     urls.push({ loc: url, pri: '0.7' });
+    pageCount++;
+  }
+}
+
+// ---------- how-to pages ----------
+const slug = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'term';
+if (howtoIds.length) {
+  const rel = '../../../';
+  const hubPath = 'guide/how-to/';
+  const hubDesc = 'Beginner-friendly guides for data recovery: make a copy of a drive, boot from a USB stick, use TestDisk and PhotoRec, check drive health and find a trustworthy pro.';
+  const hubRel = '../../'; // hub lives at guide/how-to/, one level shallower than the guides
+  const hubBody = `<nav class="crumbs" aria-label="Breadcrumb"><a href="${hubRel}">Home</a> <span aria-hidden="true">›</span> <span>Guides</span></nav>
+<h1 tabindex="-1">Beginner guides</h1>
+<p class="lead">Plain-language how-tos for the techy bits. Each one explains what to click, where to click and why.</p>
+<div class="cards hub-list">${howtoIds.map((id) => `<a class="pick" href="${id}/"><span class="t">${esc(howto[id].title)}</span><span class="b">${esc(howto[id].metaDescription)}</span></a>`).join('')}</div>
+<p class="actions"><a class="btn ghost" href="${hubRel}">Start the guide</a></p>
+<p class="disclaimer inline">${esc(DISCLAIMER)}</p>`;
+  write(hubPath + 'index.html', layout({
+    title: `Beginner data recovery guides | ${SITE_NAME}`, desc: hubDesc, path: hubPath, rel: hubRel, body: hubBody,
+    ld: [crumbLD([['Home', SITE], ['Guides', SITE + hubPath]])],
+  }).replace('<meta property="og:type" content="article">', '<meta property="og:type" content="website">'));
+  urls.push({ loc: SITE + hubPath, pri: '0.6' });
+  pageCount++;
+
+  for (const id of howtoIds) {
+    const h = howto[id];
+    const path = `guide/how-to/${id}/`;
+    const url = SITE + path;
+    const crumb = `<nav class="crumbs" aria-label="Breadcrumb"><a href="${rel}">Home</a> <span aria-hidden="true">›</span> <a href="../">Guides</a> <span aria-hidden="true">›</span> <span>${esc(h.title)}</span></nav>`;
+    const ld = [crumbLD([['Home', SITE], ['Guides', SITE + hubPath], [h.title, url]])];
+    let body;
+    if (id === 'glossary') {
+      body = `${crumb}
+<h1 tabindex="-1">${esc(h.title)}</h1>
+<p class="lead">${rich(h.intro)}</p>
+<dl class="defs">${h.terms.map((t) => `<dt id="${slug(t.term)}"><a href="#${slug(t.term)}">${esc(t.term)}</a></dt><dd>${rich(t.def)}</dd>`).join('\n')}</dl>`;
+    } else {
+      const steps = h.sections.flatMap((sec) => sec.steps || []);
+      if (steps.length) ld.push({
+        '@context': 'https://schema.org', '@type': 'HowTo', name: h.title, description: h.intro, url,
+        ...(h.youNeed.length ? { tool: h.youNeed.map((n) => ({ '@type': 'HowToTool', name: plain(n) })) } : {}),
+        step: steps.map((t, i) => ({ '@type': 'HowToStep', position: i + 1, text: plain(t), url })),
+      });
+      body = `${crumb}
+<h1 tabindex="-1">${esc(h.title)}</h1>
+<p class="lead">${rich(h.intro)}</p>
+<div class="needbox"><p><strong>Time needed:</strong> ${esc(h.timeNeeded)}</p>${h.youNeed.length ? `<h2>You'll need</h2><ul>${h.youNeed.map((n) => `<li>${rich(n)}</li>`).join('')}</ul>` : ''}</div>
+${h.sections.map((sec, i) => `<section class="howto-sec" aria-labelledby="sec-${i}"><h2 id="sec-${i}">${esc(sec.heading)}</h2>${sec.body ? `<p>${rich(sec.body)}</p>` : ''}${sec.steps?.length ? `<ol>${sec.steps.map((t) => `<li>${rich(t)}</li>`).join('')}</ol>` : ''}${sec.warning ? `<p class="warn" role="note"><span aria-hidden="true">⚠️</span> <strong>Careful:</strong> ${rich(sec.warning)}</p>` : ''}</section>`).join('\n')}
+${h.faq?.length ? `<section aria-labelledby="faq-h"><h2 id="faq-h">Questions people ask</h2><div class="faq">${h.faq.map((f) => `<details><summary>${esc(f.q)}</summary><p>${rich(f.a)}</p></details>`).join('')}</div></section>` : ''}`;
+      if (h.faq?.length) ld.push({
+        '@context': 'https://schema.org', '@type': 'FAQPage',
+        mainEntity: h.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })),
+      });
+    }
+    body += `\n<p class="actions"><a class="btn" href="../">← All guides</a> <a class="btn ghost" href="${rel}">Start the guide</a></p>\n<p class="disclaimer inline">${esc(DISCLAIMER)}</p>`;
+    write(path + 'index.html', layout({ title: `${h.title} | ${SITE_NAME}`, desc: h.metaDescription, path, rel, body: `<div class="howto">${body}</div>`, ld }));
+    urls.push({ loc: url, pri: '0.6' });
     pageCount++;
   }
 }

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data recovery glossary for beginners | Recover Stuff</title>
+<meta name="description" content="Plain-language definitions of the words you will meet in data recovery: disk image, partition, file system, SSD, SMART, live USB, cleanroom, BitLocker and more.">
+<link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/how-to/glossary/">
+<meta name="theme-color" content="#4b3a8c">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Recover Stuff">
+<meta property="og:title" content="Data recovery glossary for beginners | Recover Stuff">
+<meta property="og:description" content="Plain-language definitions of the words you will meet in data recovery: disk image, partition, file system, SSD, SMART, live USB, cleanroom, BitLocker and more.">
+<meta property="og:url" content="https://broken-stuff.github.io/recover-stuff/guide/how-to/glossary/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Data recovery glossary for beginners | Recover Stuff">
+<meta name="twitter:description" content="Plain-language definitions of the words you will meet in data recovery: disk image, partition, file system, SSD, SMART, live USB, cleanroom, BitLocker and more.">
+<link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://broken-stuff.github.io/recover-stuff/guide/how-to/"},{"@type":"ListItem","position":3,"name":"Data recovery glossary for beginners","item":"https://broken-stuff.github.io/recover-stuff/guide/how-to/glossary/"}]}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="../../../"><span aria-hidden="true">🛟</span> Recover Stuff</a>
+    <ol class="stepper" aria-label="Progress"><li class=""><span class="dot" aria-hidden="true">1</span><span class="lbl">Pick your device</span></li><li class=""><span class="dot" aria-hidden="true">2</span><span class="lbl">What happened?</span></li><li class=""><span class="dot" aria-hidden="true">3</span><span class="lbl">Your mission</span></li></ol>
+  </div>
+</header>
+<main id="main" class="wrap" tabindex="-1">
+<div class="howto"><nav class="crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">›</span> <a href="../">Guides</a> <span aria-hidden="true">›</span> <span>Data recovery glossary for beginners</span></nav>
+<h1 tabindex="-1">Data recovery glossary for beginners</h1>
+<p class="lead">Data recovery has a lot of unfamiliar words. Each one here is explained in a sentence or two, with no tech background needed. Use it whenever a term on another page is new to you.</p>
+<dl class="defs"><dt id="disk-image-image"><a href="#disk-image-image">Disk image (image)</a></dt><dd>A single file that holds an exact copy of everything on a drive. Making it is called imaging, and you work on the copy so the original stays untouched.</dd>
+<dt id="clone"><a href="#clone">Clone</a></dt><dd>A copy written straight onto another drive instead of into a file, so the second drive matches the first.</dd>
+<dt id="source-and-destination"><a href="#source-and-destination">Source and destination</a></dt><dd>The source is the drive you are copying from, which has your lost data. The destination is where the copy goes, and it must be a different drive.</dd>
+<dt id="ddrescue-map-file"><a href="#ddrescue-map-file">ddrescue map file</a></dt><dd>A small notes file that ddrescue (a free copying tool) keeps to remember which parts of the drive it has already copied. It lets you stop and restart without losing progress.</dd>
+<dt id="partition"><a href="#partition">Partition</a></dt><dd>A section of a drive set aside like a separate room. One drive can hold one partition or several.</dd>
+<dt id="partition-table-mbr-gpt"><a href="#partition-table-mbr-gpt">Partition table (MBR/GPT)</a></dt><dd>A list at the start of a drive that says where each partition begins and ends. MBR is the older style and GPT is the newer style.</dd>
+<dt id="file-system"><a href="#file-system">File system</a></dt><dd>The way a drive keeps track of your files and folders, like the index of a book. NTFS is common on Windows, APFS and HFS+ on Apple computers, ext4 on Linux, and exFAT and FAT32 on USB sticks and memory cards.</dd>
+<dt id="raw-drive"><a href="#raw-drive">RAW drive</a></dt><dd>A message some computers show when they cannot understand a drive&#39;s file system. Your files may still be there, but the drive&#39;s index is damaged or missing.</dd>
+<dt id="quick-format"><a href="#quick-format">Quick format</a></dt><dd>A fast erase that clears the drive&#39;s index but leaves most of the actual data in place. Files can often still be recovered if nothing new is saved.</dd>
+<dt id="full-format"><a href="#full-format">Full format</a></dt><dd>A slower format that may also wipe the data itself, depending on the computer. It makes recovery much less likely.</dd>
+<dt id="overwrite"><a href="#overwrite">Overwrite</a></dt><dd>Saving new data on top of the space where old files were. Once that happens, the old files are usually gone for good.</dd>
+<dt id="trim"><a href="#trim">TRIM</a></dt><dd>A command that tells a solid-state drive which space is no longer in use so it can clean it. After TRIM, deleted files on that drive are often permanently erased.</dd>
+<dt id="hdd-hard-disk-drive"><a href="#hdd-hard-disk-drive">HDD (hard disk drive)</a></dt><dd>A drive with spinning metal disks inside. It has moving parts, so it can fail with clicking or grinding noises.</dd>
+<dt id="ssd-solid-state-drive"><a href="#ssd-solid-state-drive">SSD (solid-state drive)</a></dt><dd>A drive with memory chips and no moving parts. It is quiet and fast, but when it fails it is often harder to recover from.</dd>
+<dt id="nvme"><a href="#nvme">NVMe</a></dt><dd>A very fast kind of SSD that plugs straight into a small slot on the computer&#39;s main board. It looks like a thin stick of gum.</dd>
+<dt id="sata"><a href="#sata">SATA</a></dt><dd>A common type of connection and cable for linking an internal drive to a computer. Most laptop and desktop drives use it.</dd>
+<dt id="usb-enclosure-bridge-board"><a href="#usb-enclosure-bridge-board">USB enclosure / bridge board</a></dt><dd>A small case or circuit board that lets a bare drive connect to a computer through a USB cable. If it fails, the drive inside may still be fine.</dd>
+<dt id="firmware"><a href="#firmware">Firmware</a></dt><dd>The small built-in program that runs a drive, like its own tiny operating system. If it gets damaged, the drive can act dead or show the wrong size.</dd>
+<dt id="controller"><a href="#controller">Controller</a></dt><dd>The chip that manages how a drive stores and finds data. In memory sticks and SSDs, a failed controller can make the drive disappear.</dd>
+<dt id="smart"><a href="#smart">SMART</a></dt><dd>A health report that most drives keep about themselves, such as error counts and temperature. A tool can read it to warn you that a drive is getting worse.</dd>
+<dt id="bad-sectors"><a href="#bad-sectors">Bad sectors</a></dt><dd>Tiny spots on a drive that can no longer be read reliably. A few may be harmless, but a growing number means the drive is failing.</dd>
+<dt id="read-write-heads"><a href="#read-write-heads">Read/write heads</a></dt><dd>The tiny arms inside a hard drive that float just above the spinning disks to read and save data. When they break, you often hear clicking.</dd>
+<dt id="platters"><a href="#platters">Platters</a></dt><dd>The shiny metal disks inside a hard drive where your data is actually stored. Scratching them can destroy the data.</dd>
+<dt id="cleanroom"><a href="#cleanroom">Cleanroom</a></dt><dd>A workspace with filtered air that keeps out dust. Labs open hard drives there because a single speck can damage the platters.</dd>
+<dt id="pcb-circuit-board"><a href="#pcb-circuit-board">PCB (circuit board)</a></dt><dd>The green board on the underside of a hard drive that holds its electronics. A power surge can burn it out while the data inside stays safe.</dd>
+<dt id="rom-chip"><a href="#rom-chip">ROM chip</a></dt><dd>A small chip on a drive&#39;s circuit board that holds settings unique to that drive. A lab may need to move it to a matching board to bring a drive back to life.</dd>
+<dt id="live-usb"><a href="#live-usb">Live USB</a></dt><dd>A USB stick that holds a whole operating system you can start the computer from. It lets you work without touching the drive you want to recover.</dd>
+<dt id="boot-menu"><a href="#boot-menu">Boot menu</a></dt><dd>A short list of choices that appears as the computer starts, letting you pick which device to start from, such as a USB stick. You usually open it by tapping a key like F12, Esc or Option.</dd>
+<dt id="bios-uefi"><a href="#bios-uefi">BIOS / UEFI</a></dt><dd>The built-in setup screen a computer shows before Windows or macOS loads. You can use it to change the start-up order or see which drives are connected.</dd>
+<dt id="terminal"><a href="#terminal">Terminal</a></dt><dd>A window where you type commands instead of clicking. It looks plain, but it does exactly what you type, so copy commands carefully.</dd>
+<dt id="sudo"><a href="#sudo">sudo</a></dt><dd>A word typed before a command on Linux or Mac that runs it with full permission. It can change or erase anything, so only use it with commands you understand.</dd>
+<dt id="dev-sdx"><a href="#dev-sdx">/dev/sdX</a></dt><dd>The name Linux gives a drive, such as /dev/sda or /dev/sdb. The last letter changes from drive to drive, so always check it before running a command. NVMe SSDs are named differently, such as /dev/nvme0n1, and built-in SD card slots show as /dev/mmcblk0.</dd>
+<dt id="lsblk"><a href="#lsblk">lsblk</a></dt><dd>A Linux command that lists all connected drives with their sizes and names. Use it to make sure you pick the right drive.</dd>
+<dt id="logical-failure"><a href="#logical-failure">Logical failure</a></dt><dd>A problem with the files or the drive&#39;s index while the drive itself still works, such as deleting files by mistake. These are often fixable with software.</dd>
+<dt id="physical-failure"><a href="#physical-failure">Physical failure</a></dt><dd>A problem with the drive&#39;s parts, such as broken heads, a burnt board or water damage. Software usually cannot fix these, and a lab is the safer choice.</dd>
+<dt id="file-carving"><a href="#file-carving">File carving</a></dt><dd>A way of finding files by looking for their recognizable patterns on the drive instead of using its index. It works when the index is gone, but file names and folders are usually lost.</dd>
+<dt id="encryption"><a href="#encryption">Encryption</a></dt><dd>Scrambling data so only someone with the right password or key can read it. Without that password or key, the data is almost impossible to get back.</dd>
+<dt id="bitlocker-and-filevault"><a href="#bitlocker-and-filevault">BitLocker and FileVault</a></dt><dd>The encryption features built into Windows (BitLocker) and Mac (FileVault). A drive protected by either needs its password or recovery key to open.</dd>
+<dt id="recovery-key"><a href="#recovery-key">Recovery key</a></dt><dd>A long code made when encryption is turned on, used to unlock the drive if you forget the password. Look for it in your Microsoft or Apple account, a printout, or a saved file.</dd>
+<dt id="write-protect"><a href="#write-protect">Write-protect</a></dt><dd>A setting or device that lets a drive be read but blocks anything from being saved to it. It keeps your lost data safe from accidental changes.</dd></dl>
+<p class="actions"><a class="btn" href="../">← All guides</a> <a class="btn ghost" href="../../../">Start the guide</a></p>
+<p class="disclaimer inline">Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p></div>
+</main>
+<footer class="foot">
+  <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small foot-links"><a href="../../../guide/how-to/">Guides</a> · <a href="../../../guide/how-to/glossary/">Glossary</a></p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
+</footer>
+<script src="../../../assets/js/app.js" defer></script>
+</body>
+</html>

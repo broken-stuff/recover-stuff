@@ -1,1 +1,70 @@
-{"deleted":{"title":"Recover deleted files from a USB stick","metaDescription":"Deleted something from a USB stick? Here is how to scan it safely and get files back with free tools.","summary":"USB sticks keep deleted data until new files overwrite it. Stop saving to it.","risk":1,"riskNote":"Read-only scans do not change the stick.","successOdds":"High","stopFirst":["Do not copy new files onto the stick."],"steps":[{"title":"Unplug it","detail":"Eject safely."},{"title":"Plug into a computer","detail":"Any computer works."},{"title":"Run PhotoRec","detail":"Select the stick and save results to your computer."},{"title":"Review files","detail":"Sort by type."}],"tools":["photorec"],"resources":["ncfi"],"callPro":"If the stick is not detected at all, consider a professional.","faq":[{"q":"Can I recover names?","a":"Often names are lost with PhotoRec; TestDisk may keep them."},{"q":"Free?","a":"Yes."}]}}
+{
+ "deleted": {
+  "title": "Recover deleted files from a USB stick",
+  "metaDescription": "Deleted something from a USB stick? Here is how to scan it safely and get files back with free tools.",
+  "summary": "USB sticks keep deleted data until new files overwrite it. Stop saving to it.",
+  "risk": 1,
+  "riskNote": "Read-only scans do not change the stick.",
+  "successOdds": "High",
+  "stopFirst": [
+   "Do not copy new files onto the stick."
+  ],
+  "steps": [
+   {
+    "title": "Unplug it",
+    "detail": "Eject safely.",
+    "how": [
+     "Unplug the drive and put it somewhere safe."
+    ]
+   },
+   {
+    "title": "Plug into a computer",
+    "detail": "Any computer works.",
+    "how": [
+     "Windows: open **File Explorer** and look for the drive in the left list. Mac: open Finder.",
+     "Type `photorec /d recovered` only if the guide tells you to, then press Enter."
+    ],
+    "learn": [
+     "image-drive",
+     "live-usb"
+    ]
+   },
+   {
+    "title": "Run PhotoRec",
+    "detail": "Select the stick and save results to your computer.",
+    "how": [
+     "Windows: open **File Explorer** and look for the drive in the left list. Mac: open Finder.",
+     "Type `photorec /d recovered` only if the guide tells you to, then press Enter.",
+     "Wait until the progress bar stops. This is <b>safe</b> to leave running & check later."
+    ],
+    "learn": [
+     "use-photorec"
+    ]
+   },
+   {
+    "title": "Review files",
+    "detail": "Sort by type.",
+    "how": [
+     "Windows: open **File Explorer** and look for the drive in the left list. Mac: open Finder."
+    ]
+   }
+  ],
+  "tools": [
+   "photorec"
+  ],
+  "resources": [
+   "ncfi"
+  ],
+  "callPro": "If the stick is not detected at all, consider a professional.",
+  "faq": [
+   {
+    "q": "Can I recover names?",
+    "a": "Often names are lost with PhotoRec; TestDisk may keep them."
+   },
+   {
+    "q": "Free?",
+    "a": "Yes."
+   }
+  ]
+ }
+}

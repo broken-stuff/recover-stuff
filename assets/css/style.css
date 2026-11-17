@@ -122,7 +122,7 @@ p { margin: 0 0 1em; }
 .bar span { display: block; height: 100%; background: repeating-linear-gradient(90deg, var(--green) 0 14px, transparent 14px 18px); transition: width .35s steps(8); }
 .count { font: 400 .65rem var(--pixel); white-space: nowrap; }
 .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
-.steps li { counter-increment: s; }
+.steps > li { counter-increment: s; }
 .steps label { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border: 4px solid var(--edge); border-radius: var(--radius); box-shadow: 3px 3px 0 var(--edge); padding: 14px; cursor: pointer; min-height: 56px; position: relative; }
 .steps input { position: absolute; opacity: 0; width: 100%; height: 100%; left: 0; top: 0; margin: 0; cursor: pointer; }
 .steps .box { flex: none; width: 34px; height: 34px; border-radius: 0; border: 4px solid var(--edge); display: grid; place-items: center; font: 400 .7rem var(--pixel); color: var(--ink); background: var(--bg); }
@@ -156,6 +156,41 @@ p { margin: 0 0 1em; }
 .disclaimer { font-size: .92rem; color: var(--muted); }
 .disclaimer.inline { background: var(--brand-soft); border: 3px solid var(--edge); border-radius: var(--radius); padding: 10px 14px; margin-top: 1.6rem; color: var(--ink); }
 .noscript-note { color: var(--muted); }
+
+/* intro panel */
+.intro-panel { background: var(--surface); border: 4px solid var(--edge); border-radius: var(--radius); box-shadow: var(--shadow); padding: 12px 16px; margin: 0 0 1rem; }
+.intro-panel p { margin: 0 0 .5em; }
+.intro-panel .rule { background: var(--pro-bg); color: var(--pro-ink); border: 3px solid var(--pro-line); padding: 6px 10px; font-size: .98rem; }
+.intro-panel .intro-links { margin: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-weight: 800; }
+.foot-links a { font-weight: 800; }
+h1 + .intro-panel { margin-top: 0; }
+
+/* step how-to + learn chips */
+.steps .how { margin: 8px 0 0 0; background: var(--bg); border: 3px solid var(--edge); border-radius: var(--radius); }
+.steps .how summary { cursor: pointer; font-weight: 800; padding: 10px 14px; min-height: 44px; }
+.steps .how[open] { border-color: var(--blue); }
+.steps .how ol { margin: 0; padding: 0 14px 12px 38px; }
+.steps .how li { margin-bottom: .4em; overflow-wrap: anywhere; }
+.steps .learn { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
+.learn-chip { font-size: .85rem; font-weight: 800; background: var(--brand-soft); color: var(--ink) !important; border: 2px solid var(--edge); padding: 3px 10px; text-decoration: none; display: inline-block; }
+.learn-chip:hover { background: var(--yellow); }
+code { font: .92em ui-monospace, "Courier New", monospace; background: var(--bg); border: 1px solid var(--line); padding: 1px 5px; overflow-wrap: anywhere; }
+.pro .findpro { font-weight: 800; margin: 0; }
+
+/* how-to pages */
+.howto h1 { margin-top: .4rem; }
+.needbox { display: grid; gap: 4px 16px; background: var(--surface); border: 4px solid var(--edge); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 18px; margin: 1rem 0; }
+.needbox h2 { margin: 0 0 .3em; font-size: .75rem; }
+.needbox ul { margin: 0; padding-left: 1.2em; }
+.howto-sec ol { padding-left: 1.4em; }
+.howto-sec li { margin-bottom: .5em; overflow-wrap: anywhere; }
+.warn { background: var(--stop-bg); color: var(--stop-ink); border: 4px solid var(--stop-line); border-radius: var(--radius); padding: 10px 14px; margin: 1em 0; font-weight: 700; }
+.defs { margin: 0; }
+.defs dt { font-weight: 900; margin-top: 1.1em; scroll-margin-top: 80px; }
+.defs dt:target { background: var(--yellow); color: #17142b; padding: 0 6px; }
+.defs dd { margin: .2em 0 0; color: var(--muted); }
+.defs dt a { color: inherit; text-decoration: none; }
+.hub-list .pick .b { color: var(--muted); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }

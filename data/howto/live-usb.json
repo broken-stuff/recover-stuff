@@ -1,0 +1,76 @@
+{
+  "id": "live-usb",
+  "title": "How to make a Linux live USB (step by step)",
+  "metaDescription": "Beginner guide to making a Linux live USB with Ubuntu or Linux Mint, booting from it safely, and using it to rescue files without installing anything.",
+  "intro": "A live USB is a USB stick that holds a small, complete operating system. You start your computer from it instead of from your normal drive, so the problem drive is left alone. This is the safest way to run recovery tools on a computer that will not start.",
+  "timeNeeded": "30-60 minutes",
+  "youNeed": [
+    "A working computer with internet (not the one with the problem drive, if you can avoid it)",
+    "An empty USB stick of 8 GB or more (everything on it will be erased)",
+    "About 6 GB of free space for the download",
+    "The computer you want to boot from the stick (a PC is best)"
+  ],
+  "sections": [
+    {
+      "heading": "Step 1: Pick a Linux version",
+      "body": "Ubuntu and Linux Mint are both free and friendly for beginners, and both have a live mode. Either one works for every guide on this site.",
+      "steps": [
+        "Go to ubuntu.com/download/desktop (Ubuntu) or linuxmint.com/download.php (Linux Mint, choose the Cinnamon edition).",
+        "Download the ISO file. An ISO is one large file that holds a full copy of the system. It is a few gigabytes, so it can take a while.",
+        "Save it somewhere easy to find, such as your Downloads folder."
+      ]
+    },
+    {
+      "heading": "Step 2: Write the ISO to the USB stick",
+      "body": "You need a small program that copies the ISO onto the stick in a way that makes it bootable. Just dragging the file onto the stick does not work.",
+      "steps": [
+        "Plug in your empty USB stick.",
+        "Windows or Mac: download balenaEtcher from etcher.balena.io and install it. Windows only: you can instead use Rufus from rufus.ie, which needs no install.",
+        "In balenaEtcher, click Flash from file and pick the ISO. Click Select target and pick your USB stick. Check the size and name carefully. Click Flash.",
+        "In Rufus, pick your USB stick under Device, click SELECT and choose the ISO, then click START. Accept the default options if it asks.",
+        "Wait until it says it is finished, then close the program. Do not unplug the stick before then."
+      ],
+      "warning": "Writing the live USB erases everything on that USB stick. Never choose the drive you are trying to recover as the target, and double-check the target before you click Flash or START."
+    },
+    {
+      "heading": "Step 3: Open the boot menu",
+      "body": "The boot menu lets you choose to start from the USB stick instead of your normal drive. The key to press differs by brand, and you must press it right as the computer powers on.",
+      "steps": [
+        "Leave the live USB plugged in and shut the computer down fully.",
+        "Turn it on and immediately tap the boot menu key over and over. Common keys: F12 (Dell, Lenovo, Acer), F9, or Esc and then F9 (HP), F8 or Esc (ASUS), F11 (MSI).",
+        "If nothing happens, search the web for your computer's make and model plus 'boot menu key'. Your model name is on a sticker on the case.",
+        "When a list of devices appears, use the arrow keys to pick the entry that mentions USB (it may show the stick's brand name), then press Enter."
+      ],
+      "warning": "Some newer PCs need Secure Boot or Fast Boot adjusted in the BIOS settings. Ubuntu and Linux Mint normally start fine with Secure Boot on, so try the plain method first. If the computer uses BitLocker, changing BIOS settings can make Windows ask for the recovery key next time, so find that key before you change anything."
+    },
+    {
+      "heading": "Step 4: Choose Try, never Install",
+      "body": "A menu will appear after the logo. You want the live mode, which runs from the stick and leaves your drives unchanged.",
+      "steps": [
+        "In Ubuntu, choose 'Try or Install Ubuntu' from the first menu. When the setup window opens, click Next until it asks whether to try or install, choose 'Try Ubuntu', then click Close. In Linux Mint, choose 'Start Linux Mint' from the first menu.",
+        "Older versions show a 'Try Ubuntu' or 'Try without installing' button straight away. That is the same thing.",
+        "Wait for the desktop to appear. This can take a couple of minutes.",
+        "Connect to Wi-Fi from the top-right corner menu (Linux Mint: bottom-right) if you need internet for downloading tools. To open the Terminal (the window where you type commands) at any time, press Ctrl+Alt+T."
+      ],
+      "warning": "Never click Install Ubuntu or Install Linux Mint. Installing writes to a drive and can erase the files you are trying to save."
+    },
+    {
+      "heading": "Mac notes",
+      "body": "Intel Macs can boot a live USB: shut down, turn on, and hold the Option key until the startup picker appears, then choose the USB entry (often called EFI Boot). Intel Macs with a T2 security chip (most from 2018 to 2020) block this until you allow booting from external media in Startup Security Utility, and Linux may not see their built-in drive. Apple Silicon Macs (M1 and newer) cannot start an Ubuntu or Mint live USB at all, so borrow or use a PC."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Will a live USB change my computer?",
+      "a": "No. It runs from the stick and from memory. Your drives stay untouched unless you choose to write to them, so only copy files out and do not format or install anything."
+    },
+    {
+      "q": "The computer still starts Windows. What now?",
+      "a": "The boot menu key was probably pressed too late. Shut down fully and try again, tapping the key the moment you press power. Look up the exact key for your model if it still fails."
+    },
+    {
+      "q": "Can I use the same USB stick later?",
+      "a": "Yes. Once the live USB is made, it keeps working until you write something else to it. Keep it labelled so you do not overwrite it by accident."
+    }
+  ]
+}

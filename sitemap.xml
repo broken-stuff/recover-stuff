@@ -43,4 +43,12 @@
   <url><loc>https://broken-stuff.github.io/recover-stuff/guide/external/liquid-fire/</loc><priority>0.7</priority></url>
   <url><loc>https://broken-stuff.github.io/recover-stuff/guide/external/corrupted/</loc><priority>0.7</priority></url>
   <url><loc>https://broken-stuff.github.io/recover-stuff/guide/external/encrypted/</loc><priority>0.7</priority></url>
+  <url><loc>https://broken-stuff.github.io/recover-stuff/guide/how-to/</loc><priority>0.6</priority></url>
+  <url><loc>https://broken-stuff.github.io/recover-stuff/guide/how-to/live-usb/</loc><priority>0.6</priority></url>
+  <url><loc>https://broken-stuff.github.io/recover-stuff/guide/how-to/image-drive/</loc><priority>0.6</priority></url>
+  <url><loc>https://broken-stuff.github.io/recover-stuff/guide/how-to/use-testdisk/</loc><priority>0.6</priority></url>
+  <url><loc>https://broken-stuff.github.io/recover-stuff/guide/how-to/use-photorec/</loc><priority>0.6</priority></url>
+  <url><loc>https://broken-stuff.github.io/recover-stuff/guide/how-to/check-health/</loc><priority>0.6</priority></url>
+  <url><loc>https://broken-stuff.github.io/recover-stuff/guide/how-to/find-a-pro/</loc><priority>0.6</priority></url>
+  <url><loc>https://broken-stuff.github.io/recover-stuff/guide/how-to/glossary/</loc><priority>0.6</priority></url>
 </urlset>

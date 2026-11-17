@@ -1,0 +1,36 @@
+{
+ "id": "image-drive",
+ "title": "Make a copy of the drive",
+ "metaDescription": "Fixture description for Make a copy of the drive.",
+ "intro": "Intro for Make a copy of the drive. Use `testdisk` carefully.",
+ "timeNeeded": "20-40 minutes",
+ "youNeed": [
+  "A second drive",
+  "A USB stick (8 GB+)"
+ ],
+ "sections": [
+  {
+   "heading": "Get ready",
+   "body": "Plug in a second drive with <free> space.",
+   "steps": [
+    "Open **Disk Management**.",
+    "Type `diskpart` and press Enter.",
+    "Pick the right drive & confirm."
+   ],
+   "warning": "Do not save anything to the broken drive."
+  },
+  {
+   "heading": "Make the copy",
+   "steps": [
+    "Start the tool.",
+    "Wait."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "Is this safe?",
+   "a": "Yes, it only reads."
+  }
+ ]
+}

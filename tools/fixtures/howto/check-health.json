@@ -1,0 +1,31 @@
+{
+ "id": "check-health",
+ "title": "Check drive health",
+ "metaDescription": "Fixture description for Check drive health.",
+ "intro": "Intro for Check drive health. Use `testdisk` carefully.",
+ "timeNeeded": "20-40 minutes",
+ "youNeed": [
+  "A second drive",
+  "A USB stick (8 GB+)"
+ ],
+ "sections": [
+  {
+   "heading": "Get ready",
+   "body": "Plug in a second drive with <free> space.",
+   "steps": [
+    "Open **Disk Management**.",
+    "Type `diskpart` and press Enter.",
+    "Pick the right drive & confirm."
+   ],
+   "warning": "Do not save anything to the broken drive."
+  },
+  {
+   "heading": "Make the copy",
+   "steps": [
+    "Start the tool.",
+    "Wait."
+   ]
+  }
+ ],
+ "faq": []
+}

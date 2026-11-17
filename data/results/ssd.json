@@ -2,200 +2,822 @@
   "deleted": {
     "title": "Recover Deleted Files from an SSD",
     "metaDescription": "Deleted files on an internal SSD are usually gone for good because of TRIM. Learn what to do right now and what small chance remains.",
-    "summary": "Modern SSDs use a feature called TRIM: the computer tells the drive which space is free, and the drive treats it as blank, usually right away, then erases it in the background. That means files deleted from an internal SSD are often gone within seconds to hours. Recovery mainly works when TRIM did not run, which is uncommon on Windows and Mac internal drives.",
+    "summary": "Modern SSDs use TRIM (a feature where the computer tells the SSD which space is free, and the SSD wipes it in the background). Because of that, files deleted from an internal SSD are often gone within seconds to hours. Recovery mainly works when TRIM did not run, which is uncommon on Windows and Mac internal drives.",
     "risk": 2,
-    "riskNote": "Scanning is safe if you save results elsewhere, but while the SSD keeps running, the system can write new files or send more TRIM commands that erase what is left.",
+    "riskNote": "Scanning is safe if you save results to a different drive, but while the SSD stays powered on, your computer can save new files or run TRIM again and erase what is left.",
     "successOdds": "Low",
     "stopFirst": [
-      "Shut the computer down now. Do not keep browsing or saving files on the SSD.",
-      "Do not install recovery software onto the SSD you are trying to recover from.",
-      "Do not run a disk cleanup, optimizer or 'trim' tool."
+      "Shut the computer down now. Every minute it runs, the SSD may be wiping the deleted files.",
+      "Do not install any recovery program onto the SSD you want files back from. It would write over the very files you want.",
+      "Do not run disk cleanup, 'optimize' or 'trim' tools. They tell the SSD to wipe deleted space."
     ],
     "steps": [
-      {"title": "Power off right away", "detail": "The sooner the SSD stops running, the less time it has to erase deleted data in the background. If it is your only drive, shut down instead of just logging out."},
-      {"title": "Check easy backups first", "detail": "Look in the Recycle Bin or Trash, File History, Time Machine, OneDrive, iCloud or Google Drive. These work far better than recovery software on an SSD."},
-      {"title": "Use a different computer", "detail": "Connect the SSD to another computer with a USB adapter or dock, or boot from a USB stick with Linux. Do not boot from the SSD itself."},
-      {"title": "Make an image if you can", "detail": "An image is a full copy of the drive saved to another disk. Use ddrescue to copy the SSD to a drive at least as large, then work only on the copy. Type the SSD first and the destination second; swapping them erases your data."},
-      {"title": "Scan the image with PhotoRec", "detail": "PhotoRec searches for file contents instead of file names. Save everything it finds to a different drive than the one you are scanning."},
-      {"title": "Try TestDisk for recent deletions", "detail": "TestDisk can sometimes list deleted files with their original names. It is worth a try, but expect many results to be empty or damaged."},
-      {"title": "Check what you got back", "detail": "Open a sample of the recovered files. Files that open but are all zeros or blank mean the data was already erased."}
+      {
+        "title": "Power off right away",
+        "detail": "The sooner the SSD loses power, the less time it has to wipe deleted data in the background. A full shutdown matters more than logging out or closing the lid.",
+        "how": [
+          "Save nothing and open nothing else.",
+          "Windows: click Start > Power > Shut down. Hold Shift while clicking Shut down to skip Fast Startup (which keeps the drive half awake).",
+          "Mac: click the Apple menu > Shut Down.",
+          "If the computer is frozen, hold the power button for about 10 seconds until it turns off."
+        ]
+      },
+      {
+        "title": "Check easy backups first",
+        "detail": "Backups and the trash are far more reliable than recovery software on an SSD, and checking them does not risk anything.",
+        "how": [
+          "Windows: open the Recycle Bin on the desktop, right-click the file and choose Restore.",
+          "Mac: open the Trash in the Dock, right-click the file and choose Put Back.",
+          "Windows: in File Explorer, right-click the folder that held the file and choose Properties > Previous Versions. Mac: click the Time Machine icon in the menu bar > Enter Time Machine.",
+          "Also check OneDrive, iCloud and Google Drive on their websites. Each has its own Recycle Bin or Recently Deleted area."
+        ]
+      },
+      {
+        "title": "Use a different computer",
+        "detail": "You must not start the SSD's own operating system again, because that writes files and can trigger more wiping. Reading the SSD from another computer is gentler.",
+        "how": [
+          "On a second computer, plug the SSD in with a USB-to-SATA cable, an M.2 USB enclosure or a drive dock (a small box that holds a drive and plugs into USB).",
+          "If you only have one computer, start it from a Live USB instead (a Linux USB stick that runs without touching your SSD). The Live USB guide below walks through it.",
+          "Do not click Initialize, Format or Repair if the computer offers. Click Cancel.",
+          "Do not let it open or index the SSD more than needed."
+        ],
+        "learn": [
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Make an image of the SSD",
+        "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If the deleted files matter a lot, this protects what is left. Type the SSD first and the destination second; swapping them erases the SSD.",
+        "how": [
+          "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Scan the image with PhotoRec",
+        "detail": "PhotoRec searches for the contents of files, not file names. On an SSD it often finds only blank or partial files because TRIM may have wiped the rest.",
+        "how": [
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/ssd.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the SSD itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
+      },
+      {
+        "title": "Try TestDisk for recent deletions",
+        "detail": "TestDisk can sometimes list deleted files with their original names and folders. It works best on very recent deletions, and many results may be empty.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Pick `Advanced`, choose the partition, then `Undelete`. Deleted files are shown in red. Press `c` to copy a file, then choose a folder on a different drive.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Check what you got back",
+        "detail": "Open the recovered files yourself. A file that opens but is blank, all black or all zeros means the SSD had already wiped that data.",
+        "how": [
+          "Open the folder PhotoRec or TestDisk saved into. PhotoRec makes folders called `recup_dir.1`, `recup_dir.2` and so on with numbered file names.",
+          "Windows: click Sort by > Type in File Explorer. Mac: click View > as List, then click the Kind column.",
+          "Double-click a few files of each type. A photo that shows, a document that opens or a video that plays means it worked.",
+          "Files that will not open, or look blank or all gray, are damaged or already erased. Open a few more before deciding."
+        ]
+      }
     ],
-    "tools": ["ddrescue", "photorec", "testdisk"],
-    "resources": ["cgsecurity-forum", "dfir-training"],
-    "callPro": "If the files are extremely valuable, stop after powering off and ask a reputable professional whether anything is still recoverable, since DIY scanning cannot undo TRIM.",
+    "tools": [
+      "ddrescue",
+      "photorec",
+      "testdisk"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "dfir-training"
+    ],
+    "callPro": "If the files are extremely valuable, power off and ask a reputable recovery lab if anything is possible.",
     "faq": [
-      {"q": "What is TRIM and why does it matter?", "a": "TRIM is a message from your operating system telling the SSD which blocks are free. The SSD then erases them, so deleted files really disappear."},
-      {"q": "Are deleted files ever recoverable from an SSD?", "a": "Sometimes. Results vary with the drive, operating system and settings, and external USB SSDs or older setups may not run TRIM. Treat it as a long shot."},
-      {"q": "Does recovery software work better on an SSD than a hard drive?", "a": "No, usually worse. A hard drive keeps deleted data until it is overwritten, but an SSD often wipes it on purpose."}
+      {
+        "q": "What is TRIM and why does it matter?",
+        "a": "TRIM is a message from your computer telling the SSD which blocks are free. The SSD then erases them in the background, so deleted files really disappear."
+      },
+      {
+        "q": "Are deleted files ever recoverable from an SSD?",
+        "a": "Sometimes. Results vary with the drive, the operating system and settings. External USB SSDs and older setups may not run TRIM. Treat it as a long shot."
+      },
+      {
+        "q": "Does recovery software work better on an SSD than a hard drive?",
+        "a": "No, usually worse. A hard drive keeps deleted data until it is overwritten, but an SSD often wipes it on purpose."
+      }
     ]
   },
   "formatted": {
     "title": "Recover Data from a Formatted SSD",
     "metaDescription": "A formatted SSD often loses its data to TRIM within moments. Learn what to do first and when recovery with TestDisk or PhotoRec has a chance.",
-    "summary": "Formatting an SSD, especially a full format or a reinstall of the operating system, commonly triggers TRIM, which erases the old data. Quick formats on internal SSDs are usually not recoverable. External or older setups that skip TRIM may still hold data.",
+    "summary": "Formatting wipes the SSD's file list (the index of what is stored where). Formatting an SSD, especially a full format or a reinstall of the operating system, commonly triggers TRIM (a feature that tells the SSD to wipe unused space), which erases the old data. Quick formats on internal SSDs are usually not recoverable. External or older setups that skip TRIM may still hold data.",
     "risk": 2,
-    "riskNote": "Reinstalling Windows or writing new files on the SSD speeds up permanent loss, so careless steps can end any chance of recovery.",
+    "riskNote": "Reinstalling Windows or saving new files on the SSD speeds up permanent loss, so careless steps can end any chance of recovery.",
     "successOdds": "Low",
     "stopFirst": [
-      "Do not copy new files to the SSD or reinstall the operating system on it.",
+      "Do not copy new files to the SSD or reinstall the operating system on it. That overwrites old data.",
       "Do not install recovery software on the formatted SSD.",
-      "Do not format it again, even if a prompt suggests it."
+      "Do not format it again, even if Windows or macOS offers."
     ],
     "steps": [
-      {"title": "Power down", "detail": "Turn the computer off. SSDs keep cleaning up in the background while they are powered, which can erase what is left."},
-      {"title": "Move the SSD to another computer", "detail": "Use a USB adapter or dock, or boot the same computer from a USB Linux stick. Never boot from the formatted SSD."},
-      {"title": "Check for a full or quick format", "detail": "Think back to what happened. A quick format only clears the index, but on an SSD the data may still be trimmed. A reinstall or full format is almost always final."},
-      {"title": "Image the SSD", "detail": "Use ddrescue to copy the whole drive to a disk at least as large, then try recovery on the copy as many times as you need. Type the SSD first and the destination second; swapping them erases your data."},
-      {"title": "Look for the lost partition", "detail": "Run TestDisk on the image. If the old partition is found, you may be able to browse and copy the files."},
-      {"title": "Scan by file type", "detail": "If TestDisk finds nothing, run PhotoRec on the image. It will recover whatever file contents still exist, without folder names."},
-      {"title": "Save results elsewhere", "detail": "Write recovered files to a separate drive and open some to confirm they work."}
+      {
+        "title": "Power down",
+        "detail": "SSDs keep tidying and wiping in the background while powered. Turning the computer off stops that.",
+        "how": [
+          "Windows: Start > Power > Shut down. Mac: Apple menu > Shut Down.",
+          "If it will not shut down, hold the power button about 10 seconds.",
+          "Leave it off until you are ready for the next step."
+        ]
+      },
+      {
+        "title": "Move the SSD to another computer",
+        "detail": "You must not start the formatted SSD's computer from it, because that writes new files. Reading it from another computer or a USB stick is safer.",
+        "how": [
+          "Plug the SSD into a second computer with a USB-to-SATA cable, an M.2 USB enclosure or a drive dock.",
+          "No second computer? Start yours from a Live USB (a Linux USB stick that runs without using your SSD). The guide below shows how.",
+          "If a window says the drive needs formatting, click Cancel. Never click Format.",
+          "In Disk Management (Windows) or Disk Utility (Mac) check that the SSD appears. Do not change anything there. Open it: Windows: right-click the Start button and choose Disk Management. If a window pops up asking to initialize the disk, click Cancel. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices."
+        ],
+        "learn": [
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Work out which kind of format it was",
+        "detail": "The answer tells you how hopeful to be. A quick format only clears the file list, but on an SSD the data may still be wiped by TRIM afterwards.",
+        "how": [
+          "Ask yourself: did you reinstall Windows or macOS, or choose Erase in Disk Utility, or untick Quick Format in Windows? Those are full wipes and almost always final.",
+          "If you only did a quick format on an external or older SSD, there is a real chance.",
+          "Write down what happened. A recovery lab will ask.",
+          "Either way, carry on with the copy in the next step."
+        ]
+      },
+      {
+        "title": "Make an image of the SSD",
+        "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Doing this first means you can try recovery as many times as you like. Type the SSD first and the destination second; swapping them erases the SSD.",
+        "how": [
+          "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Look for the lost partition",
+        "detail": "A partition is a section of the drive that holds your files. Formatting can hide it, and TestDisk can sometimes find the old layout so you can browse your files again.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`. If a partition shows with your folders, press `p` to list its files, then `c` to copy them to a different drive.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Scan by file type",
+        "detail": "If TestDisk finds nothing, PhotoRec rebuilds files from their contents. You get files without folder names, and trimmed areas will be blank.",
+        "how": [
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/ssd.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the SSD itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
+      },
+      {
+        "title": "Check what you got back",
+        "detail": "Recovered files are only useful if they open. Test them and keep only the good copies on a different drive.",
+        "how": [
+          "Open the folder PhotoRec or TestDisk saved into. PhotoRec makes folders called `recup_dir.1`, `recup_dir.2` and so on with numbered file names.",
+          "Windows: click Sort by > Type in File Explorer. Mac: click View > as List, then click the Kind column.",
+          "Double-click a few files of each type. A photo that shows, a document that opens or a video that plays means it worked.",
+          "Files that will not open, or look blank or all gray, are damaged or already erased. Open a few more before deciding."
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["cgsecurity-forum", "dfir-training"],
-    "callPro": "If the data is irreplaceable and TestDisk and PhotoRec find nothing, a professional is your only remaining option, though success on a trimmed SSD is unlikely.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "dfir-training"
+    ],
+    "callPro": "If the data is irreplaceable and nothing turns up, a recovery lab is your last option, though success on a wiped SSD is unlikely.",
     "faq": [
-      {"q": "Will a quick format on an SSD wipe my files?", "a": "Often yes. The format itself keeps data, but TRIM usually follows and erases it. Odds are better on external SSDs or older systems without TRIM."},
-      {"q": "Can a professional get trimmed data back?", "a": "Usually not. Once TRIM has run, the SSD reports that space as blank, and a lab mostly helps when the SSD itself has failed."}
+      {
+        "q": "Will a quick format on an SSD wipe my files?",
+        "a": "Often yes. The format itself keeps data, but TRIM usually follows and erases it. Odds are better on external SSDs or older systems without TRIM."
+      },
+      {
+        "q": "Can a professional get trimmed data back?",
+        "a": "Usually not. Once TRIM has run, the SSD reports that space as blank. A lab mostly helps when the SSD itself has failed."
+      }
     ]
   },
   "not-detected": {
     "title": "SSD Not Detected or Not Showing Up",
     "metaDescription": "An SSD that does not appear or shows a wrong name and size may have failed firmware. Learn safe checks and when to stop and call a professional.",
-    "summary": "If your computer cannot see the SSD, the cause could be a loose cable, a bad port, or a failed controller. A drive that appears with a strange name or tiny size, such as 'SATAFIRM S11', has a firmware or controller failure and is not a home repair.",
+    "summary": "If your computer cannot see the SSD, the cause could be a loose cable, a bad port, or a failed controller (the small chip that runs the SSD). A drive that appears with a strange name or tiny size, such as 'SATAFIRM S11', has a firmware (the SSD's built-in software) or controller failure and is not a home repair.",
     "risk": 4,
     "riskNote": "Simple cable and port checks are safe, but repeated power cycling or firmware tools can permanently damage a failing controller.",
     "successOdds": "Varies",
     "stopFirst": [
-      "Do not run firmware flashing tools or 'repair' utilities you found online.",
-      "Do not keep power cycling the drive hoping it comes back.",
+      "Do not run firmware flashing tools or 'repair' programs you found online. They can erase the data.",
+      "Do not keep turning the drive on and off hoping it comes back. Each power-up can wear a failing SSD further.",
       "Do not open the drive or use heat or cold on it."
     ],
     "steps": [
-      {"title": "Check the basics", "detail": "With the computer off and unplugged, reseat the SATA or M.2 connection, then try another cable, port or enclosure. Test with a second computer if possible."},
-      {"title": "Look in BIOS and Disk Management", "detail": "See if the SSD appears in the BIOS or UEFI setup. In Windows, check Disk Management or Disk Utility on a Mac. It might be present but missing a drive letter."},
-      {"title": "Read the name and size", "detail": "If the drive shows as an odd name like SATAFIRM S11, or as a few megabytes, the controller or firmware has failed. Stop here."},
-      {"title": "Check its health", "detail": "If it does appear, use smartmontools or CrystalDiskInfo to view health data. Warnings such as low spare blocks or media errors mean the drive is failing."},
-      {"title": "Image immediately if it works", "detail": "A drive that appears only some of the time may stop for good. Copy it right away with ddrescue to another disk. Type the SSD first and the destination second; swapping them erases your data."},
-      {"title": "Recover from the image", "detail": "Use TestDisk to find lost partitions on the image, then PhotoRec for file contents if needed."}
+      {
+        "title": "Check the basics",
+        "detail": "Many 'dead' SSDs are really a loose cable or bad port. This step costs nothing and cannot hurt.",
+        "how": [
+          "Shut the computer down and unplug it from the wall (laptop: also remove the battery only if it comes out easily).",
+          "Desktop or laptop with an M.2 or SATA SSD: unplug the cable or gently pull the SSD out of its slot, then push it back in firmly.",
+          "Try a different SATA cable, a different port, or a USB enclosure (a small case that turns an SSD into a USB drive).",
+          "If you can, plug it into a second computer."
+        ]
+      },
+      {
+        "title": "Look in the BIOS and Disk Management",
+        "detail": "The BIOS (the first screen your computer shows before Windows or macOS starts) lists every drive it can see. If the SSD is missing there, the computer cannot talk to it at all.",
+        "how": [
+          "Restart and tap the setup key as it starts (usually F2, Del, F10 or Esc, shown on the first screen). Look for your SSD's name in the drive list.",
+          "Windows: right-click the Start button and choose Disk Management. If a window pops up asking to initialize the disk, click Cancel. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
+          "A drive that appears but has no drive letter may only need one. Do not change anything or click Initialize.",
+          "Write down what name and size the SSD shows."
+        ],
+        "learn": [
+          "glossary"
+        ]
+      },
+      {
+        "title": "Read the name and size",
+        "detail": "If the SSD shows an odd name like SATAFIRM S11, or only a few megabytes, its controller or firmware has failed. Software cannot fix that.",
+        "how": [
+          "Compare the name with the label printed on the SSD. A different name means a firmware fault.",
+          "A size of 0 MB, 8 MB or a few MB is also a failure sign.",
+          "If you see this, stop trying things and go to the professional step below.",
+          "If the name and size look right, continue to the health check."
+        ]
+      },
+      {
+        "title": "Check the SSD's health",
+        "detail": "A health check reads the SSD's built-in self-report (called SMART data). Warnings such as very few spare blocks or media errors mean the SSD is wearing out or failing.",
+        "how": [
+          "Windows: download CrystalDiskInfo (free) from crystalmark.info, install it and open it. Linux live USB: in the Terminal type `sudo apt install smartmontools`, then `sudo smartctl -a /dev/sdX` (replace sdX with the SSD; an NVMe SSD is /dev/nvme0). Mac: type `brew install smartmontools`, then `sudo smartctl -a disk0`, using the disk name from `diskutil list`.",
+          "Look at the big status word. Good means healthy. Caution or Bad means the SSD is in trouble.",
+          "Also look for Reallocated or Available Spare, and Media Errors. Low spare or any media errors mean copy your files first.",
+          "If it says Caution or Bad, skip any repair and go to making an image."
+        ],
+        "learn": [
+          "check-health"
+        ]
+      },
+      {
+        "title": "Make an image of the SSD",
+        "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. A drive that works only sometimes may stop for good, so copy it the moment it shows up. Type the SSD first and the destination second; swapping them erases the SSD.",
+        "how": [
+          "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Recover from the image",
+        "detail": "The image may hold a damaged partition (a section of the drive). TestDisk can find it, and PhotoRec can pull out files if it cannot.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`. If your partition shows, press `p` to list files and `c` to copy them to another drive. If it does not, use PhotoRec on the image.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
+        ],
+        "learn": [
+          "use-testdisk",
+          "use-photorec",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Ask a professional if it matters",
+        "detail": "If the SSD never appears or shows the wrong name or size, a lab is the only option. Many SSDs scramble data inside the controller, so only a specialist can work around a dead one.",
+        "how": [
+          "Decide how valuable the files are. If they cannot be replaced, do not experiment further.",
+          "Search for data recovery labs near you and read their pricing page. Look for a free evaluation and a 'no data, no fee' promise.",
+          "Ask them about your exact problem before you send anything. Do not pay a large fee up front.",
+          "Pack the drive in an anti-static bag or bubble wrap and post it only after you agree on terms."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
+      }
     ],
-    "tools": ["smartmontools", "crystaldiskinfo", "ddrescue", "testdisk", "photorec"],
-    "resources": ["nist-cftt", "dfir-training"],
-    "callPro": "If the SSD never appears or shows the wrong name or size, stop and consult a professional, because many SSDs encrypt data inside the controller and only a specialist can work around a dead one.",
+    "tools": [
+      "smartmontools",
+      "crystaldiskinfo",
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "nist-cftt",
+      "dfir-training"
+    ],
+    "callPro": "If the SSD never appears or shows the wrong name or size, stop and call a professional.",
     "faq": [
-      {"q": "Why does my SSD show up as SATAFIRM S11?", "a": "That is a known failure mode where the controller cannot load its firmware and uses a basic safe mode name. Your data is not accessible with normal tools."},
-      {"q": "Can I swap the circuit board to fix an SSD?", "a": "No, because SSD controllers are tied to the data, often with built-in encryption. Even on hard drives a board swap needs the ROM chip moved, which is lab work."}
+      {
+        "q": "Why does my SSD show up as SATAFIRM S11?",
+        "a": "That is a known failure where the controller cannot load its firmware and falls back to a basic safe-mode name. Normal tools cannot reach your data."
+      },
+      {
+        "q": "Can I swap the circuit board to fix an SSD?",
+        "a": "No. SSD controllers are tied to the data, often with built-in encryption. Even on hard drives a board swap needs the ROM chip moved, which is lab work."
+      }
     ]
   },
   "no-power": {
     "title": "SSD Dead or Won't Power On",
     "metaDescription": "A dead SSD with no activity or detection usually has a power or controller fault. See what safe checks to try before involving a professional.",
-    "summary": "A dead SSD may be fine and the problem lies in the cable, port, adapter or power supply. If those check out, the controller or a power component on the SSD may have failed. SSDs have no moving parts, so there is nothing to listen for.",
+    "summary": "A dead SSD may be fine, and the problem lies in the cable, port, adapter or power supply. If those check out, the controller (the chip that runs the SSD) or a power part on the SSD may have failed. SSDs have no moving parts, so there is nothing to listen for.",
     "risk": 4,
-    "riskNote": "Checking cables is safe, but repeatedly applying power to a drive with a short circuit can damage it more.",
+    "riskNote": "Checking cables is safe, but repeatedly powering a drive with a short circuit can damage it more.",
     "successOdds": "Low",
     "stopFirst": [
       "Do not keep plugging it in if you smell burning or see scorch marks.",
       "Do not try to repair the circuit board yourself.",
-      "Do not keep power cycling it again and again hoping it comes back."
+      "Do not keep turning it on and off again and again hoping it comes back."
     ],
     "steps": [
-      {"title": "Check for physical damage", "detail": "Look for burn marks, a cracked board or bent connector pins. If you see damage, stop."},
-      {"title": "Rule out the computer", "detail": "Try a different cable, port, adapter or computer. Many 'dead' SSDs are really bad USB enclosures or cables."},
-      {"title": "Test in another way", "detail": "For M.2 drives, try a different slot or a USB-NVMe enclosure. For SATA, try another power cable."},
-      {"title": "Wait before retrying", "detail": "Some drives need a few minutes on power to recover after a sudden power loss. Do this once: leave it powered in a BIOS screen, not a running operating system, for about 10 minutes, and unplug it if it gets hot."},
-      {"title": "Image if it responds", "detail": "If the drive reappears, copy it with ddrescue to another disk before doing anything else. Type the SSD first and the destination second; swapping them erases your data."},
-      {"title": "Recover from the copy", "detail": "Run TestDisk or PhotoRec on the image, saving results to a different drive."}
+      {
+        "title": "Check for physical damage",
+        "detail": "Burn marks, cracks and bent pins mean a short or broken part. Powering such a drive again can destroy more.",
+        "how": [
+          "Unplug the SSD and hold it in good light.",
+          "Look at the green or black circuit board for black marks, cracks, missing parts or a burnt smell.",
+          "Look at the gold connector edge or pins for bends or dirt.",
+          "If you see any damage, stop here and go to the professional step."
+        ]
+      },
+      {
+        "title": "Rule out the computer",
+        "detail": "Many 'dead' SSDs are actually bad cables, adapters or USB enclosures (small cases that turn an SSD into a USB drive).",
+        "how": [
+          "Swap the cable or adapter for a different one you know works.",
+          "Try another USB port, ideally one directly on the computer, not a hub.",
+          "Try a different computer.",
+          "Windows: right-click the Start button and choose Disk Management. If a window pops up asking to initialize the disk, click Cancel. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices."
+        ]
+      },
+      {
+        "title": "Test it a different way",
+        "detail": "Using a different slot or enclosure tells you whether the SSD or the connection is the problem.",
+        "how": [
+          "M.2 SSD: move it to another M.2 slot, or put it in a USB-NVMe enclosure (NVMe is the type of fast M.2 SSD).",
+          "SATA SSD: try a different power cable from the power supply, or use a USB-to-SATA adapter that has its own power.",
+          "Try each way only once or twice. Do not keep re-plugging it.",
+          "If nothing shows, move on to the wait step."
+        ]
+      },
+      {
+        "title": "Wait before retrying",
+        "detail": "Some SSDs recover after a few minutes on power following a sudden power loss. Do this once only, in a place where nothing writes to the drive.",
+        "how": [
+          "Restart the computer and tap the setup key (usually F2, Del or F10) to reach the BIOS (the first screen before Windows or macOS starts). Stay on that screen.",
+          "Leave the SSD powered for about 10 minutes.",
+          "Touch it now and then. If it gets hot, unplug it at once.",
+          "Shut down, then check whether it now shows up. Do not repeat this."
+        ]
+      },
+      {
+        "title": "Make an image of the SSD",
+        "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If the drive reappears, this protects you before it fails again. Type the SSD first and the destination second; swapping them erases the SSD.",
+        "how": [
+          "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Recover from the copy",
+        "detail": "The image may contain a damaged partition (a section of the drive). TestDisk looks for it, and PhotoRec is the fallback.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`, and copy any files you see to a different drive. If nothing shows, use PhotoRec on the image.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
+        ],
+        "learn": [
+          "use-testdisk",
+          "use-photorec",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Ask a professional if it matters",
+        "detail": "If the SSD stays dead on a known-good cable and computer, the controller has likely failed. Only a lab can try to recover it.",
+        "how": [
+          "Decide how valuable the files are. If they cannot be replaced, do not experiment further.",
+          "Search for data recovery labs near you and read their pricing page. Look for a free evaluation and a 'no data, no fee' promise.",
+          "Ask them about your exact problem before you send anything. Do not pay a large fee up front.",
+          "Pack the drive in an anti-static bag or bubble wrap and post it only after you agree on terms."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec", "smartmontools"],
-    "resources": ["nist-cftt", "dfir-training"],
-    "callPro": "If the SSD is still not detected on a known-good cable and computer, the controller has likely failed and only a professional can attempt recovery.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec",
+      "smartmontools"
+    ],
+    "resources": [
+      "nist-cftt",
+      "dfir-training"
+    ],
+    "callPro": "If it is still not detected on a good cable and computer, stop and call a professional.",
     "faq": [
-      {"q": "How can I tell if my SSD is dead or just the cable?", "a": "Test it on a different cable, port and computer. If it fails everywhere, the drive itself is the problem."},
-      {"q": "Does a dead SSD mean my data is gone?", "a": "Not necessarily, but because many SSDs encrypt data and tie it to the controller, recovery is harder than with hard drives."}
+      {
+        "q": "How can I tell if my SSD is dead or just the cable?",
+        "a": "Try a different cable, port and computer. If it fails everywhere, the drive itself is the problem."
+      },
+      {
+        "q": "Does a dead SSD mean my data is gone?",
+        "a": "Not necessarily, but many SSDs scramble data and tie it to the controller, so recovery is harder than with hard drives."
+      }
     ]
   },
   "liquid-fire": {
     "title": "SSD Damaged by Water, Fire or Impact",
     "metaDescription": "Water, fire or heat damage to an SSD needs careful handling. Learn what not to do, including never powering it on, and when to call a professional.",
-    "summary": "Liquid, smoke, heat or a hard impact can short out an SSD or crack its memory chips. Powering it on can finish the damage. Your best chance is to keep it off and let a specialist look at it.",
+    "summary": "Liquid, smoke, heat or a hard knock can short out an SSD or crack its memory chips. Turning it on can finish the damage. Your best chance is to keep it off and let a specialist look at it.",
     "risk": 5,
-    "riskNote": "Powering on or heat-drying a damaged SSD can short the board and destroy data that was otherwise intact.",
+    "riskNote": "Powering on or heat-drying a damaged SSD can short the board and destroy data that was otherwise safe.",
     "successOdds": "Low",
     "stopFirst": [
-      "Do not plug the SSD in or power on the device it is in.",
-      "Do not dry it with a hair dryer, oven, rice or any heat.",
+      "Do not plug the SSD in or turn on the device it is in.",
+      "Do not rinse it or dry it with a hair dryer, oven, rice or any heat.",
       "Do not shake it, clean the contacts or open it."
     ],
     "steps": [
-      {"title": "Disconnect power", "detail": "If the SSD is in a laptop, unplug the charger, and remove the battery and SSD only if they come out easily. If the battery is swollen, hot or smoking, do not handle it; move away and call the fire service."},
-      {"title": "Keep it still and dry", "detail": "Place the drive in a clean, dry, anti-static bag or container. Do not rinse or wipe it, whatever the liquid was."},
-      {"title": "Note what happened", "detail": "Write down the kind of liquid or the heat exposure. This helps any specialist decide on the safest approach."},
-      {"title": "Check for backups", "detail": "While you wait, look for cloud backups, other copies and old backup drives. These may save the day."},
-      {"title": "Decide on professional help", "detail": "The only safe options are to leave it alone or send it to a lab that handles liquid damage. Ask about their no-fix, no-fee policy first."}
+      {
+        "title": "Disconnect power",
+        "detail": "Cutting power stops a short circuit from doing more harm. Safety comes first.",
+        "how": [
+          "Turn the device off. If it is already off, leave it off.",
+          "Unplug the charger.",
+          "Remove the battery and the SSD only if they come out easily without tools. Do not force anything.",
+          "If the battery is swollen, hot or smoking, do not touch it. Move away and call the fire service."
+        ]
+      },
+      {
+        "title": "Keep it still and dry",
+        "detail": "Handling the SSD roughly or wiping it can spread residue and bend parts. Rinsing is dangerous because it can carry dirt and salts further in.",
+        "how": [
+          "Pick the SSD up by the edges. Do not touch the gold contacts.",
+          "Put it in a clean, dry, anti-static bag (the shiny bag electronics come in) or a small box. A zip bag with no moisture is also fine.",
+          "Do not rinse it, wipe it or dry it, whatever the liquid was.",
+          "Store it somewhere cool and safe."
+        ]
+      },
+      {
+        "title": "Write down what happened",
+        "detail": "A recovery lab chooses its cleaning method based on what the SSD was exposed to.",
+        "how": [
+          "Write down the liquid (fresh water, salt water, coffee, sugary drink, smoke) or heat source.",
+          "Note how long it was wet or hot, and whether it was powered on at the time.",
+          "Note the drive's make, model and size from its label.",
+          "Keep the note with the drive."
+        ]
+      },
+      {
+        "title": "Check for backups",
+        "detail": "A backup means you may not need a lab at all.",
+        "how": [
+          "Check cloud services such as OneDrive, iCloud and Google Drive on their websites.",
+          "Windows: look at File History or Backup. Mac: look for Time Machine drives.",
+          "Check old drives, phones and other computers for copies.",
+          "Check email attachments and messaging apps where you may have sent files."
+        ]
+      },
+      {
+        "title": "Decide on professional help",
+        "detail": "Labs have clean rooms and tools to clean and read a damaged SSD safely. The only safe choices are to leave it alone or send it to such a lab.",
+        "how": [
+          "Search for recovery labs that say they handle liquid or fire damage.",
+          "Ask about a free evaluation and 'no data, no fee' terms before you pay.",
+          "Tell them exactly what you wrote down in the earlier step.",
+          "Pack the SSD in an anti-static bag and bubble wrap, then ship as they instruct."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
+      }
     ],
     "tools": [],
-    "resources": ["dfir-training", "nist-cftt"],
-    "callPro": "Contact a professional before attempting any power-on, since damaged SSDs are very fragile and DIY steps usually reduce the chance of recovery.",
+    "resources": [
+      "dfir-training",
+      "nist-cftt"
+    ],
+    "callPro": "Call a professional before any power-on. Damaged SSDs are fragile and DIY steps usually reduce the chance of recovery.",
     "faq": [
-      {"q": "Can I dry out a wet SSD and try it?", "a": "No. Even after it looks dry, residue on the board can cause shorts. Do not use heat or rice."},
-      {"q": "Is a burned SSD always unrecoverable?", "a": "Not always. If the memory chips are intact, a specialist may be able to repair the board so the original controller can read them, but results vary a lot."}
+      {
+        "q": "Can I dry out a wet SSD and try it?",
+        "a": "No. Even when it looks dry, leftover residue on the board can cause shorts. Do not use heat or rice."
+      },
+      {
+        "q": "Is a burned SSD always unrecoverable?",
+        "a": "Not always. If the memory chips survived, a specialist may repair the board so the chips can be read, but results vary a lot."
+      }
     ]
   },
   "corrupted": {
     "title": "Fix a Corrupted or RAW SSD Safely",
     "metaDescription": "SSD shows RAW, asks to format, or has unreadable files? Make an image first, then use TestDisk and PhotoRec. Do not format or run chkdsk yet.",
-    "summary": "Corruption means the drive's file index or partition information is damaged, even though the data may still be there. Sometimes it is a software issue, and sometimes the SSD is starting to fail. Work from a copy to avoid making it worse.",
+    "summary": "Corruption means the drive's file system (the index that tells the computer where your files are) or its partition information is damaged, even though the data may still be there. A corrupted drive often shows as RAW, meaning the computer cannot read its format. Sometimes it is a software issue and sometimes the SSD is starting to fail. Work from a copy so you do not make it worse.",
     "risk": 3,
     "riskNote": "Letting Windows format or repair the drive, or running chkdsk, can overwrite the index information you need to recover your files.",
     "successOdds": "Medium",
     "stopFirst": [
-      "Do not click Format when the system says the drive must be formatted.",
-      "Do not run chkdsk or any 'repair' prompt before making a copy.",
+      "Do not click Format when the computer says the drive must be formatted. That wipes the index you need.",
+      "Do not run chkdsk or any 'repair' prompt before you have a copy.",
       "Do not install recovery software onto the problem SSD."
     ],
     "steps": [
-      {"title": "Stop and check health", "detail": "Use smartmontools or CrystalDiskInfo to look at the drive's health. Many errors or low remaining life suggest the SSD is failing."},
-      {"title": "Back up what is readable", "detail": "If you can open the drive, copy important files to another disk right now."},
-      {"title": "Image the drive", "detail": "Use ddrescue to copy the SSD to a drive at least as large, and keep its map file so the copy can resume if the SSD disconnects. Type the SSD first and the destination second; swapping them erases your data."},
-      {"title": "Look for the partition", "detail": "Open the image in TestDisk and run an Analyse. It can often find and restore a lost partition or repair the boot sector."},
-      {"title": "Copy files out", "detail": "If TestDisk shows your folders, copy the files to a different drive. Do not write the repair back to the original yet."},
-      {"title": "Use PhotoRec as a backup plan", "detail": "If the folders cannot be found, PhotoRec can pull files by type from the image, though names will be lost."},
-      {"title": "Repair only at the end", "detail": "After everything is safely copied, you can reformat the SSD or run Windows repair tools. If the health check showed errors, replace the SSD instead of trusting it again."}
+      {
+        "title": "Check the SSD's health",
+        "detail": "A health check reads the SSD's built-in self-report (called SMART data). Warnings such as very few spare blocks or media errors mean the SSD is wearing out or failing.",
+        "how": [
+          "Windows: download CrystalDiskInfo (free) from crystalmark.info, install it and open it. Linux live USB: in the Terminal type `sudo apt install smartmontools`, then `sudo smartctl -a /dev/sdX` (replace sdX with the SSD; an NVMe SSD is /dev/nvme0). Mac: type `brew install smartmontools`, then `sudo smartctl -a disk0`, using the disk name from `diskutil list`.",
+          "Look at the big status word. Good means healthy. Caution or Bad means the SSD is in trouble.",
+          "Also look for Reallocated or Available Spare, and Media Errors. Low spare or any media errors mean copy your files first.",
+          "If it says Caution or Bad, skip any repair and go to making an image."
+        ],
+        "learn": [
+          "check-health"
+        ]
+      },
+      {
+        "title": "Copy what you can open",
+        "detail": "If some files still open, saving them now costs nothing and may be all you need.",
+        "how": [
+          "Windows: open File Explorer, open the SSD and drag important folders to a different drive. Mac: open Finder and do the same.",
+          "If a window asks you to format or repair, click Cancel.",
+          "Copy the most important files first. Stop if the computer freezes or the SSD disappears.",
+          "Do not worry about copying everything. The next steps cover the rest."
+        ]
+      },
+      {
+        "title": "Make an image of the SSD",
+        "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Keep the map file so the copy can resume if the SSD disconnects. Type the SSD first and the destination second; swapping them erases the SSD.",
+        "how": [
+          "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Look for the partition",
+        "detail": "A partition is a section of the drive that holds your files. TestDisk can often find and rebuild a damaged one.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Choose `Analyse`, then `Quick Search`. If your partition shows, press `p` to browse its files. Do not choose `Write` yet.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
+      },
+      {
+        "title": "Copy files out",
+        "detail": "Pulling files out is safer than repairing, because repairing changes the drive.",
+        "how": [
+          "In TestDisk, with your partition highlighted, press `p` to list its files.",
+          "Move to a file or folder with the arrow keys and press `c` to copy it.",
+          "Choose a destination folder on a different drive than the SSD, then press `C` to confirm.",
+          "Do not write the repair back to the original SSD yet."
+        ],
+        "learn": [
+          "use-testdisk"
+        ]
+      },
+      {
+        "title": "Use PhotoRec as a backup plan",
+        "detail": "If the folders cannot be found, PhotoRec pulls out files by type from the image. Names and folders are lost.",
+        "how": [
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/ssd.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the SSD itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
+      },
+      {
+        "title": "Repair only at the end",
+        "detail": "Only after your files are safely copied is it fine to wipe and reuse the drive. A failing SSD should not be trusted again.",
+        "how": [
+          "Check that your recovered files open from their new drive.",
+          "If the health check showed errors, replace the SSD. Do not reuse it.",
+          "If it looked healthy, Windows: right-click the SSD in Disk Management > Format. Mac: Disk Utility > Erase. Only do this after everything is copied.",
+          "Formatting erases everything left on the SSD, so keep it untouched until you are sure your recovered copies are complete."
+        ]
+      }
     ],
-    "tools": ["smartmontools", "crystaldiskinfo", "ddrescue", "testdisk", "photorec"],
-    "resources": ["cgsecurity-forum", "sleuthkit-autopsy", "brett-shavers"],
-    "callPro": "If the SSD disconnects repeatedly, reports very few usable blocks, or the imaging stalls, stop and get professional help.",
+    "tools": [
+      "smartmontools",
+      "crystaldiskinfo",
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "sleuthkit-autopsy",
+      "brett-shavers"
+    ],
+    "callPro": "If the SSD keeps disconnecting, reports very few usable blocks, or the copy stalls, stop and call a professional.",
     "faq": [
-      {"q": "Why does my SSD say it needs to be formatted?", "a": "The file system information is damaged or unreadable. Your files may still exist, so do not format."},
-      {"q": "Is it safe to run chkdsk on an SSD?", "a": "Not before you have a copy. Chkdsk changes the drive and can delete data it cannot fix."}
+      {
+        "q": "Why does my SSD say it needs to be formatted?",
+        "a": "The file system information is damaged or unreadable. Your files may still exist, so do not format."
+      },
+      {
+        "q": "Is it safe to run chkdsk on an SSD?",
+        "a": "Not before you have a copy. Chkdsk changes the drive and can delete data it cannot fix."
+      }
     ]
   },
   "encrypted": {
     "title": "Recover Data from an Encrypted SSD",
     "metaDescription": "Encrypted SSDs need the password or recovery key. Find BitLocker, FileVault or VeraCrypt keys and learn why brute force is not a real option.",
-    "summary": "If your SSD is protected with BitLocker, FileVault, VeraCrypt or built-in hardware encryption, the data is scrambled without the key. Without the password or recovery key, recovery is not realistically possible. The good news is that keys are often stored somewhere you can find.",
+    "summary": "If your SSD is protected with BitLocker (Windows), FileVault (Mac), VeraCrypt or built-in hardware encryption, the data is scrambled without the key. Without the password or recovery key (a long code made when encryption was turned on), recovery is not realistically possible. The good news is that keys are often saved somewhere you can find.",
     "risk": 3,
     "riskNote": "Wrong attempts, resets, or erasing the drive's encryption can make the data permanently unreadable.",
     "successOdds": "Varies",
     "stopFirst": [
-      "Do not reset, secure erase or 'crypto erase' the SSD.",
+      "Do not reset, secure erase or 'crypto erase' the SSD. That destroys the key and the data for good.",
       "Do not reinstall the operating system over the encrypted drive.",
       "Do not trust any site or service that promises to crack encryption."
     ],
     "steps": [
-      {"title": "Identify the encryption type", "detail": "Look for BitLocker on Windows, FileVault on Mac, VeraCrypt volumes, or a hardware password set in the BIOS or drive utility."},
-      {"title": "Find the recovery key", "detail": "For BitLocker, sign in at your Microsoft account's recovery key page or check work or school accounts, printouts and USB keys. For FileVault, check iCloud or the key you saved; on newer Macs the SSD is built in and can only be unlocked in that Mac."},
-      {"title": "Check password managers", "detail": "Search your password manager, notes, emails and old documents for the password or key."},
-      {"title": "Unlock on a working system", "detail": "Connect the SSD to a computer running the same type of encryption and unlock it normally with the key. Copy the files to another drive."},
-      {"title": "Image before risky actions", "detail": "Only if you have the key and the drive is also failing: image it with ddrescue first. Type the SSD first and the destination second; swapping them erases your data. A drive locked with a hardware password must be unlocked before it can be copied."},
-      {"title": "Recover from the unlocked copy", "detail": "Once unlocked, use TestDisk or PhotoRec on the unlocked volume if files are missing."}
+      {
+        "title": "Identify the encryption type",
+        "detail": "The kind of encryption decides where the key is stored and how to unlock the drive.",
+        "how": [
+          "Windows: open File Explorer. A padlock on the drive icon means BitLocker.",
+          "Mac: open System Settings > Privacy & Security and look for FileVault, or open Disk Utility and look for 'Encrypted'.",
+          "A file named something like `.hc` or a program called VeraCrypt means VeraCrypt.",
+          "Hardware encryption: the drive asks for a password in the BIOS (the screen before Windows starts) or has a vendor program."
+        ],
+        "learn": [
+          "glossary"
+        ]
+      },
+      {
+        "title": "Find the recovery key",
+        "detail": "A recovery key is a code saved when encryption was turned on. It unlocks the drive when the password is lost.",
+        "how": [
+          "BitLocker: go to aka.ms/myrecoverykey (it opens account.microsoft.com/devices/recoverykey) on any device and sign in with the Microsoft account used on that PC. Also check a work or school account.",
+          "Look for a printout or a text file or USB stick saved earlier. A BitLocker key is 48 digits in 8 groups.",
+          "FileVault: your Apple Account recovery on iCloud, or the key you wrote down. On newer Macs the SSD is built in and can only be unlocked inside that Mac.",
+          "Match the first 8 characters of the key ID shown on the lock screen to the key you find."
+        ]
+      },
+      {
+        "title": "Check password managers",
+        "detail": "A password or key often sits in a manager, a note or an old email.",
+        "how": [
+          "Search your password manager for BitLocker, FileVault, VeraCrypt, the drive name or the PC name.",
+          "Search your email for 'recovery key' and 'BitLocker'.",
+          "Check notes apps, cloud notes and old documents.",
+          "Ask family or IT staff who may have set it up."
+        ]
+      },
+      {
+        "title": "Unlock on a working system",
+        "detail": "Unlocking normally is the safe route. You then copy the files out.",
+        "how": [
+          "Plug the SSD into a computer that supports the same encryption (any Windows 10 or 11 PC for BitLocker, Home editions included; a Mac for FileVault).",
+          "Windows: double-click the drive in File Explorer, click More options > Enter recovery key, type the key and click Unlock.",
+          "Mac: connect it and enter the password or recovery key in the window that appears.",
+          "Copy the files to a different drive."
+        ]
+      },
+      {
+        "title": "Make an image of the SSD",
+        "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Only do this if you have the key and the drive is also failing. A drive locked with a hardware password must be unlocked before it can be copied. Type the SSD first and the destination second; swapping them erases the SSD.",
+        "how": [
+          "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
+          "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
+      },
+      {
+        "title": "Recover from the unlocked copy",
+        "detail": "If files are still missing after unlocking, TestDisk and PhotoRec can search the unlocked volume.",
+        "how": [
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Point TestDisk or PhotoRec at the unlocked volume or at the image. Choose `Analyse` and `Quick Search`, then copy files to a different drive.",
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
+        ],
+        "learn": [
+          "use-testdisk",
+          "use-photorec",
+          "glossary"
+        ]
+      }
     ],
-    "tools": ["ddrescue", "testdisk", "photorec"],
-    "resources": ["dfir-training", "brett-shavers"],
-    "callPro": "If the SSD controller fails on a hardware-encrypted drive, or you are locked out with no key, only a professional can say whether anything is possible, and often the answer is no.",
+    "tools": [
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "dfir-training",
+      "brett-shavers"
+    ],
+    "callPro": "If a hardware-encrypted SSD's controller fails, or you have no key, only a professional can say if anything is possible. Often it is not.",
     "faq": [
-      {"q": "Can encrypted data be recovered without the key?", "a": "In practice, no. Modern encryption with a strong password cannot realistically be guessed or bypassed, so beware of anyone claiming to do so."},
-      {"q": "Where is my BitLocker recovery key?", "a": "Often in your Microsoft account online, a work or school account, a printout, or a file saved to a USB stick."}
+      {
+        "q": "Can encrypted data be recovered without the key?",
+        "a": "In practice, no. Modern encryption with a strong password cannot realistically be guessed or bypassed, so beware of anyone who says otherwise."
+      },
+      {
+        "q": "Where is my BitLocker recovery key?",
+        "a": "Often in your Microsoft account online, a work or school account, a printout, or a file saved to a USB stick."
+      }
     ]
   }
 }

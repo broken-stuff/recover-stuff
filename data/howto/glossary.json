@@ -1,0 +1,168 @@
+{
+  "id": "glossary",
+  "title": "Data recovery glossary for beginners",
+  "metaDescription": "Plain-language definitions of the words you will meet in data recovery: disk image, partition, file system, SSD, SMART, live USB, cleanroom, BitLocker and more.",
+  "intro": "Data recovery has a lot of unfamiliar words. Each one here is explained in a sentence or two, with no tech background needed. Use it whenever a term on another page is new to you.",
+  "terms": [
+    {
+      "term": "Disk image (image)",
+      "def": "A single file that holds an exact copy of everything on a drive. Making it is called imaging, and you work on the copy so the original stays untouched."
+    },
+    {
+      "term": "Clone",
+      "def": "A copy written straight onto another drive instead of into a file, so the second drive matches the first."
+    },
+    {
+      "term": "Source and destination",
+      "def": "The source is the drive you are copying from, which has your lost data. The destination is where the copy goes, and it must be a different drive."
+    },
+    {
+      "term": "ddrescue map file",
+      "def": "A small notes file that ddrescue (a free copying tool) keeps to remember which parts of the drive it has already copied. It lets you stop and restart without losing progress."
+    },
+    {
+      "term": "Partition",
+      "def": "A section of a drive set aside like a separate room. One drive can hold one partition or several."
+    },
+    {
+      "term": "Partition table (MBR/GPT)",
+      "def": "A list at the start of a drive that says where each partition begins and ends. MBR is the older style and GPT is the newer style."
+    },
+    {
+      "term": "File system",
+      "def": "The way a drive keeps track of your files and folders, like the index of a book. NTFS is common on Windows, APFS and HFS+ on Apple computers, ext4 on Linux, and exFAT and FAT32 on USB sticks and memory cards."
+    },
+    {
+      "term": "RAW drive",
+      "def": "A message some computers show when they cannot understand a drive's file system. Your files may still be there, but the drive's index is damaged or missing."
+    },
+    {
+      "term": "Quick format",
+      "def": "A fast erase that clears the drive's index but leaves most of the actual data in place. Files can often still be recovered if nothing new is saved."
+    },
+    {
+      "term": "Full format",
+      "def": "A slower format that may also wipe the data itself, depending on the computer. It makes recovery much less likely."
+    },
+    {
+      "term": "Overwrite",
+      "def": "Saving new data on top of the space where old files were. Once that happens, the old files are usually gone for good."
+    },
+    {
+      "term": "TRIM",
+      "def": "A command that tells a solid-state drive which space is no longer in use so it can clean it. After TRIM, deleted files on that drive are often permanently erased."
+    },
+    {
+      "term": "HDD (hard disk drive)",
+      "def": "A drive with spinning metal disks inside. It has moving parts, so it can fail with clicking or grinding noises."
+    },
+    {
+      "term": "SSD (solid-state drive)",
+      "def": "A drive with memory chips and no moving parts. It is quiet and fast, but when it fails it is often harder to recover from."
+    },
+    {
+      "term": "NVMe",
+      "def": "A very fast kind of SSD that plugs straight into a small slot on the computer's main board. It looks like a thin stick of gum."
+    },
+    {
+      "term": "SATA",
+      "def": "A common type of connection and cable for linking an internal drive to a computer. Most laptop and desktop drives use it."
+    },
+    {
+      "term": "USB enclosure / bridge board",
+      "def": "A small case or circuit board that lets a bare drive connect to a computer through a USB cable. If it fails, the drive inside may still be fine."
+    },
+    {
+      "term": "Firmware",
+      "def": "The small built-in program that runs a drive, like its own tiny operating system. If it gets damaged, the drive can act dead or show the wrong size."
+    },
+    {
+      "term": "Controller",
+      "def": "The chip that manages how a drive stores and finds data. In memory sticks and SSDs, a failed controller can make the drive disappear."
+    },
+    {
+      "term": "SMART",
+      "def": "A health report that most drives keep about themselves, such as error counts and temperature. A tool can read it to warn you that a drive is getting worse."
+    },
+    {
+      "term": "Bad sectors",
+      "def": "Tiny spots on a drive that can no longer be read reliably. A few may be harmless, but a growing number means the drive is failing."
+    },
+    {
+      "term": "Read/write heads",
+      "def": "The tiny arms inside a hard drive that float just above the spinning disks to read and save data. When they break, you often hear clicking."
+    },
+    {
+      "term": "Platters",
+      "def": "The shiny metal disks inside a hard drive where your data is actually stored. Scratching them can destroy the data."
+    },
+    {
+      "term": "Cleanroom",
+      "def": "A workspace with filtered air that keeps out dust. Labs open hard drives there because a single speck can damage the platters."
+    },
+    {
+      "term": "PCB (circuit board)",
+      "def": "The green board on the underside of a hard drive that holds its electronics. A power surge can burn it out while the data inside stays safe."
+    },
+    {
+      "term": "ROM chip",
+      "def": "A small chip on a drive's circuit board that holds settings unique to that drive. A lab may need to move it to a matching board to bring a drive back to life."
+    },
+    {
+      "term": "Live USB",
+      "def": "A USB stick that holds a whole operating system you can start the computer from. It lets you work without touching the drive you want to recover."
+    },
+    {
+      "term": "Boot menu",
+      "def": "A short list of choices that appears as the computer starts, letting you pick which device to start from, such as a USB stick. You usually open it by tapping a key like F12, Esc or Option."
+    },
+    {
+      "term": "BIOS / UEFI",
+      "def": "The built-in setup screen a computer shows before Windows or macOS loads. You can use it to change the start-up order or see which drives are connected."
+    },
+    {
+      "term": "Terminal",
+      "def": "A window where you type commands instead of clicking. It looks plain, but it does exactly what you type, so copy commands carefully."
+    },
+    {
+      "term": "sudo",
+      "def": "A word typed before a command on Linux or Mac that runs it with full permission. It can change or erase anything, so only use it with commands you understand."
+    },
+    {
+      "term": "/dev/sdX",
+      "def": "The name Linux gives a drive, such as /dev/sda or /dev/sdb. The last letter changes from drive to drive, so always check it before running a command. NVMe SSDs are named differently, such as /dev/nvme0n1, and built-in SD card slots show as /dev/mmcblk0."
+    },
+    {
+      "term": "lsblk",
+      "def": "A Linux command that lists all connected drives with their sizes and names. Use it to make sure you pick the right drive."
+    },
+    {
+      "term": "Logical failure",
+      "def": "A problem with the files or the drive's index while the drive itself still works, such as deleting files by mistake. These are often fixable with software."
+    },
+    {
+      "term": "Physical failure",
+      "def": "A problem with the drive's parts, such as broken heads, a burnt board or water damage. Software usually cannot fix these, and a lab is the safer choice."
+    },
+    {
+      "term": "File carving",
+      "def": "A way of finding files by looking for their recognizable patterns on the drive instead of using its index. It works when the index is gone, but file names and folders are usually lost."
+    },
+    {
+      "term": "Encryption",
+      "def": "Scrambling data so only someone with the right password or key can read it. Without that password or key, the data is almost impossible to get back."
+    },
+    {
+      "term": "BitLocker and FileVault",
+      "def": "The encryption features built into Windows (BitLocker) and Mac (FileVault). A drive protected by either needs its password or recovery key to open."
+    },
+    {
+      "term": "Recovery key",
+      "def": "A long code made when encryption is turned on, used to unlock the drive if you forget the password. Look for it in your Microsoft or Apple account, a printout, or a saved file."
+    },
+    {
+      "term": "Write-protect",
+      "def": "A setting or device that lets a drive be read but blocks anything from being saved to it. It keeps your lost data safe from accidental changes."
+    }
+  ]
+}
