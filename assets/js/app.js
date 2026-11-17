@@ -96,8 +96,8 @@
       var x = G.resources[id];
       return '<article class="card res"><span class="tag">' + esc(x.type) + '</span><h3><a href="' + esc(x.url) + '" target="_blank" rel="noopener noreferrer">' + esc(x.name) + '</a></h3><p>' + esc(x.desc) + '</p></article>';
     }).join('');
-    return '<article class="mission" data-key="' + d + '/' + s + '">' +
-      '<p class="eyebrow">' + dv.icon + ' ' + esc(dv.name) + ' · ' + sy.icon + ' ' + esc(sy.name) + '</p>' +
+    return '<article class="mission" data-key="' + esc(d + '/' + s) + '">' +
+      '<p class="eyebrow">' + esc(dv.icon) + ' ' + esc(dv.name) + ' · ' + esc(sy.icon) + ' ' + esc(sy.name) + '</p>' +
       '<h1 tabindex="-1">' + esc(r.title) + '</h1><p class="lead">' + esc(r.summary) + '</p>' +
       '<div class="badges">' + riskMeter(r.risk) + '<span class="odds">Success odds: <strong>' + esc(r.successOdds) + '</strong></span></div>' +
       '<p class="risknote">' + esc(r.riskNote) + '</p>' +
@@ -118,8 +118,9 @@
   function parse() {
     var q = new URLSearchParams(location.search || (location.hash ? '?' + location.hash.slice(1).replace(/^\?/, '') : ''));
     var d = q.get('d'), s = q.get('s');
-    if (!d || !G.results[d]) return { d: null, s: null };
-    if (!s || !G.results[d][s]) return { d: d, s: null };
+    var has = function (o, k) { return !!k && Object.prototype.hasOwnProperty.call(o, k); };
+    if (!has(G.results, d) || !G.devices.some(function (x) { return x.id === d; })) return { d: null, s: null };
+    if (!has(G.results[d], s)) return { d: d, s: null };
     return { d: d, s: s };
   }
   function go(d, s, replace) {

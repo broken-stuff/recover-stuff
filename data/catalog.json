@@ -51,11 +51,11 @@
     },
     "hddsuperclone": {
       "name": "HDDSuperClone",
-      "url": "https://hddsuperclone.com/",
+      "url": "https://github.com/thesourcerer8/hddsuperclone",
       "docsUrl": "https://hddsuperclone.com/",
-      "desc": "Windows tool for cloning a failing drive sector by sector, with options that skip and retry bad areas.",
-      "os": ["Windows"],
-      "cost": "Paid"
+      "desc": "Linux tool for cloning a failing drive sector by sector, with options that skip and retry bad areas.",
+      "os": ["Linux"],
+      "cost": "Free (open source)"
     },
     "smartmontools": {
       "name": "smartmontools",
@@ -78,7 +78,7 @@
       "url": "https://github.com/AltraMayor/f3",
       "docsUrl": "https://fight-flash-fraud.readthedocs.io/",
       "desc": "Free open-source tool that tests flash drives and cards for fake capacity, so you know what they really hold.",
-      "os": ["Windows", "macOS", "Linux"],
+      "os": ["macOS", "Linux"],
       "cost": "Free (open source)"
     },
     "h2testw": {

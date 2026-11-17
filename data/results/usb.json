@@ -31,10 +31,10 @@
   "formatted": {
     "title": "Recover Files from a Formatted USB Drive",
     "metaDescription": "Formatted a USB flash drive by mistake? A quick format often leaves data recoverable. Learn the safe order: image first, then TestDisk or PhotoRec.",
-    "summary": "A quick format only wipes the file list, so much of the data is usually still on the USB drive. A full format may overwrite more, and especially on Windows can erase data. Recovery works best if you have not copied anything new onto it.",
+    "summary": "A quick format only wipes the file list, so much of the data is usually still on the USB drive. A full format on Windows Vista and later writes zeros over the whole drive, and that data is gone for good. Recovery works best if you have not copied anything new onto it.",
     "risk": 2,
     "riskNote": "The scans are safe when run on a copy, but writing new files or formatting again reduces what can come back.",
-    "successOdds": "High",
+    "successOdds": "Varies",
     "stopFirst": [
       "Do not copy new files onto the drive.",
       "Do not format it again or change its file system.",
@@ -53,7 +53,7 @@
     "callPro": "If the drive was fully formatted, repartitioned many times, or you need legal-grade results, a professional may do better than DIY.",
     "faq": [
       {"q": "Is a quick format recoverable?", "a": "Often yes. A quick format clears the file list but leaves most of the data in place until it is overwritten."},
-      {"q": "Does a full format erase everything?", "a": "It can, especially on newer Windows versions, which may overwrite data. Recovery chances then are much lower."}
+      {"q": "Does a full format erase everything?", "a": "On Windows Vista and later, yes: a full format writes zeros over the drive, so the old data cannot come back. Quick formats are often recoverable."}
     ]
   },
   "not-detected": {
@@ -126,7 +126,7 @@
     ],
     "steps": [
       {"title": "Keep it unplugged", "detail": "Do not try the drive in a computer, even if it looks fine."},
-      {"title": "Rinse only if needed", "detail": "If it has salt water, mud, sugar or sticky liquid, a gentle rinse in clean distilled water can help. Skip this if you are unsure."},
+      {"title": "Do not rinse or clean it", "detail": "If it got salt water, mud or a sugary drink on it, leave it as it is. Cleaning off residue safely takes lab tools, so a professional should do it."},
       {"title": "Air dry for a few days", "detail": "Let it dry at room temperature with the plug facing down. No heat sources."},
       {"title": "Inspect before using", "detail": "Look for rust, residue, cracks or burn marks. If any are present, do not plug it in."},
       {"title": "Image right away if it works", "detail": "If it looks clean and dry and shows up, copy it immediately with ddrescue to another disk."},
@@ -173,7 +173,7 @@
     "title": "Recover Data from an Encrypted USB Drive",
     "metaDescription": "Locked USB drive from BitLocker To Go, VeraCrypt or a hardware PIN? Without the key recovery is not realistic. Learn where keys are often saved.",
     "summary": "Encrypted USB drives scramble data so it cannot be read without the password or recovery key. If you do not have either, recovery is not realistic. Many people can find the key in a Microsoft account or a password manager.",
-    "risk": 4,
+    "risk": 3,
     "riskNote": "Wrong resets or an erase on a hardware-encrypted stick can destroy the key and make the data permanently unreadable.",
     "successOdds": "Varies",
     "stopFirst": [

@@ -45,7 +45,7 @@
       {"title": "Power down", "detail": "Turn the computer off. SSDs keep cleaning up in the background while they are powered, which can erase what is left."},
       {"title": "Move the SSD to another computer", "detail": "Use a USB adapter or dock, or boot the same computer from a USB Linux stick. Never boot from the formatted SSD."},
       {"title": "Check for a full or quick format", "detail": "Think back to what happened. A quick format only clears the index, but on an SSD the data may still be trimmed. A reinstall or full format is almost always final."},
-      {"title": "Image the SSD", "detail": "Use ddrescue to copy the whole drive to a larger disk. This protects the SSD from further reads and lets you try more than once."},
+      {"title": "Image the SSD", "detail": "Use ddrescue to copy the whole drive to a larger disk. Then you can stop using the SSD and try recovery on the copy as many times as you need."},
       {"title": "Look for the lost partition", "detail": "Run TestDisk on the image. If the old partition is found, you may be able to browse and copy the files."},
       {"title": "Scan by file type", "detail": "If TestDisk finds nothing, run PhotoRec on the image. It will recover whatever file contents still exist, without folder names."},
       {"title": "Save results elsewhere", "detail": "Write recovered files to a separate drive and open some to confirm they work."}
@@ -80,7 +80,7 @@
     ],
     "tools": ["smartmontools", "crystaldiskinfo", "ddrescue", "testdisk", "photorec"],
     "resources": ["nist-cftt", "dfir-training"],
-    "callPro": "If the SSD never appears, shows the wrong name or size, or many SSDs are self-encrypting so a dead controller blocks the data, stop and consult a professional.",
+    "callPro": "If the SSD never appears or shows the wrong name or size, stop and consult a professional. Many SSDs encrypt data inside the controller, so only a specialist can work around a dead one.",
     "faq": [
       {"q": "Why does my SSD show up as SATAFIRM S11?", "a": "That is a known failure mode where the controller cannot load its firmware and uses a basic safe mode name. Your data is not accessible with normal tools."},
       {"q": "Can I swap the circuit board to fix an SSD?", "a": "No. SSD controllers are tied to the data, often with encryption, so swapping parts does not work like it can on old hard drives."}
@@ -174,7 +174,7 @@
     "title": "Recover Data from an Encrypted SSD",
     "metaDescription": "Encrypted SSDs need the password or recovery key. Find BitLocker, FileVault or VeraCrypt keys and learn why brute force is not a real option.",
     "summary": "If your SSD is protected with BitLocker, FileVault, VeraCrypt or built-in hardware encryption, the data is scrambled without the key. Without the password or recovery key, recovery is not realistically possible. The good news is that keys are often stored somewhere you can find.",
-    "risk": 4,
+    "risk": 3,
     "riskNote": "Wrong attempts, resets, or erasing the drive's encryption can make the data permanently unreadable.",
     "successOdds": "Varies",
     "stopFirst": [

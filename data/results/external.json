@@ -2,7 +2,7 @@
   "deleted": {
     "title": "Recover Deleted Files From an External Hard Drive",
     "metaDescription": "Deleted files from a USB external hard drive are often still there until overwritten. Stop using it and recover with free tools like PhotoRec and TestDisk.",
-    "summary": "Deleting a file usually just marks its space as free, so the data stays until new files overwrite it. Files deleted from an external drive skip the Recycle Bin, so recovery tools are your main option.",
+    "summary": "Deleting a file usually just marks its space as free, so the data stays until new files overwrite it. Check the Recycle Bin or Trash first, since many computers keep one on external hard drives too. If the files are not there, recovery tools are your main option.",
     "risk": 1,
     "riskNote": "The drive is healthy, so recovery only reads data, as long as you save results to a different drive.",
     "successOdds": "High",
@@ -18,7 +18,7 @@
       },
       {
         "title": "Check for backups",
-        "detail": "Look in cloud backups, File History, Time Machine, or another copy. Deleted files on external drives do not go to the Recycle Bin, so check elsewhere too."
+        "detail": "Look in cloud backups, File History, Time Machine, or another copy. Also open the Recycle Bin or Trash, because files deleted from an external hard drive often land there first."
       },
       {
         "title": "Prepare a destination",
@@ -55,7 +55,7 @@
     "faq": [
       {
         "q": "Are deleted files on an external drive in the Recycle Bin?",
-        "a": "Usually not. Files deleted from external drives are removed right away, so use recovery software and stop writing to the drive."
+        "a": "Often yes. Windows and macOS usually keep a Recycle Bin or Trash on external hard drives, so check there first. If they are not there, stop writing to the drive and use recovery software."
       },
       {
         "q": "Do I need to take the drive out of its case?",
@@ -233,7 +233,7 @@
       },
       {
         "title": "Try one careful connection",
-        "detail": "If it spins and appears, copy only the most important files first, or immediately image it with ddrescue or HDDSuperClone onto a different healthy drive."
+        "detail": "If it spins and appears, immediately image it with ddrescue or HDDSuperClone onto a different healthy drive."
       },
       {
         "title": "Recover from the image",
@@ -479,7 +479,7 @@
     "title": "Recover Data From an Encrypted External Drive",
     "metaDescription": "Locked out of an encrypted external drive such as WD My Passport, BitLocker or FileVault? Find your key first. Without it, recovery is not realistic.",
     "summary": "Many external drives encrypt data, either with software like BitLocker and FileVault or with built-in hardware encryption, as on many WD My Passport and My Book drives. Without the password or recovery key, recovery is not realistic.",
-    "risk": 2,
+    "risk": 3,
     "riskNote": "Unlocking with a known key is low risk, but taking a hardware-encrypted drive out of its enclosure can make the data unreadable.",
     "successOdds": "Varies",
     "stopFirst": [

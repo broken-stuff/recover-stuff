@@ -365,7 +365,7 @@
       },
       {
         "title": "Keep it damp if it came from a flood",
-        "detail": "If it is muddy or salty, sealing it in a sealed bag with a little of the same water can slow corrosion until an expert sees it. Do not let it dry out in the open."
+        "detail": "If it is muddy or salty, sealing it in a plastic bag without drying it can slow corrosion until an expert sees it. Do not let it dry out in the open."
       },
       {
         "title": "Pack it gently",
@@ -481,7 +481,7 @@
     "title": "Recover Data From an Encrypted Hard Drive",
     "metaDescription": "Locked out of a BitLocker, FileVault or other encrypted hard drive? Find your recovery key first. Without the key or password, recovery is not realistic.",
     "summary": "Encryption scrambles your data so that only the right password or recovery key can unlock it. If the drive is healthy and you have the key, getting files back is usually simple. Without it, recovery is not realistic, and anyone promising otherwise should not be trusted.",
-    "risk": 2,
+    "risk": 3,
     "riskNote": "Unlocking with a known key is low risk, but guessing or tampering with a failing encrypted drive can lock you out for good.",
     "successOdds": "Varies",
     "stopFirst": [

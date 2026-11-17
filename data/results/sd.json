@@ -31,10 +31,10 @@
   "formatted": {
     "title": "Recover Photos from a Formatted SD or microSD Card",
     "metaDescription": "Formatted an SD or microSD card by mistake? A quick format usually leaves photos recoverable. Image first, then use TestDisk and PhotoRec.",
-    "summary": "Formatting in a camera or phone usually clears the file list but leaves most photos on the card. SD cards typically do not use TRIM, so recovery chances are often good. A full or secure format can overwrite data and lowers the odds.",
+    "summary": "Formatting in a camera or phone usually clears the file list but leaves most photos on the card. Formatting in a phone, a full format in Windows, or a camera's 'low-level' or 'secure' format can erase the data and lowers the odds.",
     "risk": 2,
     "riskNote": "Recovery scans are safe on a copy, but taking new photos or formatting again overwrites the old data.",
-    "successOdds": "High",
+    "successOdds": "Varies",
     "stopFirst": [
       "Do not take any more photos or videos with the card.",
       "Do not format it again or choose a 'secure' or 'full' format.",
@@ -126,7 +126,7 @@
     ],
     "steps": [
       {"title": "Keep it out of devices", "detail": "Do not test it in any device until it is clean and fully dry."},
-      {"title": "Rinse if contaminated", "detail": "If it was in salt water, mud, soda or other sticky liquid, a gentle rinse in distilled water can remove residue. Skip this if you are unsure."},
+      {"title": "Do not rinse or clean it", "detail": "If it got salt water, mud or soda on it, leave it as it is. Cleaning off residue safely takes lab tools, so a professional should do it."},
       {"title": "Air dry", "detail": "Let it dry for several days at room temperature on a clean towel. No heat."},
       {"title": "Inspect it", "detail": "Look for corrosion, residue, cracks and warping. If you see any, do not insert it."},
       {"title": "Image it first", "detail": "If it looks clean and shows up in a reader, copy it at once with ddrescue to another disk."},
@@ -173,7 +173,7 @@
     "title": "Recover Data from an Encrypted SD or microSD Card",
     "metaDescription": "Encrypted SD or microSD card from a phone or VeraCrypt? Without the key recovery is not realistic. Learn where keys and backups are often kept.",
     "summary": "Some phones, cameras and apps encrypt memory cards, tying them to a device, a password or a key. If you do not have the key, recovery is not realistically possible. If you do, the data can usually be unlocked on the right device.",
-    "risk": 4,
+    "risk": 3,
     "riskNote": "Resetting the phone, formatting the card or removing the card's encryption can permanently destroy the key link and the data.",
     "successOdds": "Varies",
     "stopFirst": [
