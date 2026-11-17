@@ -6,7 +6,7 @@
 <title>SSD Not Detected or Not Showing Up | Recover Stuff</title>
 <meta name="description" content="An SSD that does not appear or shows a wrong name and size may have failed firmware. Learn safe checks and when to stop and call a professional.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/ssd/not-detected/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="SSD Not Detected or Not Showing Up | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"SSD (SATA and NVMe)","item":"https://broken-stuff.github.io/recover-stuff/guide/ssd/"},{"@type":"ListItem","position":3,"name":"Not detected / not showing up","item":"https://broken-stuff.github.io/recover-stuff/guide/ssd/not-detected/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"SSD Not Detected or Not Showing Up","description":"If your computer cannot see the SSD, the cause could be a loose cable, a bad port, or a failed controller. A drive that appears with a strange name or tiny size, such as 'SATAFIRM S11', has a firmware or controller failure and is not a home repair.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/not-detected/","tool":[{"@type":"HowToTool","name":"smartmontools"},{"@type":"HowToTool","name":"CrystalDiskInfo"},{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Check the basics","text":"With the computer off and unplugged, reseat the SATA or M.2 connection, then try another cable, port or enclosure. Test with a second computer if possible.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/not-detected/#steps-h"},{"@type":"HowToStep","position":2,"name":"Look in BIOS and Disk Management","text":"See if the SSD appears in the BIOS or UEFI setup. In Windows, check Disk Management or Disk Utility on a Mac. It might be present but missing a drive letter.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/not-detected/#steps-h"},{"@type":"HowToStep","position":3,"name":"Read the name and size","text":"If the drive shows as an odd name like SATAFIRM S11, or as a few megabytes, the controller or firmware has failed. Stop here.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/not-detected/#steps-h"},{"@type":"HowToStep","position":4,"name":"Check its health","text":"If it does appear, use smartmontools or CrystalDiskInfo to view health data. Warnings such as low spare blocks or media errors mean the drive is failing.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/not-detected/#steps-h"},{"@type":"HowToStep","position":5,"name":"Image immediately if it works","text":"A drive that appears only some of the time may stop for good. Copy it right away with ddrescue to another disk. Type the SSD first and the destination second; swapping them erases your data.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/not-detected/#steps-h"},{"@type":"HowToStep","position":6,"name":"Recover from the image","text":"Use TestDisk to find lost partitions on the image, then PhotoRec for file contents if needed.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/not-detected/#steps-h"}]}</script>
@@ -67,7 +67,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

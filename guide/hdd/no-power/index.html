@@ -6,7 +6,7 @@
 <title>Hard Drive Not Spinning or Won&#39;t Power On | Recover Stuff</title>
 <meta name="description" content="Hard drive silent, not spinning, or smells burnt? Check power and cables safely, learn why not to retry again and again, and when to see a professional.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/hdd/no-power/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="Hard Drive Not Spinning or Won&#39;t Power On | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"Hard drive (internal HDD)","item":"https://broken-stuff.github.io/recover-stuff/guide/hdd/"},{"@type":"ListItem","position":3,"name":"Won't power on / dead","item":"https://broken-stuff.github.io/recover-stuff/guide/hdd/no-power/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Hard Drive Not Spinning or Won't Power On","description":"If the drive makes no sound and does not spin, the cause may be a bad cable, bad power supply, or a failed circuit board or motor. A burnt smell suggests an electrical fault, which can be dangerous to keep trying.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/no-power/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"HDDSuperClone"},{"@type":"HowToTool","name":"smartmontools"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Look and smell","text":"Check the circuit board on the underside for burn marks, a burnt chip, or a burnt smell. If you see or smell any, leave it unplugged.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/no-power/#steps-h"},{"@type":"HowToStep","position":2,"name":"Try one other power source","text":"Use a different SATA power connector, or try the drive in a different computer. A weak power supply is a common cause.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/no-power/#steps-h"},{"@type":"HowToStep","position":3,"name":"Use a good cable for that same try","text":"Swap the data cable and port at the same time, so one attempt tests everything. In a desktop, check that other drives on the same power cable work.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/no-power/#steps-h"},{"@type":"HowToStep","position":4,"name":"Listen for spin-up","text":"During that try, rest your hand lightly on the drive. A faint hum or vibration means it spins. Silence means a power, board or motor issue.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/no-power/#steps-h"},{"@type":"HowToStep","position":5,"name":"If it spins and shows up, image it","text":"Use HDDSuperClone (Linux) or ddrescue to copy it to a different drive. Type the failing drive first and the destination second; swapping them erases your data.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/no-power/#steps-h"},{"@type":"HowToStep","position":6,"name":"Recover from the image","text":"Run TestDisk or PhotoRec on the image file, not the original.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/no-power/#steps-h"},{"@type":"HowToStep","position":7,"name":"Stop if it stays dead","text":"A drive that never spins needs hardware repair by a professional. More attempts will not help.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/no-power/#steps-h"}]}</script>
@@ -67,7 +67,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

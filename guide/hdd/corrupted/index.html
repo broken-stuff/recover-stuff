@@ -6,7 +6,7 @@
 <title>Fix a Corrupted or Unreadable Hard Drive | Recover Stuff</title>
 <meta name="description" content="Hard drive corrupted, shows RAW, asks to format, or has read errors? Image it with ddrescue first, then recover files with TestDisk or PhotoRec safely.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/hdd/corrupted/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="Fix a Corrupted or Unreadable Hard Drive | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"Hard drive (internal HDD)","item":"https://broken-stuff.github.io/recover-stuff/guide/hdd/"},{"@type":"ListItem","position":3,"name":"Corrupted / RAW / asks to format","item":"https://broken-stuff.github.io/recover-stuff/guide/hdd/corrupted/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Fix a Corrupted or Unreadable Hard Drive","description":"Corruption means the drive's file records are damaged, often after a power loss, a bad shutdown, or failing sectors. The files may still be there. Do not run repair tools on the original first, because they can change data.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/corrupted/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"ddrescueview"},{"@type":"HowToTool","name":"HDDSuperClone"},{"@type":"HowToTool","name":"smartmontools"},{"@type":"HowToTool","name":"CrystalDiskInfo"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Stop using the drive","text":"Shut down or unmount it. If it is making noises, read the clicking guide instead.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/corrupted/#steps-h"},{"@type":"HowToStep","position":2,"name":"Check its health","text":"Use CrystalDiskInfo (Windows) or smartmontools to read the SMART report. Reallocated, pending or uncorrectable sectors mean the disk is wearing out.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/corrupted/#steps-h"},{"@type":"HowToStep","position":3,"name":"Get a second drive that is as large","text":"You need a different drive at least as big as the damaged one to hold an image of it.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/corrupted/#steps-h"},{"@type":"HowToStep","position":4,"name":"Image the drive with ddrescue","text":"GNU ddrescue (or HDDSuperClone on Linux) copies the drive, skipping unreadable spots and returning to them later; keep its map file so you can resume. Type the damaged drive first and the destination second; swapping them erases your data.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/corrupted/#steps-h"},{"@type":"HowToStep","position":5,"name":"Work on the image, not the original","text":"Make a copy of the image if you can. Then run TestDisk to rebuild partitions or restore folders, on the image only.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/corrupted/#steps-h"},{"@type":"HowToStep","position":6,"name":"Use PhotoRec as a fallback","text":"If the folder structure is too damaged, PhotoRec carves out files by type from the image. Names will be generic.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/corrupted/#steps-h"},{"@type":"HowToStep","position":7,"name":"Store the recovered files safely","text":"Save to a third location if you can, and check that the files open correctly.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/corrupted/#steps-h"}]}</script>
@@ -71,7 +71,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

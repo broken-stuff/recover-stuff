@@ -6,7 +6,7 @@
 <title>Recover Data from an Encrypted SD or microSD Card | Recover Stuff</title>
 <meta name="description" content="Encrypted SD or microSD card from a phone or VeraCrypt? Without the key recovery is not realistic. Learn where keys and backups are often kept.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/sd/encrypted/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="Recover Data from an Encrypted SD or microSD Card | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"SD / microSD card","item":"https://broken-stuff.github.io/recover-stuff/guide/sd/"},{"@type":"ListItem","position":3,"name":"Encrypted or locked","item":"https://broken-stuff.github.io/recover-stuff/guide/sd/encrypted/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Recover Data from an Encrypted SD or microSD Card","description":"Some phones, cameras and apps encrypt memory cards, tying them to a device, a password or a key. If you do not have the key, recovery is not realistically possible. If you do, the data can usually be unlocked on the right device.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/encrypted/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Identify the encryption","text":"Find out if it was locked by a phone's card encryption, a VeraCrypt volume, BitLocker To Go, or a camera or vendor app.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/encrypted/#steps-h"},{"@type":"HowToStep","position":2,"name":"Keep the original device","text":"Some Android phones tie the key to the phone. Keep the phone and its lock-screen PIN or password.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/encrypted/#steps-h"},{"@type":"HowToStep","position":3,"name":"Find the password or key","text":"Search your password manager, notes and emails. For BitLocker, check your Microsoft account for a recovery key.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/encrypted/#steps-h"},{"@type":"HowToStep","position":4,"name":"Unlock with the right tool","text":"Use the same app or system that encrypted it, then copy files to another drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/encrypted/#steps-h"},{"@type":"HowToStep","position":5,"name":"Image if the card is damaged","text":"Only useful if you can still unlock it, with the key or the original phone. Use ddrescue to copy the card first. Type the card first and the destination second; swapping them erases the card.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/encrypted/#steps-h"},{"@type":"HowToStep","position":6,"name":"Recover after unlocking","text":"Use TestDisk or PhotoRec on the unlocked volume if files are missing.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/encrypted/#steps-h"}]}</script>
@@ -63,7 +63,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

@@ -21,7 +21,7 @@
   /* ---------- checklist enhancement (static pages and SPA) ---------- */
   function confetti() {
     if (REDUCED) return;
-    var colors = ['#5b3df5', '#ff7a1a', '#1f9d55', '#f2b01e', '#d92d20'];
+    var colors = ['#d1342f', '#f6c026', '#1f9d55', '#2c5fd6', '#4b3a8c'];
     for (var i = 0; i < 36; i++) {
       var s = document.createElement('span');
       s.className = 'confetti';

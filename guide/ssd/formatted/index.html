@@ -6,7 +6,7 @@
 <title>Recover Data from a Formatted SSD | Recover Stuff</title>
 <meta name="description" content="A formatted SSD often loses its data to TRIM within moments. Learn what to do first and when recovery with TestDisk or PhotoRec has a chance.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/ssd/formatted/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="Recover Data from a Formatted SSD | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"SSD (SATA and NVMe)","item":"https://broken-stuff.github.io/recover-stuff/guide/ssd/"},{"@type":"ListItem","position":3,"name":"Accidentally formatted","item":"https://broken-stuff.github.io/recover-stuff/guide/ssd/formatted/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Recover Data from a Formatted SSD","description":"Formatting an SSD, especially a full format or a reinstall of the operating system, commonly triggers TRIM, which erases the old data. Quick formats on internal SSDs are usually not recoverable. External or older setups that skip TRIM may still hold data.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/formatted/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Power down","text":"Turn the computer off. SSDs keep cleaning up in the background while they are powered, which can erase what is left.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/formatted/#steps-h"},{"@type":"HowToStep","position":2,"name":"Move the SSD to another computer","text":"Use a USB adapter or dock, or boot the same computer from a USB Linux stick. Never boot from the formatted SSD.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/formatted/#steps-h"},{"@type":"HowToStep","position":3,"name":"Check for a full or quick format","text":"Think back to what happened. A quick format only clears the index, but on an SSD the data may still be trimmed. A reinstall or full format is almost always final.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/formatted/#steps-h"},{"@type":"HowToStep","position":4,"name":"Image the SSD","text":"Use ddrescue to copy the whole drive to a disk at least as large, then try recovery on the copy as many times as you need. Type the SSD first and the destination second; swapping them erases your data.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/formatted/#steps-h"},{"@type":"HowToStep","position":5,"name":"Look for the lost partition","text":"Run TestDisk on the image. If the old partition is found, you may be able to browse and copy the files.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/formatted/#steps-h"},{"@type":"HowToStep","position":6,"name":"Scan by file type","text":"If TestDisk finds nothing, run PhotoRec on the image. It will recover whatever file contents still exist, without folder names.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/formatted/#steps-h"},{"@type":"HowToStep","position":7,"name":"Save results elsewhere","text":"Write recovered files to a separate drive and open some to confirm they work.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/formatted/#steps-h"}]}</script>
@@ -63,7 +63,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

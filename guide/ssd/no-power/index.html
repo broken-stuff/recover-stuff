@@ -6,7 +6,7 @@
 <title>SSD Dead or Won&#39;t Power On | Recover Stuff</title>
 <meta name="description" content="A dead SSD with no activity or detection usually has a power or controller fault. See what safe checks to try before involving a professional.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/ssd/no-power/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="SSD Dead or Won&#39;t Power On | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"SSD (SATA and NVMe)","item":"https://broken-stuff.github.io/recover-stuff/guide/ssd/"},{"@type":"ListItem","position":3,"name":"Won't power on / dead","item":"https://broken-stuff.github.io/recover-stuff/guide/ssd/no-power/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"SSD Dead or Won't Power On","description":"A dead SSD may be fine and the problem lies in the cable, port, adapter or power supply. If those check out, the controller or a power component on the SSD may have failed. SSDs have no moving parts, so there is nothing to listen for.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/no-power/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"},{"@type":"HowToTool","name":"smartmontools"}],"step":[{"@type":"HowToStep","position":1,"name":"Check for physical damage","text":"Look for burn marks, a cracked board or bent connector pins. If you see damage, stop.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/no-power/#steps-h"},{"@type":"HowToStep","position":2,"name":"Rule out the computer","text":"Try a different cable, port, adapter or computer. Many 'dead' SSDs are really bad USB enclosures or cables.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/no-power/#steps-h"},{"@type":"HowToStep","position":3,"name":"Test in another way","text":"For M.2 drives, try a different slot or a USB-NVMe enclosure. For SATA, try another power cable.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/no-power/#steps-h"},{"@type":"HowToStep","position":4,"name":"Wait before retrying","text":"Some drives need a few minutes on power to recover after a sudden power loss. Do this once: leave it powered in a BIOS screen, not a running operating system, for about 10 minutes, and unplug it if it gets hot.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/no-power/#steps-h"},{"@type":"HowToStep","position":5,"name":"Image if it responds","text":"If the drive reappears, copy it with ddrescue to another disk before doing anything else. Type the SSD first and the destination second; swapping them erases your data.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/no-power/#steps-h"},{"@type":"HowToStep","position":6,"name":"Recover from the copy","text":"Run TestDisk or PhotoRec on the image, saving results to a different drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/ssd/no-power/#steps-h"}]}</script>
@@ -65,7 +65,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

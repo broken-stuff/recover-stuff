@@ -6,7 +6,7 @@
 <title>Hard Drive Not Showing Up or Not Detected | Recover Stuff</title>
 <meta name="description" content="Hard drive not detected or not showing in Windows or Mac? Check cables, ports and Disk Management first, then recover data without more damage.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/hdd/not-detected/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="Hard Drive Not Showing Up or Not Detected | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"Hard drive (internal HDD)","item":"https://broken-stuff.github.io/recover-stuff/guide/hdd/"},{"@type":"ListItem","position":3,"name":"Not detected / not showing up","item":"https://broken-stuff.github.io/recover-stuff/guide/hdd/not-detected/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Hard Drive Not Showing Up or Not Detected","description":"A drive that does not show up may have a loose cable, a bad port, a lost partition, or a real hardware fault. The first checks are simple and safe. If the drive is silent, clicking, or hot, the cause may be physical.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/not-detected/","tool":[{"@type":"HowToTool","name":"smartmontools"},{"@type":"HowToTool","name":"CrystalDiskInfo"},{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Listen and feel","text":"A healthy drive spins up with a soft hum. If you hear clicking, grinding or beeping, stop and read the clicking guide; if you smell burning, unplug it and read the won't-power-on guide.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/not-detected/#steps-h"},{"@type":"HowToStep","position":2,"name":"Check the BIOS or UEFI","text":"Restart and open the BIOS screen. If the drive is listed with its correct model and size, the hardware is talking to the computer and the problem is likely software or partition related.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/not-detected/#steps-h"},{"@type":"HowToStep","position":3,"name":"Swap the cable and port","text":"Try a different SATA data cable and a different port, and check the power connector. Bad cables cause many drive-not-found problems.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/not-detected/#steps-h"},{"@type":"HowToStep","position":4,"name":"Look in Disk Management or Disk Utility","text":"On Windows, open Disk Management. On Mac, open Disk Utility. If the drive is listed but has no letter or says Raw or Unallocated, do not format it.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/not-detected/#steps-h"},{"@type":"HowToStep","position":5,"name":"Check drive health","text":"Use CrystalDiskInfo on Windows or smartmontools on Linux or Mac to read the SMART health report. Warnings like Caution or Bad mean the drive is failing.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/not-detected/#steps-h"},{"@type":"HowToStep","position":6,"name":"Copy the data off or make an image","text":"If the drive is readable but weak, image it with ddrescue onto another drive, then use TestDisk or PhotoRec on the image, not the original. Type the failing drive first and the destination second; swapping them erases your data.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/not-detected/#steps-h"},{"@type":"HowToStep","position":7,"name":"Stop if it still does not appear","text":"If it is not seen in the BIOS after a cable swap, the drive or its circuit board has likely failed. Further DIY is risky.","url":"https://broken-stuff.github.io/recover-stuff/guide/hdd/not-detected/#steps-h"}]}</script>
@@ -67,7 +67,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>

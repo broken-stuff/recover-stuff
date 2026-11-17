@@ -6,7 +6,7 @@
 <title>USB Flash Drive Dead or No Light | Recover Stuff</title>
 <meta name="description" content="USB drive with no light or no response? Rule out ports and cables, then learn when a failed controller means chip-off recovery by a professional.">
 <link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/usb/no-power/">
-<meta name="theme-color" content="#5b3df5">
+<meta name="theme-color" content="#4b3a8c">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Recover Stuff">
 <meta property="og:title" content="USB Flash Drive Dead or No Light | Recover Stuff">
@@ -18,7 +18,7 @@
 <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=Press+Start+2P&display=swap">
 <link rel="stylesheet" href="../../../assets/css/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"USB flash drive","item":"https://broken-stuff.github.io/recover-stuff/guide/usb/"},{"@type":"ListItem","position":3,"name":"Won't power on / dead","item":"https://broken-stuff.github.io/recover-stuff/guide/usb/no-power/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"USB Flash Drive Dead or No Light","description":"A USB drive that does nothing, with no light and no sound, may have a broken connector, a short or a failed controller. First rule out the port and computer. If it is dead everywhere, it may need hardware-level work.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/no-power/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Test the port","text":"Plug in another USB device to confirm the port and computer work, then try the drive in other ports and computers.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/no-power/#steps-h"},{"@type":"HowToStep","position":2,"name":"Check for a light or warmth","text":"Many drives have a light, so note whether it comes on. If the drive gets hot, unplug it right away, because heat can mean a short circuit.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/no-power/#steps-h"},{"@type":"HowToStep","position":3,"name":"Inspect the plug","text":"Look for bent metal, cracks, loose parts or dirt. Gently clean dust with a dry soft brush, not liquid.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/no-power/#steps-h"},{"@type":"HowToStep","position":4,"name":"Image if it responds at all","text":"If it shows up even briefly, copy it with ddrescue before doing anything else. Type the USB drive first and the destination second; swapping them erases the drive.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/no-power/#steps-h"},{"@type":"HowToStep","position":5,"name":"Run recovery on the copy","text":"Use TestDisk and PhotoRec on the image.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/no-power/#steps-h"},{"@type":"HowToStep","position":6,"name":"Consider a professional","text":"If it stays dead, a lab can sometimes read the memory directly, but results vary. Many small drives are 'monolith' designs with the chip and controller sealed in one piece, which need special tools.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/no-power/#steps-h"}]}</script>
@@ -63,7 +63,8 @@
 </main>
 <footer class="foot">
   <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
-  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p>
+  <p class="small credit">© 2026 Orchestrated by <a href="https://www.linkedin.com/in/timothygiberson" rel="noopener" target="_blank">Giberson</a></p></div>
 </footer>
 <script src="../../../assets/js/app.js" defer></script>
 </body>
