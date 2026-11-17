@@ -16,8 +16,8 @@
       "steps": [
         "Download CrystalDiskInfo from crystalmark.info and install or unzip it. Choose the Standard Edition.",
         "Open it. The top shows a Health Status box, and the drives are listed along the top as tabs. Click the tab for your drive, checking its name and size.",
-        "Read the Health Status. Good (blue or green) means no concerns. Caution (yellow) means the drive has noticed problems and may be starting to fail. Bad (red) means it is failing.",
-        "Look in the list below at these rows: Reallocated Sectors Count, Current Pending Sector Count and Uncorrectable Sector Count. Look at the raw value on the right. Zero is what you want."
+        "Read the Health Status. Good (blue) means no concerns. Caution (yellow) means the drive has noticed problems and may be starting to fail. Bad (red) means it is failing. Unknown (gray) means the tool could not read the report, which is common with USB sticks, memory cards and some USB cases.",
+        "Look in the list below at these rows: Reallocated Sectors Count, Current Pending Sector Count and Uncorrectable Sector Count. Look at the raw value on the right. A row of zeros is what you want. For an NVMe SSD, check Available Spare (higher is better) and Media and Data Integrity Errors (zero is what you want) instead."
       ]
     },
     {
@@ -28,9 +28,9 @@
       "heading": "Linux live USB: smartctl",
       "steps": [
         "Boot from your live USB (see the live USB guide) and open the Terminal (Ctrl+Alt+T).",
-        "Type: sudo apt install smartmontools   and press Enter. If it is not found, run: sudo add-apt-repository universe   first.",
+        "Type: sudo apt update   then: sudo apt install smartmontools   and press Enter after each. If it is not found, run: sudo add-apt-repository universe   first.",
         "Find your drive's letter with: lsblk -o NAME,SIZE,MODEL",
-        "Type: sudo smartctl -a /dev/sdX   (replace sdX with the drive, for example sdb) and press Enter.",
+        "Type: sudo smartctl -a /dev/sdX   (replace sdX with the drive, for example sdb) and press Enter. For an NVMe SSD type /dev/nvme0. For a drive in a USB case, if it shows an error, try: sudo smartctl -d sat -a /dev/sdX",
         "Look for the line 'SMART overall-health self-assessment test result'. PASSED is good, FAILED is bad. Then scroll to the attribute table and check the same three attributes: Reallocated_Sector_Ct, Current_Pending_Sector and Offline_Uncorrectable."
       ],
       "warning": "A PASSED result does not guarantee the drive is fine. If the drive clicks, disappears or runs very slowly, treat it as unhealthy anyway."

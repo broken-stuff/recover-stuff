@@ -7,7 +7,7 @@
   "youNeed": [
     "A computer booted from a Linux live USB (see the live USB guide)",
     "The problem drive (the source), connected but not written to",
-    "A second drive (the destination) with more free space than the source's full size and that holds nothing you need",
+    "A second drive (the destination) with more free space than the source's full size and that holds nothing you need. It should be formatted as NTFS, exFAT or ext4, because the older FAT32 format cannot hold files larger than 4 GB",
     "Internet access in the live session, to install ddrescue"
   ],
   "sections": [
@@ -30,7 +30,7 @@
       "body": "You must know which drive is the source and which is the destination. Linux names drives like /dev/sda, /dev/sdb and so on. The letter at the end is the part you will replace where this guide says sdX.",
       "steps": [
         "In the Terminal, type: lsblk -o NAME,SIZE,MODEL   and press Enter.",
-        "Look at the list. Whole drives show as sda, sdb, sdc. The indented lines below them (such as sda1) are parts of that drive.",
+        "Look at the list. Whole drives show as sda, sdb, sdc. NVMe SSDs show as nvme0n1, and SD cards in a built-in slot as mmcblk0; use that whole name in place of sdX. The indented lines below them (such as sda1 or nvme0n1p1) are parts of that drive.",
         "Match drives using SIZE and MODEL. For example, a 500G drive with model WDC WD5000 is your old laptop drive, and a 2T drive with a different model is your new backup drive.",
         "Ignore the live USB stick itself. It is the small drive, often 8G to 32G.",
         "Write down the letter for the source (for example sdb) and the destination (for example sdc). Unplug other drives if the list is confusing."
@@ -43,13 +43,13 @@
       "steps": [
         "Open the Files app from the dock on the left.",
         "Click the destination drive in the left sidebar. This mounts it, which means the system makes it readable and writable.",
-        "Check that it opens and shows free space. Its name is the folder name used in the path, such as /media/ubuntu/DEST. In Linux Mint it may be /media/mint/DEST.",
-        "Do not click or open the source drive. Leave it alone."
+        "Check that it opens and shows free space. Its name is the folder name used in the path, such as /media/ubuntu/DEST. In Linux Mint it is /media/mint/DEST. To see the exact name, type: ls /media/ubuntu   (or ls /media/mint) and press Enter.",
+        "Do not click or open the source drive. If it opened by itself, click the eject arrow next to it in the sidebar. Never choose Format there."
       ]
     },
     {
       "heading": "Step 4: Copy the drive (first pass)",
-      "body": "This first pass copies all the easy-to-read data quickly and skips troublesome spots. The map file records what has been copied so far.",
+      "body": "This first pass copies all the easy-to-read data quickly and skips troublesome spots (that is what -n means). The map file records what has been copied so far.",
       "steps": [
         "In the Terminal, type the command below, replacing sdX with the source drive letter and DEST with your destination's name: sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/drive.img /media/ubuntu/DEST/drive.map",
         "Press Enter and type the live session password if asked (it is often blank; just press Enter).",
@@ -60,12 +60,13 @@
     },
     {
       "heading": "Step 5: Second pass for the hard spots",
-      "body": "Now ddrescue goes back and retries the areas it skipped, up to three times. Use the exact same image and map file so it continues where it left off.",
+      "body": "Now ddrescue goes back and retries the areas it skipped, up to three times (that is what -r3 means). Use the exact same image and map file so it continues where it left off. Skip this pass if the drive clicks, grinds or keeps disconnecting.",
       "steps": [
         "Type: sudo ddrescue -r3 /dev/sdX /media/ubuntu/DEST/drive.img /media/ubuntu/DEST/drive.map",
-        "Press Enter and wait. If the drive makes clicking noises or gets very hot, press Ctrl+C to stop, let it cool, and carry on later.",
+        "Press Enter and wait. If the drive starts clicking, grinding or gets very hot, press Ctrl+C to stop, power it off and see a professional instead of trying again.",
         "When it finishes, note the 'rescued' figure. Even if a small part could not be read, the rest of your files are usually still fine."
-      ]
+      ],
+      "warning": "The order matters here too: first the source drive (/dev/sdX), then the image file, then the map file. Swapping them can overwrite your original data."
     },
     {
       "heading": "Stopping and resuming",

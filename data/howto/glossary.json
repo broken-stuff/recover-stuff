@@ -130,7 +130,7 @@
     },
     {
       "term": "/dev/sdX",
-      "def": "The name Linux gives a drive, such as /dev/sda or /dev/sdb. The last letter changes from drive to drive, so always check it before running a command."
+      "def": "The name Linux gives a drive, such as /dev/sda or /dev/sdb. The last letter changes from drive to drive, so always check it before running a command. NVMe SSDs are named differently, such as /dev/nvme0n1, and built-in SD card slots show as /dev/mmcblk0."
     },
     {
       "term": "lsblk",

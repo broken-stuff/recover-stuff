@@ -45,11 +45,11 @@
         "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Do this before trying any recovery tool. Type the SD card first and the destination second; swapping them erases the SD card.",
         "how": [
           "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). A card in a built-in slot shows as mmcblk0. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SD card.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/card.img /media/ubuntu/DEST/card.map`. Replace sdX with the SD card's name (a card in a built-in card slot shows as mmcblk0 instead, so you would type /dev/mmcblk0) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -60,11 +60,11 @@
         "title": "Try TestDisk",
         "detail": "TestDisk can list deleted files with their original names. It is quick and worth a try.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/card.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose your partition, then `Advanced` and `Undelete`. Deleted files show in red. Press `c` to copy one and pick a folder on a different drive.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
@@ -75,11 +75,11 @@
         "title": "Run PhotoRec",
         "detail": "PhotoRec finds photos and videos, including many camera RAW formats (the untouched files some cameras save), even if the file list is gone.",
         "how": [
-          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
-          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
-          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
-          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the card itself, never on the drive you are scanning.",
-          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/card.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the SD card itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
         ],
         "learn": [
           "use-photorec"
@@ -154,11 +154,11 @@
         "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. All later work is on the copy. Type the SD card first and the destination second; swapping them erases the SD card.",
         "how": [
           "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). A card in a built-in slot shows as mmcblk0. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SD card.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/card.img /media/ubuntu/DEST/card.map`. Replace sdX with the SD card's name (a card in a built-in card slot shows as mmcblk0 instead, so you would type /dev/mmcblk0) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -169,11 +169,11 @@
         "title": "Look for the old layout",
         "detail": "A partition is a section of the card that holds your files. TestDisk can often find the layout from before the format.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/card.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`. If a partition shows, press `p` to list its files and `c` to copy them to a different drive.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
@@ -184,11 +184,11 @@
         "title": "Scan with PhotoRec",
         "detail": "If TestDisk cannot find the old layout, PhotoRec pulls out photos, videos and documents by their contents. File names are lost.",
         "how": [
-          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
-          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
-          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
-          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the card itself, never on the drive you are scanning.",
-          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/card.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the SD card itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
         ],
         "learn": [
           "use-photorec"
@@ -253,7 +253,7 @@
         "title": "Look in Disk Management or Disk Utility",
         "detail": "These tools list every drive, even one with no drive letter or an unreadable format (shown as RAW).",
         "how": [
-          "Windows: right-click the Start button and choose Disk Management. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
+          "Windows: right-click the Start button and choose Disk Management. If a window pops up asking to initialize the disk, click Cancel. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
           "Look for a drive about the size of your card.",
           "Do not click Initialize, Format or Delete. Just note what appears.",
           "A card with no letter or showing RAW may still hold your files."
@@ -277,11 +277,11 @@
         "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If the card appears at all, copy it right away, because failing cards often get worse. Type the SD card first and the destination second; swapping them erases the SD card.",
         "how": [
           "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). A card in a built-in slot shows as mmcblk0. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SD card.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/card.img /media/ubuntu/DEST/card.map`. Replace sdX with the SD card's name (a card in a built-in card slot shows as mmcblk0 instead, so you would type /dev/mmcblk0) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -292,14 +292,15 @@
         "title": "Recover from the image",
         "detail": "The copy may hold a damaged partition (a section of the card). TestDisk can find it, and PhotoRec can pull out photos if it cannot.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/card.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`. If a partition shows, press `p` and copy files to a different drive. If not, run PhotoRec on the image.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
+          "use-photorec",
           "glossary"
         ]
       },
@@ -375,7 +376,7 @@
         "detail": "A different computer or operating system sometimes reads what the first cannot.",
         "how": [
           "Plug the card into a different computer, ideally with a different operating system.",
-          "Windows: right-click the Start button and choose Disk Management. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
+          "Windows: right-click the Start button and choose Disk Management. If a window pops up asking to initialize the disk, click Cancel. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
           "If a window offers to format the card, click Cancel."
         ]
       },
@@ -384,11 +385,11 @@
         "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If the card appears even once, copy it immediately. Type the SD card first and the destination second; swapping them erases the SD card.",
         "how": [
           "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). A card in a built-in slot shows as mmcblk0. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SD card.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/card.img /media/ubuntu/DEST/card.map`. Replace sdX with the SD card's name (a card in a built-in card slot shows as mmcblk0 instead, so you would type /dev/mmcblk0) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -399,14 +400,15 @@
         "title": "Recover from the copy",
         "detail": "TestDisk and PhotoRec search the copy for your files so the fragile card is left alone.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/card.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`, and copy files to another drive. If nothing shows, run PhotoRec on the image.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
+          "use-photorec",
           "glossary"
         ]
       },
@@ -501,11 +503,11 @@
         "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If it looks clean and dry and shows up in a reader, copy it at once. Type the SD card first and the destination second; swapping them erases the SD card.",
         "how": [
           "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). A card in a built-in slot shows as mmcblk0. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SD card.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/card.img /media/ubuntu/DEST/card.map`. Replace sdX with the SD card's name (a card in a built-in card slot shows as mmcblk0 instead, so you would type /dev/mmcblk0) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -516,14 +518,15 @@
         "title": "Recover from the image",
         "detail": "The copy lets you search for photos without using the fragile card again.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/card.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`, and copy found files to another drive. If nothing shows, run PhotoRec on the image.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
+          "use-photorec",
           "glossary"
         ]
       },
@@ -599,11 +602,11 @@
         "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. ddrescue handles bad spots without stopping. Type the SD card first and the destination second; swapping them erases the SD card.",
         "how": [
           "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). A card in a built-in slot shows as mmcblk0. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SD card.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/card.img /media/ubuntu/DEST/card.map`. Replace sdX with the SD card's name (a card in a built-in card slot shows as mmcblk0 instead, so you would type /dev/mmcblk0) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -614,11 +617,11 @@
         "title": "Try TestDisk",
         "detail": "A partition is a section of the card. TestDisk can repair a damaged partition or boot sector (the part that says how the card starts), or let you browse files.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/card.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`. If your folders appear, press `p` to browse and `c` to copy files to a different drive. Do not choose `Write`.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
@@ -629,11 +632,11 @@
         "title": "Use PhotoRec",
         "detail": "If folders are lost, PhotoRec recovers photos and videos by type from the image. Names are not kept.",
         "how": [
-          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
-          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
-          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
-          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the card itself, never on the drive you are scanning.",
-          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/card.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the SD card itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
         ],
         "learn": [
           "use-photorec"
@@ -710,7 +713,7 @@
         "detail": "The key is often saved somewhere you can search.",
         "how": [
           "Search your password manager, notes and email for the card, the app name or 'recovery key'.",
-          "BitLocker: sign in at account.microsoft.com/devices/recoverykey with the Microsoft account you used.",
+          "BitLocker: go to aka.ms/myrecoverykey (it opens account.microsoft.com/devices/recoverykey) on any device and sign in with the Microsoft account you used.",
           "Check printouts and files saved earlier."
         ]
       },
@@ -729,11 +732,11 @@
         "detail": "An image is an exact copy of the whole SD card saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Only useful if you can still unlock it, with the key or the original phone. Type the SD card first and the destination second; swapping them erases the SD card.",
         "how": [
           "You need a second drive with free space at least as big as the SD card. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SD card's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SD card's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). A card in a built-in slot shows as mmcblk0. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SD card.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/sdcard.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/card.img /media/ubuntu/DEST/card.map`. Replace sdX with the SD card's name (a card in a built-in card slot shows as mmcblk0 instead, so you would type /dev/mmcblk0) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SD card (the source), the second is where the copy goes. Swapping them erases the SD card.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -744,14 +747,15 @@
         "title": "Recover after unlocking",
         "detail": "If files are missing after unlocking, TestDisk and PhotoRec can search the unlocked volume.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/card.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Point TestDisk or PhotoRec at the unlocked card or its image, choose `Analyse` and `Quick Search`, and copy files to another drive.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
+          "use-photorec",
           "glossary"
         ]
       }

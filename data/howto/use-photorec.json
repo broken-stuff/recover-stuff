@@ -16,17 +16,17 @@
       "body": "PhotoRec comes in the same download as TestDisk, made by CGSecurity.",
       "steps": [
         "Windows: from cgsecurity.org download the TestDisk and PhotoRec zip. Right-click it, choose Extract All, open the folder, and run qphotorec_win.exe as administrator (right-click, Run as administrator). This is the version with windows and buttons.",
-        "Linux live USB: open the Terminal (Ctrl+Alt+T), type: sudo apt install testdisk   and press Enter. If not found, run: sudo add-apt-repository universe   first.",
-        "Start it on Linux with: sudo photorec drive.img   to use an image file, or: sudo photorec   to pick a drive from a list.",
+        "Linux live USB: open the Terminal (Ctrl+Alt+T), type: sudo apt update   then: sudo apt install testdisk   and press Enter after each. If not found, run: sudo add-apt-repository universe   first.",
+        "Start it on Linux with: sudo photorec /media/ubuntu/DEST/drive.img   (your own folder and file name) to use an image file, or: sudo photorec   to pick a drive from a list.",
         "The Linux version is text-based. Use arrow keys to move and Enter to confirm."
       ]
     },
     {
       "heading": "Step 2: Choose the source and partition",
       "steps": [
-        "Pick the drive or image file you want to search.",
+        "Pick the drive or image file you want to search (text version: then choose Proceed).",
         "Pick the partition from the list. If you are unsure, or the drive was formatted, choose the line for the whole disk (it may be called No partition or Whole disk).",
-        "Choose the file system type. Pick Other for FAT, NTFS and exFAT (most Windows, USB and camera cards). Pick ext2/ext3/ext4 for Linux drives."
+        "Choose the file system type. Pick Other for FAT, NTFS, exFAT and Mac drives (most Windows, USB and camera cards); in qphotorec it is labelled FAT/NTFS/HFS+/ReiserFS/... Pick ext2/ext3/ext4 for Linux drives. In the text version this question comes after you choose Search."
       ]
     },
     {
@@ -39,18 +39,18 @@
     },
     {
       "heading": "Step 4: Limit file types (optional but helpful)",
-      "body": "Searching for every type of file takes longer and fills the results with junk. The File Opt menu lets you tick only what you need.",
+      "body": "Searching for every type of file takes longer and fills the results with junk. The File Opt menu lets you tick only what you need. Do this before you start the search.",
       "steps": [
-        "Open File Opt (in qphotorec, click File Formats; in the text version, choose File Opt).",
-        "Untick everything, then tick only your file types, such as jpg, png and cr2 for photos, or doc, docx, xls and pdf for documents.",
+        "Open File Opt (in qphotorec, click File Formats; in the text version, choose File Opt from the menu at the bottom, next to Search).",
+        "Untick everything (text version: press s), then tick only your file types (text version: Space bar). Some names differ from file endings: jpg and png for photos, cr2 or nef for camera RAW, mov for MP4 and MOV videos, pdf, doc for older Word and Excel files, and zip for DOCX and XLSX.",
         "Go back to the main screen."
       ]
     },
     {
       "heading": "Step 5: Set the destination and start",
       "steps": [
-        "Choose the folder where results will be saved. It must be on a different drive from the one you are searching, with lots of free space.",
-        "Click Search (or press C to confirm in the text version).",
+        "Choose the folder where results will be saved. It must be on a different drive from the one you are searching, with lots of free space. In qphotorec, click Browse. In the text version, move through the folder list with the arrow keys and Enter; on a Linux live USB other drives are inside /media/ubuntu (Linux Mint: /media/mint).",
+        "Click Search (text version: when you are inside the right folder, press C).",
         "Wait. A large drive can take many hours. You can see the number of files found rising."
       ],
       "warning": "Never save results onto the drive you are recovering from. It can overwrite the data you want."

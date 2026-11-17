@@ -50,11 +50,11 @@
         "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If the deleted files matter a lot, this protects what is left. Type the SSD first and the destination second; swapping them erases the SSD.",
         "how": [
           "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SSD's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -65,11 +65,11 @@
         "title": "Scan the image with PhotoRec",
         "detail": "PhotoRec searches for the contents of files, not file names. On an SSD it often finds only blank or partial files because TRIM may have wiped the rest.",
         "how": [
-          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
-          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
-          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
-          "Click `Browse` and choose a folder on a different drive than the SSD, never on the drive you are scanning.",
-          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/ssd.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the SSD itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
         ],
         "learn": [
           "use-photorec"
@@ -79,11 +79,11 @@
         "title": "Try TestDisk for recent deletions",
         "detail": "TestDisk can sometimes list deleted files with their original names and folders. It works best on very recent deletions, and many results may be empty.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Pick `Advanced`, choose the partition, then `Undelete`. Deleted files are shown in red. Press `c` to copy a file, then choose a folder on a different drive.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
@@ -155,7 +155,7 @@
           "Plug the SSD into a second computer with a USB-to-SATA cable, an M.2 USB enclosure or a drive dock.",
           "No second computer? Start yours from a Live USB (a Linux USB stick that runs without using your SSD). The guide below shows how.",
           "If a window says the drive needs formatting, click Cancel. Never click Format.",
-          "In Disk Management (Windows) or Disk Utility (Mac) check that the SSD appears. Do not change anything there. Open it: Windows: right-click the Start button and choose Disk Management. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices."
+          "In Disk Management (Windows) or Disk Utility (Mac) check that the SSD appears. Do not change anything there. Open it: Windows: right-click the Start button and choose Disk Management. If a window pops up asking to initialize the disk, click Cancel. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices."
         ],
         "learn": [
           "live-usb"
@@ -176,11 +176,11 @@
         "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Doing this first means you can try recovery as many times as you like. Type the SSD first and the destination second; swapping them erases the SSD.",
         "how": [
           "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SSD's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -191,11 +191,11 @@
         "title": "Look for the lost partition",
         "detail": "A partition is a section of the drive that holds your files. Formatting can hide it, and TestDisk can sometimes find the old layout so you can browse your files again.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`. If a partition shows with your folders, press `p` to list its files, then `c` to copy them to a different drive.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
@@ -206,11 +206,11 @@
         "title": "Scan by file type",
         "detail": "If TestDisk finds nothing, PhotoRec rebuilds files from their contents. You get files without folder names, and trimmed areas will be blank.",
         "how": [
-          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
-          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
-          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
-          "Click `Browse` and choose a folder on a different drive than the SSD, never on the drive you are scanning.",
-          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/ssd.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the SSD itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
         ],
         "learn": [
           "use-photorec"
@@ -276,7 +276,7 @@
         "detail": "The BIOS (the first screen your computer shows before Windows or macOS starts) lists every drive it can see. If the SSD is missing there, the computer cannot talk to it at all.",
         "how": [
           "Restart and tap the setup key as it starts (usually F2, Del, F10 or Esc, shown on the first screen). Look for your SSD's name in the drive list.",
-          "Windows: right-click the Start button and choose Disk Management. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
+          "Windows: right-click the Start button and choose Disk Management. If a window pops up asking to initialize the disk, click Cancel. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
           "A drive that appears but has no drive letter may only need one. Do not change anything or click Initialize.",
           "Write down what name and size the SSD shows."
         ],
@@ -298,7 +298,7 @@
         "title": "Check the SSD's health",
         "detail": "A health check reads the SSD's built-in self-report (called SMART data). Warnings such as very few spare blocks or media errors mean the SSD is wearing out or failing.",
         "how": [
-          "Windows: download CrystalDiskInfo (free) from crystalmark.info, install it and open it. Mac or Linux: in Terminal type `smartctl -a /dev/sdX` (replace sdX with the SSD; install with `brew install smartmontools` on Mac).",
+          "Windows: download CrystalDiskInfo (free) from crystalmark.info, install it and open it. Linux live USB: in the Terminal type `sudo apt install smartmontools`, then `sudo smartctl -a /dev/sdX` (replace sdX with the SSD; an NVMe SSD is /dev/nvme0). Mac: type `brew install smartmontools`, then `sudo smartctl -a disk0`, using the disk name from `diskutil list`.",
           "Look at the big status word. Good means healthy. Caution or Bad means the SSD is in trouble.",
           "Also look for Reallocated or Available Spare, and Media Errors. Low spare or any media errors mean copy your files first.",
           "If it says Caution or Bad, skip any repair and go to making an image."
@@ -312,11 +312,11 @@
         "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. A drive that works only sometimes may stop for good, so copy it the moment it shows up. Type the SSD first and the destination second; swapping them erases the SSD.",
         "how": [
           "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SSD's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -327,14 +327,15 @@
         "title": "Recover from the image",
         "detail": "The image may hold a damaged partition (a section of the drive). TestDisk can find it, and PhotoRec can pull out files if it cannot.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`. If your partition shows, press `p` to list files and `c` to copy them to another drive. If it does not, use PhotoRec on the image.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
+          "use-photorec",
           "glossary"
         ]
       },
@@ -405,7 +406,7 @@
           "Swap the cable or adapter for a different one you know works.",
           "Try another USB port, ideally one directly on the computer, not a hub.",
           "Try a different computer.",
-          "Windows: right-click the Start button and choose Disk Management. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices."
+          "Windows: right-click the Start button and choose Disk Management. If a window pops up asking to initialize the disk, click Cancel. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices."
         ]
       },
       {
@@ -433,11 +434,11 @@
         "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If the drive reappears, this protects you before it fails again. Type the SSD first and the destination second; swapping them erases the SSD.",
         "how": [
           "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SSD's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -448,14 +449,15 @@
         "title": "Recover from the copy",
         "detail": "The image may contain a damaged partition (a section of the drive). TestDisk looks for it, and PhotoRec is the fallback.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`, and copy any files you see to a different drive. If nothing shows, use PhotoRec on the image.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
+          "use-photorec",
           "glossary"
         ]
       },
@@ -596,7 +598,7 @@
         "title": "Check the SSD's health",
         "detail": "A health check reads the SSD's built-in self-report (called SMART data). Warnings such as very few spare blocks or media errors mean the SSD is wearing out or failing.",
         "how": [
-          "Windows: download CrystalDiskInfo (free) from crystalmark.info, install it and open it. Mac or Linux: in Terminal type `smartctl -a /dev/sdX` (replace sdX with the SSD; install with `brew install smartmontools` on Mac).",
+          "Windows: download CrystalDiskInfo (free) from crystalmark.info, install it and open it. Linux live USB: in the Terminal type `sudo apt install smartmontools`, then `sudo smartctl -a /dev/sdX` (replace sdX with the SSD; an NVMe SSD is /dev/nvme0). Mac: type `brew install smartmontools`, then `sudo smartctl -a disk0`, using the disk name from `diskutil list`.",
           "Look at the big status word. Good means healthy. Caution or Bad means the SSD is in trouble.",
           "Also look for Reallocated or Available Spare, and Media Errors. Low spare or any media errors mean copy your files first.",
           "If it says Caution or Bad, skip any repair and go to making an image."
@@ -620,11 +622,11 @@
         "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Keep the map file so the copy can resume if the SSD disconnects. Type the SSD first and the destination second; swapping them erases the SSD.",
         "how": [
           "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SSD's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -635,11 +637,11 @@
         "title": "Look for the partition",
         "detail": "A partition is a section of the drive that holds your files. TestDisk can often find and rebuild a damaged one.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`. If your partition shows, press `p` to browse its files. Do not choose `Write` yet.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
@@ -663,11 +665,11 @@
         "title": "Use PhotoRec as a backup plan",
         "detail": "If the folders cannot be found, PhotoRec pulls out files by type from the image. Names and folders are lost.",
         "how": [
-          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
-          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
-          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
-          "Click `Browse` and choose a folder on a different drive than the SSD, never on the drive you are scanning.",
-          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/ssd.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the SSD itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
         ],
         "learn": [
           "use-photorec"
@@ -680,7 +682,7 @@
           "Check that your recovered files open from their new drive.",
           "If the health check showed errors, replace the SSD. Do not reuse it.",
           "If it looked healthy, Windows: right-click the SSD in Disk Management > Format. Mac: Disk Utility > Erase. Only do this after everything is copied.",
-          "Now it is safe to run chkdsk or other repair tools if you want."
+          "Formatting erases everything left on the SSD, so keep it untouched until you are sure your recovered copies are complete."
         ]
       }
     ],
@@ -738,7 +740,7 @@
         "title": "Find the recovery key",
         "detail": "A recovery key is a code saved when encryption was turned on. It unlocks the drive when the password is lost.",
         "how": [
-          "BitLocker: sign in at account.microsoft.com/devices/recoverykey with the Microsoft account used on that PC. Also check a work or school account.",
+          "BitLocker: go to aka.ms/myrecoverykey (it opens account.microsoft.com/devices/recoverykey) on any device and sign in with the Microsoft account used on that PC. Also check a work or school account.",
           "Look for a printout or a text file or USB stick saved earlier. A BitLocker key is 48 digits in 8 groups.",
           "FileVault: your Apple Account recovery on iCloud, or the key you wrote down. On newer Macs the SSD is built in and can only be unlocked inside that Mac.",
           "Match the first 8 characters of the key ID shown on the lock screen to the key you find."
@@ -758,7 +760,7 @@
         "title": "Unlock on a working system",
         "detail": "Unlocking normally is the safe route. You then copy the files out.",
         "how": [
-          "Plug the SSD into a computer that supports the same encryption (Windows Pro for BitLocker, a Mac for FileVault).",
+          "Plug the SSD into a computer that supports the same encryption (any Windows 10 or 11 PC for BitLocker, Home editions included; a Mac for FileVault).",
           "Windows: double-click the drive in File Explorer, click More options > Enter recovery key, type the key and click Unlock.",
           "Mac: connect it and enter the password or recovery key in the window that appears.",
           "Copy the files to a different drive."
@@ -769,11 +771,11 @@
         "detail": "An image is an exact copy of the whole SSD saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Only do this if you have the key and the drive is also failing. A drive locked with a hardware password must be unlocked before it can be copied. Type the SSD first and the destination second; swapping them erases the SSD.",
         "how": [
           "You need a second drive with free space at least as big as the SSD. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the SSD's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the SSD's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). An NVMe SSD shows as nvme0n1. Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the SSD.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/ssd.img /media/ubuntu/DEST/ssd.map`. Replace sdX with the SSD's name (an NVMe SSD shows as nvme0n1 instead, so you would type /dev/nvme0n1) and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the SSD (the source), the second is where the copy goes. Swapping them erases the SSD.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -784,14 +786,15 @@
         "title": "Recover from the unlocked copy",
         "detail": "If files are still missing after unlocking, TestDisk and PhotoRec can search the unlocked volume.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/ssd.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Point TestDisk or PhotoRec at the unlocked volume or at the image. Choose `Analyse` and `Quick Search`, then copy files to a different drive.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
+          "use-photorec",
           "glossary"
         ]
       }

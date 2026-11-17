@@ -50,9 +50,9 @@
         "title": "Run TestDisk for folders and names",
         "detail": "TestDisk reads the drive's records, so it can often list deleted files with their original names and folders on some file systems (ways of organising files).",
         "how": [
-          "Download TestDisk from cgsecurity.org to your computer's own drive and unzip it. Windows: run testdisk_win.exe as administrator. Mac or Linux: run `sudo ./testdisk`.",
+          "Download TestDisk from cgsecurity.org to your computer's own drive and unzip it. Windows: run testdisk_win.exe as administrator. Linux live USB: type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
           "Choose Create, pick your external drive by its size, accept the partition type, then choose Advanced, pick the partition and choose Undelete.",
-          "Highlight a file, press `c` to copy and choose a folder on your destination drive."
+          "Highlight a file, press `c` to copy, move to a folder on your destination drive, then press `C` to confirm."
         ],
         "learn": [
           "use-testdisk",
@@ -63,9 +63,9 @@
         "title": "Use PhotoRec for the rest",
         "detail": "PhotoRec ignores the drive's records and scans for the recognisable shape of photos, videos and documents, so it can find files TestDisk cannot. Names are usually lost.",
         "how": [
-          "Run photorec_win.exe (Windows, as administrator) or `sudo ./photorec` (Mac or Linux).",
+          "Run photorec_win.exe (Windows, as administrator) or `sudo photorec` (Mac or Linux, installed with TestDisk as above).",
           "Pick the external drive and partition, use File Opt to tick the file types you want, then choose Free if you only want deleted files.",
-          "Pick a folder on your destination drive and press `c` to start. Wait for it to say it has finished."
+          "Pick `Other` as the file system unless it is a Linux drive, move to a folder on your destination drive and press `C` to start. Wait for it to say it has finished."
         ],
         "learn": [
           "use-photorec"
@@ -148,9 +148,9 @@
         "title": "Run TestDisk",
         "detail": "TestDisk searches for the lost partition (the section of the drive that holds your files) and may restore your folders with their original names, especially after a quick format.",
         "how": [
-          "Download TestDisk from cgsecurity.org to your computer's own drive and unzip it. Windows: run testdisk_win.exe as administrator. Mac or Linux: `sudo ./testdisk`.",
+          "Download TestDisk from cgsecurity.org to your computer's own drive and unzip it. Windows: run testdisk_win.exe as administrator. Linux live USB: `sudo apt install testdisk`, then `sudo testdisk`. Mac: `brew install testdisk`, then `sudo testdisk`.",
           "Choose Create, pick your external drive by its size, accept the partition type, then choose Analyse and Quick Search.",
-          "If your old partition appears, press `p` to list its files, copy what you need with `c` to your other drive, or choose Write to restore it."
+          "If your old partition appears, press `p` to list its files and copy what you need with `c` to your other drive. Do not choose Write: it changes the drive itself."
         ],
         "learn": [
           "use-testdisk",
@@ -161,8 +161,8 @@
         "title": "Use PhotoRec if TestDisk cannot help",
         "detail": "PhotoRec scans for the shape of known file types and saves them to your other drive. Expect generic names that you sort afterwards.",
         "how": [
-          "Run photorec_win.exe (Windows, as administrator) or `sudo ./photorec` (Mac or Linux).",
-          "Pick the external drive, choose Whole disk, then pick a folder on your other drive and press `c`.",
+          "Run photorec_win.exe (Windows, as administrator) or `sudo photorec` (Mac or Linux, installed with TestDisk as above).",
+          "Pick the external drive and the Whole disk line, choose Search, pick `Other` as the file system (unless it was a Linux drive) and `Whole`, then move to a folder on your other drive and press `C`.",
           "Expect hours for a large drive."
         ],
         "learn": [
@@ -237,7 +237,7 @@
         "title": "Check Disk Management or Disk Utility",
         "detail": "These tools show drives that the computer can see but cannot use yet, for example a drive with no letter.",
         "how": [
-          "Windows: right-click the Start button, choose Disk Management. Mac: open Finder, Applications, Utilities, Disk Utility, then View, Show All Devices.",
+          "Windows: right-click the Start button, choose Disk Management. If a window pops up asking to initialize the disk, click Cancel. Mac: open Finder, Applications, Utilities, Disk Utility, then View, Show All Devices.",
           "Find your drive by its size. If it says Raw, Unallocated or Not Initialized, do not click Initialize, Format or Erase.",
           "Use TestDisk instead, ideally on an image (an exact copy of the whole drive saved as a file)."
         ],
@@ -258,7 +258,7 @@
         "title": "Understand the enclosure",
         "detail": "If the computer sees a USB device but no storage, the bridge board may have failed while the drive inside is fine.",
         "how": [
-          "Windows: in Device Manager, look under Disk drives and Universal Serial Bus controllers. Mac: Apple menu, About This Mac, System Report, USB.",
+          "Windows: right-click the Start button, choose Device Manager, and look under Disk drives and Universal Serial Bus controllers. Mac: Apple menu, About This Mac (newer macOS: then More Info), System Report, USB.",
           "Listed as a USB device but with no disk: suspect the bridge board. Do not assume the drive inside is bad."
         ]
       },
@@ -277,13 +277,15 @@
         "title": "If it is readable, check health and image it",
         "detail": "An image (an exact copy of the whole drive saved as a file) lets you recover from a copy and leave a weak drive alone. SMART is the drive's own health record.",
         "how": [
-          "Read SMART with CrystalDiskInfo (Windows) or `smartctl -a /dev/sdX` (Mac or Linux). Some USB cases hide SMART, so a missing report does not mean it is fine.",
+          "Read SMART with CrystalDiskInfo (Windows), or on a Linux live USB with `sudo smartctl -a /dev/sdX` after `sudo apt install smartmontools` (some USB cases need `sudo smartctl -d sat -a /dev/sdX`). Some USB cases hide SMART, so a missing report does not mean it is fine.",
           "If errors show, follow our imaging guide with ddrescue. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
           "Then run TestDisk or PhotoRec on the image file."
         ],
         "learn": [
           "check-health",
-          "image-drive"
+          "image-drive",
+          "use-testdisk",
+          "use-photorec"
         ]
       }
     ],
@@ -369,9 +371,9 @@
         "title": "Get the copy direction right",
         "detail": "Imaging means copying everything on the drive to a file. In ddrescue or HDDSuperClone (free tools for Linux), the clicking drive is the source and a healthy drive is the destination. Getting this wrong is very costly.",
         "how": [
-          "Boot a Linux live USB (a USB stick that runs its own system without installing anything) on a computer, plug in the clicking drive and a healthy destination drive.",
-          "In a terminal run `lsblk` to see both drives by size. Note the name of each, such as sdb and sdc.",
-          "Run `sudo ddrescue -n /dev/sdX /mnt/backup/disk.img /mnt/backup/disk.map`, where sdX is the clicking drive. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data."
+          "Boot a Linux live USB (a USB stick that runs its own system without installing anything) on a computer, press Ctrl+Alt+T to open a terminal and type `sudo apt install gddrescue`. Then plug in the healthy destination drive and open it in the Files app, and only then plug in the clicking drive.",
+          "In the terminal run `lsblk -o NAME,SIZE,MODEL` to see both drives by size. Note the name of each, such as sdb and sdc.",
+          "Run `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/drive.img /media/ubuntu/DEST/drive.map`, where sdX is the clicking drive and DEST is the destination drive's name (Linux Mint: /media/mint/DEST). Run only this first pass; skip the retry pass. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data."
         ],
         "learn": [
           "image-drive",
@@ -648,7 +650,7 @@
         "title": "Check its health",
         "detail": "SMART is the drive's own health record. It shows whether the disk is wearing out.",
         "how": [
-          "Windows: install and open CrystalDiskInfo and read the Health Status. Mac or Linux: in a terminal run `smartctl -a /dev/sdX`.",
+          "Windows: install and open CrystalDiskInfo and read the Health Status. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install smartmontools`, then `sudo smartctl -a /dev/sdX` (some USB cases need `-d sat` after `smartctl`). Mac: see the health check guide.",
           "Some USB cases hide SMART, so a missing report does not mean the drive is fine."
         ],
         "learn": [
@@ -675,8 +677,8 @@
         "title": "Image with ddrescue",
         "detail": "ddrescue copies the drive while skipping unreadable spots and returning to them later, which saves the most data and stresses the drive the least.",
         "how": [
-          "Boot a Linux live USB if needed, open a terminal and run `lsblk` to identify both drives.",
-          "Run `sudo ddrescue -n /dev/sdX /mnt/backup/disk.img /mnt/backup/disk.map`, where sdX is the damaged drive. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
+          "Boot a Linux live USB, press Ctrl+Alt+T to open a terminal, install ddrescue with `sudo apt install gddrescue`, then run `lsblk -o NAME,SIZE,MODEL` to identify both drives. Open the destination drive in the Files app, but not the damaged one.",
+          "Run `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/drive.img /media/ubuntu/DEST/drive.map`, where sdX is the damaged drive and DEST is your destination drive's name (Linux Mint: /media/mint/DEST). Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
           "Keep the map file so you can stop and resume. HDDSuperClone is an alternative on Linux."
         ],
         "learn": [
@@ -688,8 +690,8 @@
         "title": "Recover from the image",
         "detail": "The image is expendable, so you can try again if something goes wrong.",
         "how": [
-          "Run `sudo testdisk disk.img` to rebuild partitions or list files, and copy them to another drive.",
-          "If folders are too damaged, run `sudo photorec disk.img`. Never work on the original."
+          "Run `sudo testdisk /media/ubuntu/DEST/drive.img` to rebuild partitions or list files, and copy them to another drive.",
+          "If folders are too damaged, run `sudo photorec /media/ubuntu/DEST/drive.img`. Never work on the original."
         ],
         "learn": [
           "use-testdisk",
@@ -753,7 +755,7 @@
         "title": "Find your recovery key",
         "detail": "The recovery key is a long backup code made when encryption was turned on, which unlocks the drive if the password fails.",
         "how": [
-          "BitLocker: sign in at account.microsoft.com/devices/recoverykey, or check a work or school account, a printed page or a saved file.",
+          "BitLocker: go to aka.ms/myrecoverykey (it opens account.microsoft.com/devices/recoverykey) on any device and sign in, or check a work or school account, a printed page or a saved file.",
           "Mac: use the password you set, which may be saved in Keychain Access (Applications, Utilities)."
         ]
       },

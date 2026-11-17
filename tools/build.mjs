@@ -303,14 +303,15 @@ if (howtoIds.length) {
   const rel = '../../../';
   const hubPath = 'guide/how-to/';
   const hubDesc = 'Beginner-friendly guides for data recovery: make a copy of a drive, boot from a USB stick, use TestDisk and PhotoRec, check drive health and find a trustworthy pro.';
-  const hubBody = `<nav class="crumbs" aria-label="Breadcrumb"><a href="${rel}">Home</a> <span aria-hidden="true">›</span> <span>Guides</span></nav>
+  const hubRel = '../../'; // hub lives at guide/how-to/, one level shallower than the guides
+  const hubBody = `<nav class="crumbs" aria-label="Breadcrumb"><a href="${hubRel}">Home</a> <span aria-hidden="true">›</span> <span>Guides</span></nav>
 <h1 tabindex="-1">Beginner guides</h1>
 <p class="lead">Plain-language how-tos for the techy bits. Each one explains what to click, where to click and why.</p>
 <div class="cards hub-list">${howtoIds.map((id) => `<a class="pick" href="${id}/"><span class="t">${esc(howto[id].title)}</span><span class="b">${esc(howto[id].metaDescription)}</span></a>`).join('')}</div>
-<p class="actions"><a class="btn ghost" href="${rel}">Start the guide</a></p>
+<p class="actions"><a class="btn ghost" href="${hubRel}">Start the guide</a></p>
 <p class="disclaimer inline">${esc(DISCLAIMER)}</p>`;
   write(hubPath + 'index.html', layout({
-    title: `Beginner data recovery guides | ${SITE_NAME}`, desc: hubDesc, path: hubPath, rel, body: hubBody,
+    title: `Beginner data recovery guides | ${SITE_NAME}`, desc: hubDesc, path: hubPath, rel: hubRel, body: hubBody,
     ld: [crumbLD([['Home', SITE], ['Guides', SITE + hubPath]])],
   }).replace('<meta property="og:type" content="article">', '<meta property="og:type" content="website">'));
   urls.push({ loc: SITE + hubPath, pri: '0.6' });

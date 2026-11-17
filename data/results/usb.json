@@ -36,11 +36,11 @@
         "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Doing this first protects you if the drive starts failing. Type the USB drive first and the destination second; swapping them erases the USB drive.",
         "how": [
           "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the USB drive.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/usb.img /media/ubuntu/DEST/usb.map`. Replace sdX with the USB drive's name and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -51,11 +51,11 @@
         "title": "Try TestDisk first",
         "detail": "TestDisk can often bring back deleted files with their original names and folders. It is the quickest option.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/usb.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose your partition, press `Advanced`, then `Undelete`. Deleted files show in red. Press `c` to copy a file, then pick a folder on a different drive.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
@@ -66,11 +66,11 @@
         "title": "Use PhotoRec next",
         "detail": "If TestDisk cannot find your files, PhotoRec searches the drive's contents directly. It works even when the file list is gone, but names are lost.",
         "how": [
-          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
-          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
-          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
-          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the USB drive itself, never on the drive you are scanning.",
-          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/usb.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the USB drive itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
         ],
         "learn": [
           "use-photorec"
@@ -145,11 +145,11 @@
         "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. From now on you work only on the copy. Type the USB drive first and the destination second; swapping them erases the USB drive.",
         "how": [
           "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the USB drive.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/usb.img /media/ubuntu/DEST/usb.map`. Replace sdX with the USB drive's name and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -160,11 +160,11 @@
         "title": "Find the old partition",
         "detail": "A partition is a section of the drive that holds your files. TestDisk can often find the old layout from before the format.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/usb.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`. If a partition appears, press `p` to list its files, then `c` to copy them to a different drive.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
@@ -175,11 +175,11 @@
         "title": "Run PhotoRec if needed",
         "detail": "If TestDisk cannot find the old layout, PhotoRec pulls out photos, documents and videos by their contents. File names will be lost.",
         "how": [
-          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
-          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
-          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
-          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the USB drive itself, never on the drive you are scanning.",
-          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/usb.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the USB drive itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
         ],
         "learn": [
           "use-photorec"
@@ -254,7 +254,7 @@
         "title": "Look in Disk Management or Disk Utility",
         "detail": "These built-in tools list every drive, even ones with no drive letter or an unknown format (shown as RAW, meaning the computer cannot read how it is organized).",
         "how": [
-          "Windows: right-click the Start button and choose Disk Management. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
+          "Windows: right-click the Start button and choose Disk Management. If a window pops up asking to initialize the disk, click Cancel. Mac: press Cmd+Space, type Disk Utility and press Enter, then click View > Show All Devices.",
           "Look for a drive of the right size. A drive with no letter, or labelled RAW or Unallocated, may still hold your files.",
           "Do not click Initialize, Format or Delete Volume. Just write down what you see.",
           "If nothing of the right size appears, go to the next step."
@@ -278,11 +278,11 @@
         "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Even if it appears for a moment, copy it at once because it may not appear again. Type the USB drive first and the destination second; swapping them erases the USB drive.",
         "how": [
           "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the USB drive.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/usb.img /media/ubuntu/DEST/usb.map`. Replace sdX with the USB drive's name and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -293,14 +293,15 @@
         "title": "Recover from the copy",
         "detail": "The copy may hold a damaged partition (a section of the drive). TestDisk can find it, and PhotoRec can pull out files if it cannot.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/usb.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`. If a partition shows, press `p` and copy files to another drive. If not, run PhotoRec on the image.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
+          "use-photorec",
           "glossary"
         ]
       },
@@ -387,11 +388,11 @@
         "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If it shows up even briefly, copy it before doing anything else. Type the USB drive first and the destination second; swapping them erases the USB drive.",
         "how": [
           "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the USB drive.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/usb.img /media/ubuntu/DEST/usb.map`. Replace sdX with the USB drive's name and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -402,14 +403,15 @@
         "title": "Run recovery on the copy",
         "detail": "The copy lets you search for lost files without touching the damaged drive again.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/usb.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`, and copy any files to another drive. If nothing shows, run PhotoRec on the image.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
+          "use-photorec",
           "glossary"
         ]
       },
@@ -505,11 +507,11 @@
         "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. If it looks clean and dry and shows up, copy it right away. Type the USB drive first and the destination second; swapping them erases the USB drive.",
         "how": [
           "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the USB drive.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/usb.img /media/ubuntu/DEST/usb.map`. Replace sdX with the USB drive's name and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -520,14 +522,15 @@
         "title": "Recover from the copy",
         "detail": "TestDisk and PhotoRec search the copy for your files, so the fragile drive is not used again.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/usb.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`, and copy found files to another drive. If nothing shows, run PhotoRec on the image.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
+          "use-photorec",
           "glossary"
         ]
       },
@@ -593,11 +596,11 @@
         "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. This also shows which areas are unreadable. Type the USB drive first and the destination second; swapping them erases the USB drive.",
         "how": [
           "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the USB drive.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/usb.img /media/ubuntu/DEST/usb.map`. Replace sdX with the USB drive's name and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -608,11 +611,11 @@
         "title": "Try TestDisk on the image",
         "detail": "A partition is a section of the drive. TestDisk can find a lost one or repair a damaged boot sector (the part that says how the drive starts).",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/usb.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Choose `Analyse`, then `Quick Search`. If your folders appear, press `p` to browse and `c` to copy files to a different drive. Do not choose `Write`.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
@@ -623,11 +626,11 @@
         "title": "Use PhotoRec if folders are lost",
         "detail": "PhotoRec recovers files by type from the image. Names and folders are not kept.",
         "how": [
-          "Open PhotoRec (a free tool that searches for file contents instead of file names). Windows: unzip the TestDisk download and double-click `qphotorec_win.exe` for the click-and-type window. Mac or Linux: in Terminal type `sudo photorec`.",
-          "Choose your image file (or the drive if you have no image) at the top of the window or in the list, then pick `Whole disk` or the biggest partition.",
-          "Click `File Formats` and untick types you do not need (for example keep only JPG, PNG, MP4, DOCX) to save time. Skipping this is also fine.",
-          "Click `Browse` and choose a folder on a folder on your computer or a different drive, never the USB drive itself, never on the drive you are scanning.",
-          "Click `Search` (terminal: press `C`). It can take hours. Leave the computer on."
+          "Open PhotoRec (a free tool that searches for file contents instead of file names; it comes with TestDisk). Windows: in the unzipped TestDisk folder, right-click `qphotorec_win.exe` and choose Run as administrator (this version has buttons). Linux live USB: type `sudo apt install testdisk` if you have not yet, then `sudo photorec /media/ubuntu/DEST/usb.img` to search your image. Mac: `brew install testdisk`, then `sudo photorec`. The text version uses the arrow keys and Enter.",
+          "Pick the drive or image from the list (text version: then choose `Proceed`), then the partition, or the `Whole disk` line if unsure. When asked for the file system, pick `Other` (the window version calls it FAT/NTFS/HFS+/ReiserFS/...) unless it was a Linux drive (`ext2/ext3/ext4`). Choose `Free` for deleted files, or `Whole` for formatted, RAW or damaged drives.",
+          "Click `File Formats` and untick types you do not need to save time. Some names differ from the file endings: keep `jpg` and `png` for photos, `mov` for MP4 and MOV videos, `pdf`, and `zip` for DOCX and XLSX. Text version: choose `File Opt` before `Search`, press `s` to untick everything, tick types with the Space bar, then press `q` to go back. Skipping this is also fine.",
+          "Choose where to save results: a folder on a different drive, never the USB drive itself. Window version: click `Browse`. Text version: after `Search` it shows a list of folders; move to /media/ubuntu/DEST with the arrow keys and Enter, then press `C`.",
+          "Window version: click `Search`. It can take hours. Leave the computer on until it says it has finished."
         ],
         "learn": [
           "use-photorec"
@@ -703,7 +706,7 @@
         "title": "Find the key",
         "detail": "BitLocker recovery keys are usually saved online or printed.",
         "how": [
-          "BitLocker: sign in at account.microsoft.com/devices/recoverykey with your Microsoft account. Also check any work or school account.",
+          "BitLocker: go to aka.ms/myrecoverykey (it opens account.microsoft.com/devices/recoverykey) on any device and sign in with your Microsoft account. Also check any work or school account.",
           "Look for a printout, or a text file on another drive or in email.",
           "A BitLocker key is 48 digits in 8 groups.",
           "Match the key ID on the lock screen to the one shown online."
@@ -733,11 +736,11 @@
         "detail": "An image is an exact copy of the whole USB drive saved as one file. You then run every recovery tool on the copy, so the original is never touched again. ddrescue is the free tool that makes the copy and keeps going past unreadable spots. Only do this if you have the key and the drive is damaged. It works for BitLocker or VeraCrypt, not keypad drives, and you unlock the copy afterwards. Type the USB drive first and the destination second; swapping them erases the USB drive.",
         "how": [
           "You need a second drive with free space at least as big as the USB drive. Plug it in and note its name.",
-          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
-          "Find the USB drive's name. Linux: type `lsblk` and match it by size (it looks like /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess.",
+          "Windows: ddrescue runs from Linux, so follow the Live USB guide to start your PC from a Linux USB stick (a stick that starts a temporary Linux without touching your drive). When the Linux desktop appears, press Ctrl+Alt+T to open the Terminal and type `sudo apt install gddrescue` (the imaging guide explains what to do if it is not found). Mac: press Cmd+Space, type Terminal, press Enter, then type `brew install ddrescue` (needs Homebrew from brew.sh).",
+          "Find the USB drive's name. Linux: type `lsblk -o NAME,SIZE,MODEL` and match it by size (it looks like sdb, which you type as /dev/sdb). Mac: type `diskutil list` (it looks like /dev/disk4). Pick by size, never guess. Then open the destination drive in the Files app (Mac: Finder) so it is ready, but do not open the USB drive.",
           "Mac only: type `diskutil unmountDisk /dev/disk4` (use your number) so the Mac lets go of it. Do not click Initialize or Erase if a window pops up.",
-          "Type `sudo ddrescue -d /dev/sdX /mnt/backup/usbdrive.img /mnt/backup/map.log` replacing sdX and the folder with yours. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
-          "Wait until it says it is finished. Keep the map.log file: it lets you stop and resume. Work only on an image file from now on."
+          "Type `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/usb.img /media/ubuntu/DEST/usb.map`. Replace sdX with the USB drive's name and DEST with your destination drive's name (on Linux Mint the folder is /media/mint/ instead). On a Mac, use /dev/diskN as the first path and /Volumes/DEST/ for the other two. The first path is the USB drive (the source), the second is where the copy goes. Swapping them erases the USB drive.",
+          "Wait until it says it is finished. Keep the .map file: it lets you stop and resume. Work only on an image file from now on."
         ],
         "learn": [
           "image-drive",
@@ -748,14 +751,15 @@
         "title": "Run recovery after unlocking",
         "detail": "If files are missing, TestDisk and PhotoRec can search the unlocked volume or its image.",
         "how": [
-          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: unzip the download from cgsecurity.org and double-click `testdisk_win.exe`. Mac or Linux: in Terminal type `sudo testdisk`.",
-          "If you made an image, open it by typing `testdisk image.img` (Windows: run this in Command Prompt from the TestDisk folder). Otherwise choose the drive from the list with the arrow keys and press Enter.",
-          "Choose `Create` (log file), then pick the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
+          "Open TestDisk (a free tool that finds lost partitions, meaning the sections of a drive, and deleted files). Windows: download it from cgsecurity.org, right-click the zip, choose Extract All, then right-click `testdisk_win.exe` and choose Run as administrator. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install testdisk`, then `sudo testdisk`. Mac: in Terminal type `brew install testdisk`, then `sudo testdisk`.",
+          "If you made an image, start TestDisk on the image instead: type `sudo testdisk /media/ubuntu/DEST/usb.img` (use your own folder and file name). Otherwise it lists your drives.",
+          "Choose `Create` (log file), pick the drive or image with the arrow keys, choose `Proceed`, then accept the partition table type it suggests, usually `Intel/PC` or `EFI GPT`, and press Enter.",
           "Point TestDisk or PhotoRec at the unlocked drive or image, choose `Analyse` and `Quick Search`, and copy files to another drive.",
-          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it yet."
+          "Use the arrow keys and Enter to move around and `q` to go back. TestDisk only changes anything if you choose Write, so do not choose it."
         ],
         "learn": [
           "use-testdisk",
+          "use-photorec",
           "glossary"
         ]
       }

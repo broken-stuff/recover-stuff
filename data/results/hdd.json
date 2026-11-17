@@ -43,7 +43,7 @@
         "how": [
           "Simplest: shut down, remove the drive, and attach it to a second computer as an extra drive (a USB adapter or dock works).",
           "Or boot from a live USB (a USB stick that starts its own small copy of Linux so nothing is installed). Our guide shows how to make one.",
-          "On the Linux desktop, open a terminal (a window where you type commands) from the menu."
+          "On the Linux desktop, press Ctrl+Alt+T to open a terminal (a window where you type commands), then type `sudo apt install testdisk` and press Enter. This installs TestDisk and PhotoRec. On a second Windows computer, download TestDisk from cgsecurity.org and unzip it instead."
         ],
         "learn": [
           "live-usb",
@@ -54,9 +54,9 @@
         "title": "Try TestDisk first to get names and folders back",
         "detail": "TestDisk reads the drive's records of what was stored where, so it can often list deleted files with their original names and folders.",
         "how": [
-          "In the terminal, type `sudo testdisk` and press Enter.",
+          "In the terminal, type `sudo testdisk` and press Enter. Windows: right-click `testdisk_win.exe` and choose Run as administrator.",
           "Choose Create (new log), pick your drive with the arrow keys, press Enter, pick the partition type it suggests (usually Intel or EFI GPT), then choose Advanced.",
-          "Select the partition holding your files, choose Undelete, highlight the file, press `c` to copy, and pick the folder on your second drive."
+          "Select the partition holding your files, choose Undelete, highlight the file, press `c` to copy, move to a folder on your second drive (on a live USB it is inside /media/ubuntu, or /media/mint on Linux Mint), then press `C` to confirm."
         ],
         "learn": [
           "use-testdisk"
@@ -66,9 +66,9 @@
         "title": "Use PhotoRec if names are lost",
         "detail": "PhotoRec ignores the records and scans the raw drive for the recognisable shape of photos, documents and other file types. You get the contents back, but usually with generic names.",
         "how": [
-          "In the terminal, type `sudo photorec` and press Enter.",
+          "In the terminal, type `sudo photorec` and press Enter. Windows: right-click `qphotorec_win.exe` and choose Run as administrator.",
           "Pick the drive, then the partition, then choose File Opt to tick only the file types you want, which speeds things up.",
-          "Choose the folder on your second drive as the destination and press `c` to start. Wait until it says it has finished."
+          "Choose Search, pick `Other` as the file system (unless it is a Linux drive), then `Free` to search only the empty space where deleted files sit. Move to a folder on your second drive and press `C` to start. Wait until it says it has finished."
         ],
         "learn": [
           "use-photorec"
@@ -158,9 +158,9 @@
         "title": "Try TestDisk to restore the old structure",
         "detail": "TestDisk searches for the lost partition (a section of the drive that holds your files) and may bring back folders with their original names. It works best after a quick format.",
         "how": [
-          "In a terminal, type `sudo testdisk` and press Enter. On Windows, run testdisk_win.exe as administrator.",
+          "In a terminal, type `sudo testdisk` and press Enter (on a live USB, first type `sudo apt install testdisk`). On Windows, run testdisk_win.exe as administrator.",
           "Choose Create, pick the drive, accept the partition type it suggests, then choose Analyse and Quick Search.",
-          "If it finds your old partition, press `p` to list its files and check they look right. Then choose Write to restore it, or copy the files out with `c` first if you prefer."
+          "If it finds your old partition, press `p` to list its files and check they look right. Copy what you need with `c` to a folder on your second drive. Do not choose Write: it changes the drive itself."
         ],
         "learn": [
           "use-testdisk",
@@ -172,7 +172,7 @@
         "detail": "PhotoRec scans the whole drive for the recognisable shape of photos, documents and other known file types. Names and folders are usually lost, but the contents come back.",
         "how": [
           "Type `sudo photorec` (Windows: run photorec_win.exe as administrator) and pick the drive.",
-          "Choose Whole disk, then the file system type Other (for FAT, NTFS, exFAT) or ext2/3/4 as needed.",
+          "Choose the Whole disk line, then Search, then the file system type Other (for FAT, NTFS, exFAT) or ext2/ext3/ext4 for Linux drives, then Whole.",
           "Pick a folder on your second drive and press `c`. This can take hours for a big drive."
         ],
         "learn": [
@@ -242,14 +242,14 @@
         "how": [
           "Restart the computer and tap the BIOS key as it starts. Common keys are Del, F2, F10 or F12; the startup screen often shows which one.",
           "Look in the Storage, Boot or SATA information section for your drive's model name and size.",
-          "Listed correctly: the problem is probably software or the partition. Not listed: go to the next step. Leave the BIOS with Esc without changing anything."
+          "Listed correctly: the problem is probably software or the partition. Not listed: go to the next step. Leave the BIOS with Esc without changing anything, and choose No or Discard if it asks whether to save changes."
         ]
       },
       {
         "title": "Swap the cable and port",
         "detail": "Bad cables and ports cause many drive-not-found problems, and changing them is free and safe.",
         "how": [
-          "Shut down and unplug the power. Open the case if it is a desktop.",
+          "Shut down and unplug the power. On a desktop, open the computer's side panel (never the drive itself).",
           "Swap the thin SATA data cable for another one and plug into a different SATA port on the motherboard. Press each connector in firmly.",
           "Check the wider power connector is firmly seated, or try a different one from the power supply. Then start the computer and look in the BIOS again."
         ]
@@ -258,7 +258,7 @@
         "title": "Look in Disk Management or Disk Utility",
         "detail": "These built-in tools show drives that the system can see but cannot use yet, such as a drive with no letter or no recognised file system.",
         "how": [
-          "Windows: right-click the Start button, choose Disk Management. Mac: open Finder, Applications, Utilities, Disk Utility, then View, Show All Devices.",
+          "Windows: right-click the Start button, choose Disk Management. If a window pops up asking to initialize the disk, click Cancel. Mac: open Finder, Applications, Utilities, Disk Utility, then View, Show All Devices.",
           "Find your drive by its size. If it says Raw, Unallocated or Not Initialized, that is fine. Do not click Initialize, Format or Erase.",
           "If it is listed, note what it says and move on to the health check."
         ]
@@ -268,7 +268,7 @@
         "detail": "The drive keeps its own health record, called SMART. Reading it shows whether the drive is failing, before you stress it any further.",
         "how": [
           "Windows: install CrystalDiskInfo and open it. Look at the big Health Status box: Good is fine, Caution or Bad means it is failing.",
-          "Mac or Linux: in a terminal, run `smartctl -a /dev/sdX` (replace sdX with your drive, which `lsblk` shows).",
+          "Linux live USB: press Ctrl+Alt+T, type `sudo apt install smartmontools`, then `sudo smartctl -a /dev/sdX` (replace sdX with your drive, which `lsblk` shows). Mac: see the health check guide.",
           "Look for Reallocated, Pending or Uncorrectable sector counts above zero. Those mean the surface is wearing out."
         ],
         "learn": [
@@ -390,7 +390,7 @@
         "detail": "An image (an exact copy of the whole drive saved as a file) is made by tools that read the easy areas first and skip bad spots, saving the most data before the drive gets worse. Ordinary copy and paste would stall on bad spots and stress the drive.",
         "how": [
           "Plug in a healthy destination drive at least as big as the clicking one.",
-          "Run ddrescue or HDDSuperClone as shown in the imaging guide. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
+          "Run ddrescue or HDDSuperClone as shown in the imaging guide, but only the first pass (with -n). Skip the retry pass, which works the damaged areas hardest. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
           "Keep the map file ddrescue creates, so it can resume if you must stop."
         ],
         "learn": [
@@ -670,7 +670,7 @@
         "title": "Check its health",
         "detail": "The SMART report is the drive's own health record. It shows whether the disk is wearing out, which decides how gently you must treat it.",
         "how": [
-          "Windows: install and open CrystalDiskInfo, then look at Health Status. Mac or Linux: in a terminal run `smartctl -a /dev/sdX`.",
+          "Windows: install and open CrystalDiskInfo, then look at Health Status. Linux live USB: in the Terminal (Ctrl+Alt+T) type `sudo apt install smartmontools`, then `sudo smartctl -a /dev/sdX`. Mac: see the health check guide.",
           "Reallocated, Pending or Uncorrectable sector counts above zero mean the disk surface is wearing out. Caution or Bad means the drive is failing."
         ],
         "learn": [
@@ -689,8 +689,8 @@
         "title": "Image the drive with ddrescue",
         "detail": "ddrescue copies the drive while skipping spots it cannot read and returning to them later. That saves the most data and stresses the drive the least.",
         "how": [
-          "Boot a live USB if needed (our guide shows how), then open a terminal and run `lsblk` to identify both drives.",
-          "Run `sudo ddrescue -n /dev/sdX /mnt/backup/disk.img /mnt/backup/disk.map`, where sdX is the damaged drive. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
+          "Boot a live USB (our guide shows how), press Ctrl+Alt+T to open a terminal, install ddrescue with `sudo apt install gddrescue`, then run `lsblk -o NAME,SIZE,MODEL` to identify both drives. Open the destination drive in the Files app, but not the damaged one.",
+          "Run `sudo ddrescue -n /dev/sdX /media/ubuntu/DEST/drive.img /media/ubuntu/DEST/drive.map`, where sdX is the damaged drive and DEST is your destination drive's name (Linux Mint: /media/mint/DEST). Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
           "Keep the map file so you can stop and resume. HDDSuperClone is an alternative on Linux."
         ],
         "learn": [
@@ -703,7 +703,7 @@
         "detail": "The image is expendable. If a tool changes it, you can make a fresh copy and try again.",
         "how": [
           "If you have space, copy the image file so you have a spare.",
-          "Run `sudo testdisk disk.img` and follow its menus to rebuild the partition or list the files.",
+          "Run `sudo testdisk /media/ubuntu/DEST/drive.img` and follow its menus to rebuild the partition or list the files.",
           "Copy what you find to a different drive."
         ],
         "learn": [
@@ -714,7 +714,7 @@
         "title": "Use PhotoRec as a fallback",
         "detail": "If the folder records are too damaged, PhotoRec finds files by their content and saves them with generic names.",
         "how": [
-          "Run `sudo photorec disk.img` and choose the image file.",
+          "Run `sudo photorec /media/ubuntu/DEST/drive.img` and choose the image file.",
           "Pick the file types you want, then a destination folder on a different drive, and press `c`."
         ],
         "learn": [
@@ -786,7 +786,7 @@
         "title": "Find your recovery key",
         "detail": "The recovery key is a long backup code made when encryption was turned on. It unlocks the drive if the password fails.",
         "how": [
-          "BitLocker: sign in at account.microsoft.com/devices/recoverykey with the Microsoft account you used on the computer. Also check a work or school account.",
+          "BitLocker: go to aka.ms/myrecoverykey (it opens account.microsoft.com/devices/recoverykey) on any device and sign in with the Microsoft account you used on the computer. Also check a work or school account.",
           "FileVault: on a Mac, use Apple Account reset on the login screen, or the recovery key you saved.",
           "Also look for a printed page or a text file on a USB stick."
         ]
@@ -813,7 +813,7 @@
         "detail": "An image (an exact copy of the whole drive saved as a file) of an encrypted drive stays encrypted, and you unlock the copy later. Only do this if you hold the key.",
         "how": [
           "Follow our imaging guide with ddrescue. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
-          "Then unlock the image or a copy with the same key, and copy files out."
+          "Then unlock a copy of the image with the same key and copy files out. On Ubuntu: open the Disks app, choose Attach Disk Image from its menu, pick the image, then open it in Files and type the password or key. If this is beyond you, a professional can do it."
         ],
         "learn": [
           "image-drive"
