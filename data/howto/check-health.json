@@ -1,0 +1,70 @@
+{
+  "id": "check-health",
+  "title": "How to check if a drive is healthy (SMART)",
+  "metaDescription": "Beginner guide to checking drive health with SMART: CrystalDiskInfo on Windows, smartctl on Linux, what the results mean, and what to do next.",
+  "intro": "Most hard drives and SSDs have a built-in self-monitoring system called SMART. It keeps a record of problems the drive has noticed, and you can read it for free. This tells you whether the drive is safe to scan or whether you should copy it first.",
+  "timeNeeded": "5-15 minutes",
+  "youNeed": [
+    "The drive connected to a computer that can see it",
+    "Windows with CrystalDiskInfo, or a Linux live USB, or a Mac with Homebrew",
+    "A notepad to write down the results"
+  ],
+  "sections": [
+    {
+      "heading": "Windows: CrystalDiskInfo",
+      "body": "CrystalDiskInfo is a free program that reads SMART and shows a simple health label.",
+      "steps": [
+        "Download CrystalDiskInfo from crystalmark.info and install or unzip it. Choose the Standard Edition.",
+        "Open it. The top shows a Health Status box, and the drives are listed along the top as tabs. Click the tab for your drive, checking its name and size.",
+        "Read the Health Status. Good (blue or green) means no concerns. Caution (yellow) means the drive has noticed problems and may be starting to fail. Bad (red) means it is failing.",
+        "Look in the list below at these rows: Reallocated Sectors Count, Current Pending Sector Count and Uncorrectable Sector Count. Look at the raw value on the right. Zero is what you want."
+      ]
+    },
+    {
+      "heading": "What the key attributes mean",
+      "body": "A sector is a tiny block of storage. Reallocated sectors are bad blocks the drive has already moved to spare areas. Pending sectors are blocks that could not be read and are waiting to be checked. Uncorrectable sectors are blocks that could not be fixed. Any number above zero is a warning, and a number that grows over time is more serious."
+    },
+    {
+      "heading": "Linux live USB: smartctl",
+      "steps": [
+        "Boot from your live USB (see the live USB guide) and open the Terminal (Ctrl+Alt+T).",
+        "Type: sudo apt install smartmontools   and press Enter. If it is not found, run: sudo add-apt-repository universe   first.",
+        "Find your drive's letter with: lsblk -o NAME,SIZE,MODEL",
+        "Type: sudo smartctl -a /dev/sdX   (replace sdX with the drive, for example sdb) and press Enter.",
+        "Look for the line 'SMART overall-health self-assessment test result'. PASSED is good, FAILED is bad. Then scroll to the attribute table and check the same three attributes: Reallocated_Sector_Ct, Current_Pending_Sector and Offline_Uncorrectable."
+      ],
+      "warning": "A PASSED result does not guarantee the drive is fine. If the drive clicks, disappears or runs very slowly, treat it as unhealthy anyway."
+    },
+    {
+      "heading": "Mac",
+      "body": "macOS Disk Utility shows only a basic status. For full details, install Homebrew from brew.sh, then run 'brew install smartmontools' and 'sudo smartctl -a disk0' in Terminal, using the disk name from 'diskutil list'."
+    },
+    {
+      "heading": "What to do with the result",
+      "steps": [
+        "Good or PASSED with zero in the key attributes: the drive looks healthy. You can go ahead with recovery tools, ideally on an image.",
+        "Caution, Bad or any growing warning counts: make an image first, right away (see the image guide).",
+        "Stop running scans, repair tools and anything else that reads the whole drive until the image is finished. Each extra read can use up the drive's remaining life.",
+        "If the drive will not stay connected or makes clicking or grinding sounds, stop and consider professional help."
+      ]
+    },
+    {
+      "heading": "USB sticks and SD cards",
+      "body": "Many USB flash drives and SD cards do not report SMART at all, so the tools may show nothing or an error. That does not mean the drive is fine. If it behaves oddly, copy or image it as soon as possible."
+    }
+  ],
+  "faq": [
+    {
+      "q": "The tool shows 'Caution'. Is my data gone?",
+      "a": "No. Caution means the drive is wearing out, not that data is lost. It is a signal to copy your data now."
+    },
+    {
+      "q": "Does reading SMART hurt the drive?",
+      "a": "No. It only asks the drive for a short status report, which is very light use."
+    },
+    {
+      "q": "Can I fix a drive that shows Bad?",
+      "a": "Not reliably. Copy what you can to another drive and replace it. A bad drive should not be trusted with important files."
+    }
+  ]
+}

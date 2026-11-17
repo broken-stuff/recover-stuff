@@ -1,0 +1,82 @@
+{
+  "id": "use-photorec",
+  "title": "How to use PhotoRec to recover photos and files",
+  "metaDescription": "Beginner guide to PhotoRec: choose the drive, partition and file system, pick Free or Whole, set a destination on another drive, and sort results.",
+  "intro": "PhotoRec is a free tool that searches a drive for the raw contents of files and rebuilds them, even if the folders and names are gone. It works on formatted, damaged or deleted data. It does not change the drive it reads, but it saves what it finds to a folder you choose.",
+  "timeNeeded": "1-several hours, depending on drive size",
+  "youNeed": [
+    "The drive, or better, an image file of it (see the image guide)",
+    "A different drive with plenty of free space for the results",
+    "Windows, or a Linux live USB",
+    "Time to sort results afterwards"
+  ],
+  "sections": [
+    {
+      "heading": "Step 1: Get PhotoRec",
+      "body": "PhotoRec comes in the same download as TestDisk, made by CGSecurity.",
+      "steps": [
+        "Windows: from cgsecurity.org download the TestDisk and PhotoRec zip. Right-click it, choose Extract All, open the folder, and run qphotorec_win.exe as administrator (right-click, Run as administrator). This is the version with windows and buttons.",
+        "Linux live USB: open the Terminal (Ctrl+Alt+T), type: sudo apt install testdisk   and press Enter. If not found, run: sudo add-apt-repository universe   first.",
+        "Start it on Linux with: sudo photorec drive.img   to use an image file, or: sudo photorec   to pick a drive from a list.",
+        "The Linux version is text-based. Use arrow keys to move and Enter to confirm."
+      ]
+    },
+    {
+      "heading": "Step 2: Choose the source and partition",
+      "steps": [
+        "Pick the drive or image file you want to search.",
+        "Pick the partition from the list. If you are unsure, or the drive was formatted, choose the line for the whole disk (it may be called No partition or Whole disk).",
+        "Choose the file system type. Pick Other for FAT, NTFS and exFAT (most Windows, USB and camera cards). Pick ext2/ext3/ext4 for Linux drives."
+      ]
+    },
+    {
+      "heading": "Step 3: Free or Whole",
+      "body": "This choice changes what part of the drive gets searched.",
+      "steps": [
+        "Choose Free to search only the unused space on a working partition. Use this for files you deleted by mistake.",
+        "Choose Whole to search everything. Use this for drives that were formatted, reformatted, show as RAW, or will not open."
+      ]
+    },
+    {
+      "heading": "Step 4: Limit file types (optional but helpful)",
+      "body": "Searching for every type of file takes longer and fills the results with junk. The File Opt menu lets you tick only what you need.",
+      "steps": [
+        "Open File Opt (in qphotorec, click File Formats; in the text version, choose File Opt).",
+        "Untick everything, then tick only your file types, such as jpg, png and cr2 for photos, or doc, docx, xls and pdf for documents.",
+        "Go back to the main screen."
+      ]
+    },
+    {
+      "heading": "Step 5: Set the destination and start",
+      "steps": [
+        "Choose the folder where results will be saved. It must be on a different drive from the one you are searching, with lots of free space.",
+        "Click Search (or press C to confirm in the text version).",
+        "Wait. A large drive can take many hours. You can see the number of files found rising."
+      ],
+      "warning": "Never save results onto the drive you are recovering from. It can overwrite the data you want."
+    },
+    {
+      "heading": "Step 6: Sort the results",
+      "body": "PhotoRec saves files into folders called recup_dir.1, recup_dir.2, and so on. The files have generic names such as f1234567.jpg, because the original names and folders are usually lost.",
+      "steps": [
+        "Open the destination folder and look inside each recup_dir.",
+        "Use your file manager's thumbnail view for photos, and sort by type or size.",
+        "Delete obvious junk, such as tiny icons and thumbnails, and rename or move the files you want to keep."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Why are my file names gone?",
+      "a": "PhotoRec finds files by their contents, not by the folder records. Those records are what hold the names, so they are not available after a format or damage."
+    },
+    {
+      "q": "Do I need an image before running PhotoRec?",
+      "a": "It is strongly recommended if the drive is failing, because PhotoRec reads the whole drive. For a healthy drive or a memory card it is usually fine to run directly."
+    },
+    {
+      "q": "It found far more files than I expected. Is that normal?",
+      "a": "Yes. It also recovers old files that were deleted before and system files. Limiting file types and sorting by date or size helps."
+    }
+  ]
+}

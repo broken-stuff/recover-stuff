@@ -1,0 +1,116 @@
+{
+  "id": "find-a-pro",
+  "title": "How to find a trustworthy data recovery professional",
+  "metaDescription": "How to choose a data recovery lab you can trust: where to look, what a good lab does, red flags, rough prices, questions to ask, and how to ship a drive safely.",
+  "intro": "Some drives are beyond home repair, and a professional lab is the right call. This page helps you pick an honest one and avoid the common traps. We do not refer or recommend any company here.",
+  "timeNeeded": "1-2 hours to research and make contact",
+  "youNeed": [
+    "The drive, kept powered off",
+    "The drive's brand and model number (printed on its label)",
+    "A short written note of what happened and when",
+    "A rough idea of what the data is worth to you"
+  ],
+  "sections": [
+    {
+      "heading": "When you need a professional",
+      "body": "Go to a lab if the drive makes clicking, grinding or beeping sounds, does not spin up, was in a fire or flood, or has a damaged circuit board. Also go if the data is truly irreplaceable and you are not willing to risk it on a first attempt.",
+      "warning": "Every extra power-on of a failing drive can make damage worse, so decide early instead of trying one more thing."
+    },
+    {
+      "heading": "Before you contact anyone",
+      "steps": [
+        "Stop using the drive. Unplug it and do not run repair tools, disk checks or recovery programs on it.",
+        "Write down the drive's brand, model, size and what kind of drive it is (spinning hard drive, solid-state drive, USB stick, memory card).",
+        "Write down what happened: dropped, got wet, stopped showing up, made noise, was deleted or formatted by accident. Include dates and anything you already tried.",
+        "List what you must get back, such as a photo folder or one work file. A short list can lower the price and speed things up.",
+        "Decide how much the data is worth to you. This sets your budget so a quote does not catch you off guard."
+      ]
+    },
+    {
+      "heading": "Where to look",
+      "steps": [
+        "Search for \"data recovery lab\" plus your city or region. Read the lab's own site and look for a street address and a phone number.",
+        "Check whether the drive's maker runs or partners with a recovery service. Many do, and some include it with certain purchased plans. Look on the maker's support site (for example Seagate, Western Digital or Samsung) for \"data recovery\".",
+        "If the drive belongs to your work, ask the company IT department. They may already have a contract with a lab.",
+        "Check whether your cyber insurance or home insurance policy covers data recovery costs. Read the policy or call the insurer before you pay."
+      ],
+      "warning": "Avoid general phone or computer repair shops for mechanical failures such as clicking or dead drives, unless they tell you plainly that they send the work to a real recovery lab."
+    },
+    {
+      "heading": "What a good lab does",
+      "steps": [
+        "Offers a free or low-cost evaluation and gives you a written quote before doing any work.",
+        "Has a clear \"no data, no fee\" policy and explains every possible charge: evaluation, the recovery attempt, success, return shipping, and the new drive or media used to send your data back.",
+        "Works on clicking or dead drives in a real cleanroom or laminar-flow bench (a clean workspace with filtered air so dust does not land on the drive). Ask what kind it is. ISO 14644-1 Class 5 is a common standard.",
+        "Makes a full copy (an image) of the drive first and works from the copy where it can, so the original takes less strain.",
+        "Lets you see a list of the recoverable files before you pay.",
+        "Explains how it handles your data: a non-disclosure agreement (NDA) on request, secure storage, and deletion of its copy after you confirm the files arrived.",
+        "Has a physical address and genuine reviews on sites the lab does not control."
+      ]
+    },
+    {
+      "heading": "Red flags",
+      "steps": [
+        "A firm price quoted over the phone without anyone checking the drive for physical damage.",
+        "Pressure to pay the full amount up front.",
+        "A promise of \"100% success guaranteed\". No honest lab can promise that.",
+        "Advice to put the drive in the freezer or to tap or knock it. These tricks can ruin a drive for good.",
+        "Refusing to explain what they will do, how they handle your data, or how the fees work.",
+        "A price for a clicking or dead drive that is far below everyone else's. Real cleanroom work costs money, so a very low price often means no cleanroom."
+      ]
+    },
+    {
+      "heading": "Typical price ranges",
+      "body": "These are rough ranges only, and they vary widely by region, lab and how urgent the job is. Logical recovery (the drive works but files are lost or hidden) is often in the low hundreds of dollars. Physical or cleanroom work commonly runs from several hundred to a few thousand dollars, depending on the damage. Rush service usually costs extra. Always get a written quote.",
+      "warning": "Treat any price in this section as a ballpark and not an offer, and compare at least two written quotes when you can."
+    },
+    {
+      "heading": "Questions to ask before you hand over the drive",
+      "steps": [
+        "Do you charge for the evaluation, and will I get a written quote before any work starts?",
+        "Is it \"no data, no fee\"? What exactly counts as success?",
+        "What fees could be added: attempt, parts, rush, return shipping, the drive I get my data back on?",
+        "Do you have a cleanroom or laminar-flow bench, and what is its rating?",
+        "Will you make a full copy of the drive before working on it?",
+        "Can I see a list of recoverable files before I pay?",
+        "Who will have access to my files, will you sign an NDA, and when do you delete your copy?",
+        "How long will it take, and how will you keep me updated?",
+        "What is your physical address, and can I send or drop off the drive in person?",
+        "What happens to my original drive when the job is finished?"
+      ]
+    },
+    {
+      "heading": "How to ship the drive",
+      "steps": [
+        "Put the drive in an anti-static bag (the shiny gray or silver bag that new drives come in). If you have no such bag, wrap it in a clean sheet of paper and then bubble wrap.",
+        "Wrap the drive in thick padding so it cannot move or rattle. Include the written note from earlier and your contact details.",
+        "Place it in a small box with padding on all sides, then place that box inside a larger box with more padding. This \"box inside a box\" protects against drops.",
+        "Never send a bare drive loose in an envelope or a padded mailer.",
+        "Use a shipping service with tracking, and insure the package for a realistic value. Keep your receipt and tracking number."
+      ]
+    },
+    {
+      "heading": "If the data may be evidence",
+      "body": "If the data could matter in a crime or a court case, contact law enforcement or an attorney first, and do not try DIY recovery, because it can change the data and weaken it as evidence. NCFI and the FBI RCFL program support law enforcement, not ordinary consumers, so they will not take a personal job.",
+      "warning": "Do not power on, repair or copy a drive that may be evidence until you have spoken to the police or a lawyer."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is it worth paying for professional recovery?",
+      "a": "It depends on what the data is worth to you. For photos, family records or work you cannot recreate, many people find it worth a few hundred dollars or more. For files you can replace, it usually is not."
+    },
+    {
+      "q": "Will a lab always get my data back?",
+      "a": "No. Even the best labs cannot recover everything, which is why a clear \"no data, no fee\" policy matters. Be wary of anyone who guarantees full success."
+    },
+    {
+      "q": "Can I try recovery myself first and then go to a lab?",
+      "a": "You can for working drives with lost files, if you copy the drive first. For a clicking or dead drive, trying yourself can cause more damage, so go straight to a lab."
+    },
+    {
+      "q": "Is my private data safe with a lab?",
+      "a": "A good lab explains how it handles data, will sign an NDA on request and deletes its copy afterwards. If you are worried, ask these privacy questions before you send anything."
+    }
+  ]
+}

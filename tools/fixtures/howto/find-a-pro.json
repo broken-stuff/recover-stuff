@@ -1,0 +1,23 @@
+{
+ "id": "find-a-pro",
+ "title": "How to find a trustworthy pro",
+ "metaDescription": "Fixture description for How to find a trustworthy pro.",
+ "intro": "Intro for How to find a trustworthy pro. Use `testdisk` carefully.",
+ "timeNeeded": "20-40 minutes",
+ "youNeed": [
+  "A second drive",
+  "A USB stick (8 GB+)"
+ ],
+ "sections": [
+  {
+   "heading": "Questions to ask",
+   "body": "Ask about price."
+  }
+ ],
+ "faq": [
+  {
+   "q": "Is this safe?",
+   "a": "Yes, it only reads."
+  }
+ ]
+}

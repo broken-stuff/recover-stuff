@@ -2,43 +2,89 @@
   "deleted": {
     "title": "Recover Deleted Files From an Internal Hard Drive",
     "metaDescription": "Deleted files on a hard drive are often still there until overwritten. Learn how to stop the damage and safely recover them with free tools like PhotoRec.",
-    "summary": "When you delete a file, the computer usually just marks its space as free. The data stays on the disk until something new is written over it. The sooner you stop using the drive, the better your chances.",
+    "summary": "When you delete a file, the computer usually does not wipe it. It just marks the space as free to reuse. Your file stays on the disk until something new is saved over it, so the sooner you stop using the drive, the better your chances.",
     "risk": 1,
-    "riskNote": "If the drive is healthy, recovery only reads data, as long as you save results to a different drive.",
+    "riskNote": "If the drive is healthy, recovery only reads data and changes nothing, as long as you save the results to a different drive.",
     "successOdds": "High",
     "stopFirst": [
-      "Stop saving, downloading, installing or browsing on this drive right now. New data can overwrite your deleted files.",
-      "Do not install recovery software onto the affected drive. Install it on a different drive or run it from a USB stick.",
-      "Do not save recovered files back to the same drive. Always pick a different drive."
+      "Stop saving, downloading, installing or browsing on this drive right now. Anything new can overwrite your deleted files.",
+      "Do not install recovery software onto this drive. Install it on a different drive, or run it from a USB stick.",
+      "Do not save recovered files back onto this drive. Always choose a different drive as the destination."
     ],
     "steps": [
       {
         "title": "Stop using the drive",
-        "detail": "If it is your Windows or Mac system drive, shut down now. Every minute the computer runs, it writes small files that can overwrite what you deleted."
+        "detail": "Every minute the computer runs, it quietly saves small files, and those can land on the space your deleted files used. Stopping now protects them.",
+        "how": [
+          "If the drive is your main Windows or Mac drive: save nothing, close your programs, then shut the computer down. Windows: Start menu, Power, Shut down. Mac: Apple menu, Shut Down.",
+          "If it is a second internal drive, just stop saving or downloading to it until the recovery is done."
+        ]
       },
       {
         "title": "Check the Recycle Bin or Trash first",
-        "detail": "Open the Recycle Bin (Windows) or Trash (Mac). If your file is there, restore it and you are done. Also check cloud backups or File History and Time Machine."
+        "detail": "Deleted files often go to a holding folder first, and restoring from there is instant and risk free. Backups can also hold a copy.",
+        "how": [
+          "Windows: double-click Recycle Bin on the desktop, right-click your file, choose Restore. Mac: click Trash in the Dock, right-click the file, choose Put Back.",
+          "Windows: also try right-click the folder, Properties, Previous Versions (this uses File History). Mac: open Time Machine from the menu bar and browse back in time.",
+          "Check any cloud backup you use, such as OneDrive, iCloud or Google Drive, for a Deleted or Recently deleted section."
+        ]
       },
       {
         "title": "Prepare a second drive",
-        "detail": "Get a separate drive with enough free space to hold everything you want back. This is where recovered files will be saved."
+        "detail": "Recovered files must be saved somewhere other than the drive you are rescuing, or they could overwrite the very data you want back.",
+        "how": [
+          "Get an external drive or USB stick with at least as much free space as the files you want back.",
+          "Plug it in and check it opens normally. Windows: File Explorer, This PC. Mac: Finder sidebar."
+        ]
       },
       {
-        "title": "Run recovery from another computer or a USB stick",
-        "detail": "Best is to connect the drive to a second computer, or boot from a USB stick with TestDisk and PhotoRec. This keeps the original drive untouched."
+        "title": "Run recovery from a USB stick or another computer",
+        "detail": "Recovery tools only read your drive, but installing them on it could overwrite your files. Running them from a USB stick or a second computer keeps the original drive untouched.",
+        "how": [
+          "Simplest: shut down, remove the drive, and attach it to a second computer as an extra drive (a USB adapter or dock works).",
+          "Or boot from a live USB (a USB stick that starts its own small copy of Linux so nothing is installed). Our guide shows how to make one.",
+          "On the Linux desktop, open a terminal (a window where you type commands) from the menu."
+        ],
+        "learn": [
+          "live-usb",
+          "glossary"
+        ]
       },
       {
-        "title": "Try TestDisk first for whole folders",
-        "detail": "TestDisk can often list deleted files with their original names and folders. Copy what you need to your second drive."
+        "title": "Try TestDisk first to get names and folders back",
+        "detail": "TestDisk reads the drive's records of what was stored where, so it can often list deleted files with their original names and folders.",
+        "how": [
+          "In the terminal, type `sudo testdisk` and press Enter.",
+          "Choose Create (new log), pick your drive with the arrow keys, press Enter, pick the partition type it suggests (usually Intel or EFI GPT), then choose Advanced.",
+          "Select the partition holding your files, choose Undelete, highlight the file, press `c` to copy, and pick the folder on your second drive."
+        ],
+        "learn": [
+          "use-testdisk"
+        ]
       },
       {
         "title": "Use PhotoRec if names are lost",
-        "detail": "PhotoRec scans for file types such as photos and documents. It brings back the contents, but file names and folders are usually gone, so you sort them afterwards."
+        "detail": "PhotoRec ignores the records and scans the raw drive for the recognisable shape of photos, documents and other file types. You get the contents back, but usually with generic names.",
+        "how": [
+          "In the terminal, type `sudo photorec` and press Enter.",
+          "Pick the drive, then the partition, then choose File Opt to tick only the file types you want, which speeds things up.",
+          "Choose the folder on your second drive as the destination and press `c` to start. Wait until it says it has finished."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
       },
       {
         "title": "Check your recovered files",
-        "detail": "Open a sample of files to be sure they work. Keep the original drive unchanged until you are happy with the results."
+        "detail": "Some recovered files can be damaged, and you want to know that before you wipe or reuse the drive.",
+        "how": [
+          "Open a handful of files of each type, such as a photo, a document and a video, and make sure they open fully.",
+          "Keep the original drive untouched until you are happy with the results.",
+          "If you are unsure whether the drive itself is healthy, see our health check guide."
+        ],
+        "learn": [
+          "check-health"
+        ]
       }
     ],
     "tools": [
@@ -50,58 +96,97 @@
       "cgsecurity-forum",
       "dfir-training"
     ],
-    "callPro": "If the drive starts making odd noises, disappears, or the files are very valuable and recovery fails, stop and talk to a professional before trying more.",
+    "callPro": "If the drive starts making odd noises or disappears, or the files are very valuable and recovery fails, stop and call a professional.",
     "faq": [
       {
         "q": "Can I get back files I emptied from the Recycle Bin?",
-        "a": "Often yes, because emptying the bin only frees the space, so stop using the drive right away. Some newer SMR drives clear freed space like an SSD does, which lowers the odds."
+        "a": "Often yes. Emptying the bin only marks the space as free, so stop using the drive right away. Some newer drives (called SMR drives) tidy up freed space on their own, which lowers the odds."
       },
       {
         "q": "Why did my recovered files lose their names?",
-        "a": "PhotoRec finds files by their content, not by the file table, so names and folders are not saved. TestDisk can sometimes keep names if the file table is still intact."
+        "a": "PhotoRec finds files by what they contain, not by the drive's records, so names and folders are not saved. TestDisk can sometimes keep names if those records are still intact."
       },
       {
-        "q": "Is it a problem that I kept using the computer after deleting?",
-        "a": "It lowers the odds a bit, because new data may land on the freed space. Stop now and recover what is left."
+        "q": "Does it matter that I kept using the computer after deleting?",
+        "a": "It lowers the odds a little, because new data may have landed on the freed space. Stop now and recover what is left."
       }
     ]
   },
   "formatted": {
     "title": "Recover Files From a Formatted Hard Drive",
     "metaDescription": "Accidentally formatted a hard drive? Quick format is often recoverable, full format on Windows is not. Learn what to do and which free tools to use.",
-    "summary": "A quick format wipes the drive's table of contents but leaves most of your data in place, so recovery is often possible. A full format on modern Windows (Vista and later) writes zeros over everything, and that data is gone for good.",
+    "summary": "A quick format wipes the drive's table of contents but leaves most of your data in place, so recovery is often possible. A full format on Windows Vista or newer writes zeros over everything, and that data is gone for good.",
     "risk": 2,
-    "riskNote": "Software recovery only reads from the drive, but writing anything new to it can destroy what is left.",
+    "riskNote": "Recovery software only reads the drive, but saving anything new onto it can destroy what is left.",
     "successOdds": "Varies",
     "stopFirst": [
       "Do not copy, save or install anything onto the formatted drive. New data overwrites what you want back.",
-      "Do not format it again, and do not reinstall the operating system on it.",
+      "Do not format it again, and do not reinstall Windows or macOS onto it.",
       "Do not install recovery software onto the formatted drive. Use a different drive."
     ],
     "steps": [
       {
         "title": "Work out which kind of format you did",
-        "detail": "A quick format finished in seconds or minutes. A full format ran for a long time. On Windows Vista and later, a full format writes zeros, so the old data cannot be brought back."
+        "detail": "A quick format only erases the index, so files can come back. A full format on Windows Vista or newer overwrites everything with zeros, so nothing can come back. Knowing which one you did sets your expectations.",
+        "how": [
+          "Think back: did the format finish in seconds or a few minutes? That was a quick format. Did it run for hours? That was a full format.",
+          "On Windows, the Format window had a Quick Format tick box. If it was ticked, it was quick. On a Mac, Erase is normally quick unless you chose Security Options and moved the slider toward Most Secure.",
+          "If you are not sure, carry on. Scanning is safe, and the results will tell you."
+        ]
       },
       {
         "title": "Stop using the drive",
-        "detail": "If it was your system drive and you reinstalled the operating system, the new install has already overwritten some data. Stop and do not install anything else."
+        "detail": "If you reinstalled the operating system onto it, the install has already overwritten some of the old data. Any more writing makes it worse.",
+        "how": [
+          "Do not copy files onto it, install programs, or start a new backup.",
+          "If it is your main drive and the computer is running, shut it down: Windows Start, Power, Shut down; Mac Apple menu, Shut Down."
+        ]
       },
       {
         "title": "Attach it to a second computer",
-        "detail": "Connect the drive as a secondary drive, or boot from a USB stick with recovery tools. Prepare a separate drive with enough space to save results."
+        "detail": "This lets you scan the drive without the drive running anything. You also need a separate drive to save results on.",
+        "how": [
+          "Shut down, unplug the drive and connect it to a second computer as an extra drive, using a USB adapter or dock if needed.",
+          "Or boot from a live USB (a USB stick that runs its own small copy of Linux without installing anything).",
+          "Get a different drive with enough free space for everything you want back."
+        ],
+        "learn": [
+          "live-usb"
+        ]
       },
       {
         "title": "Try TestDisk to restore the old structure",
-        "detail": "TestDisk can search for the lost partition and may bring back folders with their original names. This works best after a quick format."
+        "detail": "TestDisk searches for the lost partition (a section of the drive that holds your files) and may bring back folders with their original names. It works best after a quick format.",
+        "how": [
+          "In a terminal, type `sudo testdisk` and press Enter. On Windows, run testdisk_win.exe as administrator.",
+          "Choose Create, pick the drive, accept the partition type it suggests, then choose Analyse and Quick Search.",
+          "If it finds your old partition, press `p` to list its files and check they look right. Then choose Write to restore it, or copy the files out with `c` first if you prefer."
+        ],
+        "learn": [
+          "use-testdisk",
+          "glossary"
+        ]
       },
       {
         "title": "Use PhotoRec if TestDisk finds nothing",
-        "detail": "PhotoRec scans the whole drive for known file types and saves them to your second drive. Names and folders are usually lost, but the content is back."
+        "detail": "PhotoRec scans the whole drive for the recognisable shape of photos, documents and other known file types. Names and folders are usually lost, but the contents come back.",
+        "how": [
+          "Type `sudo photorec` (Windows: run photorec_win.exe as administrator) and pick the drive.",
+          "Choose Whole disk, then the file system type Other (for FAT, NTFS, exFAT) or ext2/3/4 as needed.",
+          "Pick a folder on your second drive and press `c`. This can take hours for a big drive."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
       },
       {
         "title": "Check what you got",
-        "detail": "Open a few files of each type. If many are damaged or missing, the drive may have been fully formatted or overwritten, or it may be a newer SMR drive that clears freed space."
+        "detail": "This tells you whether the drive was fully formatted, overwritten, or maybe one of the newer SMR drives that clear freed space on their own.",
+        "how": [
+          "Open a few files of each type. Photos should show the whole picture, and documents should open without errors.",
+          "If many files are blank or damaged, the data was probably overwritten. Stop there rather than running more tools.",
+          "Sort the recovered files into folders and make a backup of the good ones right away."
+        ]
       }
     ],
     "tools": [
@@ -113,11 +198,11 @@
       "cgsecurity-forum",
       "brett-shavers"
     ],
-    "callPro": "If the drive is making noises, is not detected, or the data is critical and software scans fail, stop and consult a professional.",
+    "callPro": "If the drive makes noises, is not detected, or the data is critical and software scans fail, stop and ask a professional.",
     "faq": [
       {
         "q": "Can I recover data after a full format?",
-        "a": "On Windows Vista and newer, a full format writes zeros over the disk, so the data is gone. A quick format is a very different story and is often recoverable."
+        "a": "On Windows Vista and newer, no. A full format writes zeros over the whole disk. A quick format is a different story and is often recoverable."
       },
       {
         "q": "Did reinstalling Windows destroy my files?",
@@ -132,43 +217,90 @@
   "not-detected": {
     "title": "Hard Drive Not Showing Up or Not Detected",
     "metaDescription": "Hard drive not detected or not showing in Windows or Mac? Check cables, ports and Disk Management first, then recover data without more damage.",
-    "summary": "A drive that does not show up may have a loose cable, a bad port, a lost partition, or a real hardware fault. The first checks are simple and safe. If the drive is silent, clicking, or hot, the cause may be physical.",
+    "summary": "A drive that does not show up may have a loose cable, a bad port, a lost partition (the section that holds your files), or a real hardware fault. The first checks are simple and safe. If the drive is silent, clicking or very hot, the cause may be physical.",
     "risk": 3,
-    "riskNote": "Cable and software checks are safe, but repeated power-ups of a physically failing drive can make the damage worse.",
+    "riskNote": "Cable and software checks are safe, but powering a failing drive on and off again and again can make the damage worse.",
     "successOdds": "Varies",
     "stopFirst": [
-      "Do not keep powering the drive on and off to see if it comes back. Each attempt can add wear if it is failing.",
-      "Do not click Initialize or Format if your computer offers it. That can erase the data.",
-      "Do not open the drive. Hard drives need a cleanroom, and dust ruins them."
+      "Do not keep switching the drive on and off to see if it comes back. Each try adds wear if it is failing.",
+      "If your computer offers to Initialize or Format the drive, click Cancel. Either one can erase your data.",
+      "Do not open the drive. The inside needs a cleanroom, and ordinary dust ruins it."
     ],
     "steps": [
       {
         "title": "Listen and feel",
-        "detail": "A healthy drive spins up with a soft hum. If you hear clicking, grinding or beeping, stop and read the clicking guide; if you smell burning, unplug it and read the won't-power-on guide."
+        "detail": "What the drive sounds like tells you whether this is a simple problem or a physical one. A healthy drive spins up with a soft hum.",
+        "how": [
+          "With the drive connected and the computer on, listen closely and rest a fingertip lightly on the drive.",
+          "Soft hum or gentle vibration: it is spinning, so carry on to the next step.",
+          "Clicking, grinding or beeping: unplug it and read our clicking guide. Burning smell or silence: unplug it and read our no-power guide."
+        ]
       },
       {
         "title": "Check the BIOS or UEFI",
-        "detail": "Restart and open the BIOS screen. If the drive is listed with its correct model and size, the hardware is talking to the computer and the problem is likely software or partition related."
+        "detail": "The BIOS (also called UEFI) is a screen built into your computer that lists every drive it can physically see, before Windows or macOS starts. If the drive is listed there, the hardware is working.",
+        "how": [
+          "Restart the computer and tap the BIOS key as it starts. Common keys are Del, F2, F10 or F12; the startup screen often shows which one.",
+          "Look in the Storage, Boot or SATA information section for your drive's model name and size.",
+          "Listed correctly: the problem is probably software or the partition. Not listed: go to the next step. Leave the BIOS with Esc without changing anything."
+        ]
       },
       {
         "title": "Swap the cable and port",
-        "detail": "Try a different SATA data cable and a different port, and check the power connector. Bad cables cause many drive-not-found problems."
+        "detail": "Bad cables and ports cause many drive-not-found problems, and changing them is free and safe.",
+        "how": [
+          "Shut down and unplug the power. Open the case if it is a desktop.",
+          "Swap the thin SATA data cable for another one and plug into a different SATA port on the motherboard. Press each connector in firmly.",
+          "Check the wider power connector is firmly seated, or try a different one from the power supply. Then start the computer and look in the BIOS again."
+        ]
       },
       {
         "title": "Look in Disk Management or Disk Utility",
-        "detail": "On Windows, open Disk Management. On Mac, open Disk Utility. If the drive is listed but has no letter or says Raw or Unallocated, do not format it."
+        "detail": "These built-in tools show drives that the system can see but cannot use yet, such as a drive with no letter or no recognised file system.",
+        "how": [
+          "Windows: right-click the Start button, choose Disk Management. Mac: open Finder, Applications, Utilities, Disk Utility, then View, Show All Devices.",
+          "Find your drive by its size. If it says Raw, Unallocated or Not Initialized, that is fine. Do not click Initialize, Format or Erase.",
+          "If it is listed, note what it says and move on to the health check."
+        ]
       },
       {
         "title": "Check drive health",
-        "detail": "Use CrystalDiskInfo on Windows or smartmontools on Linux or Mac to read the SMART health report. Warnings like Caution or Bad mean the drive is failing."
+        "detail": "The drive keeps its own health record, called SMART. Reading it shows whether the drive is failing, before you stress it any further.",
+        "how": [
+          "Windows: install CrystalDiskInfo and open it. Look at the big Health Status box: Good is fine, Caution or Bad means it is failing.",
+          "Mac or Linux: in a terminal, run `smartctl -a /dev/sdX` (replace sdX with your drive, which `lsblk` shows).",
+          "Look for Reallocated, Pending or Uncorrectable sector counts above zero. Those mean the surface is wearing out."
+        ],
+        "learn": [
+          "check-health",
+          "glossary"
+        ]
       },
       {
-        "title": "Copy the data off or make an image",
-        "detail": "If the drive is readable but weak, image it with ddrescue onto another drive, then use TestDisk or PhotoRec on the image, not the original. Type the failing drive first and the destination second; swapping them erases your data."
+        "title": "Copy the data off, or make an image first",
+        "detail": "If the drive works but shows signs of weakness, an image (an exact copy of the whole drive saved as a file) lets you try recovery on the copy and leave the weak original alone.",
+        "how": [
+          "Get a different drive at least as big as the failing one.",
+          "Follow our imaging guide to copy the drive with ddrescue. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
+          "Then run TestDisk or PhotoRec on the image file, not on the original drive."
+        ],
+        "learn": [
+          "image-drive",
+          "use-testdisk",
+          "use-photorec"
+        ]
       },
       {
         "title": "Stop if it still does not appear",
-        "detail": "If it is not seen in the BIOS after a cable swap, the drive or its circuit board has likely failed. Further DIY is risky."
+        "detail": "A drive that cannot be seen in the BIOS after a cable swap has most likely failed in its circuit board or inside. Further tries risk more damage.",
+        "how": [
+          "Unplug the drive and put it somewhere safe.",
+          "Do not try a replacement circuit board yourself. Each board holds a small ROM chip with data unique to that drive, and it must be moved onto the new board by a specialist.",
+          "Contact a professional recovery lab and describe what you tried."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
       }
     ],
     "tools": [
@@ -183,15 +315,15 @@
       "cgsecurity-forum",
       "dfir-training"
     ],
-    "callPro": "If the drive is missing from the BIOS after trying a new cable and port, or it makes any unusual noise, stop and consider a professional with a cleanroom.",
+    "callPro": "If the drive is missing from the BIOS after a new cable and port, or it makes any unusual noise, stop and ask a professional with a cleanroom.",
     "faq": [
       {
         "q": "My drive shows up but says Raw or needs formatting. What now?",
-        "a": "Do not format it. The file table may be damaged, and TestDisk or PhotoRec can often still reach your files, ideally working on an image."
+        "a": "Do not format it. The drive's file records are probably damaged, and TestDisk or PhotoRec can often still reach your files, ideally working on an image (a full copy of the drive)."
       },
       {
         "q": "Could it just be a cable?",
-        "a": "Yes, that is very common. Try another cable, port, and power connector before assuming the drive is dead."
+        "a": "Yes, that is very common. Try another cable, another port and another power connector before assuming the drive is dead."
       },
       {
         "q": "Can I fix it by swapping the circuit board?",
@@ -202,44 +334,93 @@
   "clicking": {
     "title": "Hard Drive Clicking, Grinding or Beeping",
     "metaDescription": "A clicking, grinding or beeping hard drive is failing mechanically. Learn what not to do, why the freezer trick is a myth, and when DIY is reasonable.",
-    "summary": "Clicking, grinding or beeping usually means the moving parts inside, such as the read/write heads, are damaged or stuck. Every extra power-up can scratch the disk surface and destroy more data.",
+    "summary": "Clicking, grinding or beeping usually means the moving parts inside, such as the read/write heads (the tiny arms that read the disk), are damaged or stuck. Every extra power-up can scratch the disk surface and destroy more data.",
     "risk": 5,
     "riskNote": "Mechanical faults can get worse every time the drive is powered on, and real repairs need a cleanroom.",
     "successOdds": "Low",
     "stopFirst": [
-      "Power it off and leave it off. Do not keep trying, because each power-up can scratch the platters.",
-      "Do not put the drive in the freezer, tap it, or shake it. The freezer trick is a myth that can cause condensation damage.",
-      "Never open the drive. Dust in a normal room ruins the platters.",
-      "Do not run recovery scans, CHKDSK or other repair tools on it. Heavy reading stresses a failing drive; imaging (below) is the only DIY step worth trying."
+      "Power it off and leave it off. Do not keep trying, because each power-up can scratch the disk inside.",
+      "Do not put the drive in the freezer, tap it or shake it. The freezer trick is a myth and can cause water damage from condensation.",
+      "Never open the drive. Dust in a normal room ruins the disk.",
+      "Do not run recovery scans, CHKDSK or any repair tool on it. Heavy reading stresses a failing drive, and making a copy (see below) is the only DIY step worth trying."
     ],
     "steps": [
       {
         "title": "Unplug it now",
-        "detail": "Shut down and disconnect the drive. Note what you heard (clicking, grinding, beeping, or not spinning) because it helps when talking to an expert."
+        "detail": "Switching it off stops the damage growing. What you heard is also useful to a professional.",
+        "how": [
+          "Shut down the computer, then unplug the drive's power and data cables, or unplug the USB cable.",
+          "Write down what you heard: clicking, grinding, beeping, or no spin at all, and when it started."
+        ]
       },
       {
         "title": "Decide how valuable the data is",
-        "detail": "If it is irreplaceable, the safest choice is a professional lab with a cleanroom. If it is replaceable or you accept the risk, read on."
+        "detail": "Home attempts can lower the odds for a lab. Knowing the value of your files tells you whether the risk is worth taking.",
+        "how": [
+          "Irreplaceable files such as family photos or work with no backup: skip to the last step and contact a professional.",
+          "Replaceable files, or you accept the risk: read on, and plan for at most one careful try."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
       },
       {
-        "title": "Check the noise source",
-        "detail": "Make sure the noise really came from the drive and not a fan. Do not keep testing cables and power on an internal drive, because clicking is rarely a cable problem."
+        "title": "Check the noise really came from the drive",
+        "detail": "Fans and optical drives can click too. Confirming the source avoids needless worry, and avoids testing cables on a drive that clicks, because clicking is rarely a cable problem.",
+        "how": [
+          "Shut down. Unplug only this drive's power cable.",
+          "Start the computer. If the noise is gone, it was the drive."
+        ]
       },
       {
         "title": "Try one careful attempt, if you accept the risk",
-        "detail": "Boot a second computer from a Linux live USB and connect the drive once. If it spins up and appears, start imaging right away with HDDSuperClone or ddrescue (both run on Linux) onto a different healthy drive."
+        "detail": "A second computer booted from a live USB (a USB stick that runs Linux without installing anything) avoids loading Windows or macOS, which would read the drive heavily as soon as it is connected.",
+        "how": [
+          "Make a live USB using our guide, then boot a second computer from it.",
+          "Connect the clicking drive once, with a good cable. Do not retry if it fails.",
+          "If it spins and shows up in `lsblk` (a command that lists drives), go straight to making an image. If not, power off."
+        ],
+        "learn": [
+          "live-usb",
+          "glossary"
+        ]
       },
       {
-        "title": "Image, don't copy",
-        "detail": "These tools read the easy areas first and skip bad spots, saving the most data before the drive gets worse. Type the failing drive first and the destination second; swapping them erases your data."
+        "title": "Image it, do not copy it",
+        "detail": "An image (an exact copy of the whole drive saved as a file) is made by tools that read the easy areas first and skip bad spots, saving the most data before the drive gets worse. Ordinary copy and paste would stall on bad spots and stress the drive.",
+        "how": [
+          "Plug in a healthy destination drive at least as big as the clicking one.",
+          "Run ddrescue or HDDSuperClone as shown in the imaging guide. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
+          "Keep the map file ddrescue creates, so it can resume if you must stop."
+        ],
+        "learn": [
+          "image-drive"
+        ]
       },
       {
         "title": "Recover from the image",
-        "detail": "Once you have an image, run TestDisk or PhotoRec on the image file, never on the original failing drive."
+        "detail": "Working on the image means the failing drive never has to run again, so you can retry as many times as you need.",
+        "how": [
+          "Power off and unplug the failing drive once imaging is done.",
+          "Run TestDisk (for folders and names) on the image file, then PhotoRec if names are lost.",
+          "Save recovered files to a third location."
+        ],
+        "learn": [
+          "use-testdisk",
+          "use-photorec"
+        ]
       },
       {
-        "title": "Stop at the first sign of trouble",
-        "detail": "If it clicks, stalls, or disappears again, power it off. Further attempts lower the odds for a professional."
+        "title": "Stop at the first sign of trouble, and call a pro",
+        "detail": "If it clicks, stalls or disappears again, more tries lower what a lab can save. A cleanroom lab can swap the damaged heads, which is not possible at home.",
+        "how": [
+          "Power off at the first stall, click or disappearance.",
+          "Do not retry. Pack the drive in a padded box.",
+          "Ask a few labs about their price and their policy if they cannot recover anything."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
       }
     ],
     "tools": [
@@ -255,63 +436,105 @@
       "dfir-training",
       "nist-cftt"
     ],
-    "callPro": "If the data matters and the drive clicks, grinds, beeps or will not spin, stop and have a professional with a cleanroom look at it.",
+    "callPro": "If the data matters and the drive clicks, grinds, beeps or will not spin, stop and ask a professional with a cleanroom.",
     "faq": [
       {
         "q": "Does the freezer trick work?",
-        "a": "No. It can cause condensation and make the damage worse. Experts and data recovery communities advise against it."
+        "a": "No. It can cause condensation, which is water damage, and make things worse. Data recovery experts advise against it."
       },
       {
         "q": "Can I open the drive and fix it myself?",
-        "a": "No. Opening a hard drive outside a cleanroom lets in dust that can scratch the platters. Head replacement needs special tools and matching parts."
+        "a": "No. Opening a hard drive outside a cleanroom lets in dust that scratches the disk. Replacing the heads needs special tools and matching parts."
       },
       {
         "q": "Is it worth trying once myself?",
-        "a": "Only if the data is not critical. Keep it to one careful attempt, and image the drive immediately if it works."
+        "a": "Only if the data is not critical. Keep it to one careful attempt, and make an image straight away if it works."
       }
     ]
   },
   "no-power": {
     "title": "Hard Drive Not Spinning or Won't Power On",
     "metaDescription": "Hard drive silent, not spinning, or smells burnt? Check power and cables safely, learn why not to retry again and again, and when to see a professional.",
-    "summary": "If the drive makes no sound and does not spin, the cause may be a bad cable, bad power supply, or a failed circuit board or motor. A burnt smell suggests an electrical fault, which can be dangerous to keep trying.",
+    "summary": "If the drive makes no sound and does not spin, the cause may be a bad cable, a weak power supply, or a failed circuit board or motor. A burnt smell points to an electrical fault, which can be dangerous to keep trying.",
     "risk": 4,
-    "riskNote": "Simple cable and power checks are fine, but repeated attempts on a drive with a burnt board or stuck motor can cause more harm.",
+    "riskNote": "Cable and power checks are fine, but repeated attempts on a drive with a burnt board or stuck motor can cause more harm.",
     "successOdds": "Low",
     "stopFirst": [
       "Unplug it right away if you smell burning or see scorch marks. Do not power it up again.",
-      "Do not power-cycle it again and again hoping it starts. Limit yourself to one or two careful tries.",
+      "Do not switch it on and off again and again hoping it starts. Limit yourself to one or two careful tries.",
       "Do not use the freezer trick, and never open the drive. It needs a cleanroom.",
-      "Do not swap circuit boards yourself. Each board has a ROM chip with drive-specific data that must be moved over, which is a job for a lab."
+      "Do not swap circuit boards yourself. Each board has a ROM chip with data unique to that drive, which must be moved over, and that is a job for a lab."
     ],
     "steps": [
       {
         "title": "Look and smell",
-        "detail": "Check the circuit board on the underside for burn marks, a burnt chip, or a burnt smell. If you see or smell any, leave it unplugged."
+        "detail": "Burn marks tell you to stop now, before trying anything else.",
+        "how": [
+          "Shut down and unplug the drive. Turn it over so you can see the green circuit board on the underside.",
+          "Look for dark scorch spots, a cracked or blackened chip, and sniff for a burnt smell.",
+          "If you see or smell any, leave it unplugged and skip to the last step."
+        ]
       },
       {
         "title": "Try one other power source",
-        "detail": "Use a different SATA power connector, or try the drive in a different computer. A weak power supply is a common cause."
+        "detail": "A weak or faulty power supply is a common cause, and trying another is quick and safe.",
+        "how": [
+          "Plug the drive's power into a different connector from the same power supply, or try it in another computer or a USB dock.",
+          "Check that other drives on the same cable work. If none do, the power supply is the problem."
+        ]
       },
       {
-        "title": "Use a good cable for that same try",
-        "detail": "Swap the data cable and port at the same time, so one attempt tests everything. In a desktop, check that other drives on the same power cable work."
+        "title": "Use a good data cable for that same try",
+        "detail": "Swapping the data cable and port in the same attempt tests everything at once, so you power the drive on as few times as possible.",
+        "how": [
+          "Use a spare SATA data cable and a different port on the motherboard, or a USB dock.",
+          "Press each connector in firmly before switching on."
+        ]
       },
       {
         "title": "Listen for spin-up",
-        "detail": "During that try, rest your hand lightly on the drive. A faint hum or vibration means it spins. Silence means a power, board or motor issue."
+        "detail": "Spinning up produces a faint hum or vibration. Silence tells you where the fault is.",
+        "how": [
+          "Switch on and rest a fingertip lightly on the drive for about 10 seconds.",
+          "Hum or vibration: it spins, so check whether it appears in the BIOS or Disk Management.",
+          "Nothing at all: the fault is power, circuit board or motor. Switch off, do not retry."
+        ]
       },
       {
         "title": "If it spins and shows up, image it",
-        "detail": "Use HDDSuperClone (Linux) or ddrescue to copy it to a different drive. Type the failing drive first and the destination second; swapping them erases your data."
+        "detail": "An image (an exact copy of the whole drive saved as a file) lets you recover files without running the shaky drive again and again.",
+        "how": [
+          "Plug in a healthy drive at least as big as this one.",
+          "Follow our imaging guide with ddrescue (on Linux), or HDDSuperClone. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data."
+        ],
+        "learn": [
+          "image-drive",
+          "glossary"
+        ]
       },
       {
         "title": "Recover from the image",
-        "detail": "Run TestDisk or PhotoRec on the image file, not the original."
+        "detail": "The image can be searched repeatedly without risk to the original.",
+        "how": [
+          "Run TestDisk to see folders and names, then PhotoRec if needed.",
+          "Always point the tools at the image file, never at the original drive."
+        ],
+        "learn": [
+          "use-testdisk",
+          "use-photorec"
+        ]
       },
       {
         "title": "Stop if it stays dead",
-        "detail": "A drive that never spins needs hardware repair by a professional. More attempts will not help."
+        "detail": "A drive that never spins needs hardware repair by a professional. More attempts will not help, and they can damage it.",
+        "how": [
+          "Unplug it and pack it in a padded box.",
+          "Describe what you saw, heard and smelled when you talk to a lab.",
+          "Ask about their price and their policy if they cannot recover anything."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
       }
     ],
     "tools": [
@@ -325,7 +548,7 @@
       "hddguru-forum",
       "dfir-training"
     ],
-    "callPro": "If it does not spin after trying another cable and power source, or there is a burnt smell or scorch marks, stop and use a professional.",
+    "callPro": "If it does not spin after another cable and power source, or there is a burnt smell or scorch marks, stop and call a professional.",
     "faq": [
       {
         "q": "My drive is dead but not clicking. Is that better or worse?",
@@ -333,47 +556,72 @@
       },
       {
         "q": "Can I replace the circuit board myself?",
-        "a": "Not as a DIY fix. The board's ROM chip holds unique data for that drive and must be moved to the new board, which experts do with special tools."
+        "a": "Not as a DIY fix. The board's ROM chip holds data unique to that drive and must be moved onto the new board, which experts do with special tools."
       },
       {
         "q": "Is a burnt smell always the end?",
-        "a": "Not always. Sometimes only the protection part on the board has blown and the data is fine, but it needs a careful repair by an expert."
+        "a": "Not always. Sometimes only a small protection part on the board has blown and the data is fine, but it needs a careful repair by an expert."
       }
     ]
   },
   "liquid-fire": {
     "title": "Water, Liquid or Fire Damaged Hard Drive",
     "metaDescription": "Hard drive got wet, flooded or burned? Do not power it on, do not use rice or heat. Learn what to do next to give a professional the best chance.",
-    "summary": "Liquid can short the circuit board and corrode parts inside, and fire or heat can warp the drive. Powering it on can cause a short or scratch the platters, so the safest move is to keep it off and get professional help.",
+    "summary": "Liquid can short the circuit board and corrode parts inside, and fire or heat can warp the drive. Switching it on can cause a short or scratch the disk, so the safest move is to keep it off and get professional help.",
     "risk": 5,
-    "riskNote": "Power, heat, or opening the drive can turn recoverable damage into permanent loss.",
+    "riskNote": "Power, heat or opening the drive can turn damage that could be fixed into permanent loss.",
     "successOdds": "Low",
     "stopFirst": [
       "Do not power it on. Not even once to see if it works.",
       "Do not dry it with a hair dryer, oven or heater, and do not bury it in rice. Heat can warp parts, and rice adds dust and starch without drying the inside.",
-      "Do not open the drive or try to clean the platters.",
+      "Do not open the drive or try to clean the disk.",
       "Do not shake it or rinse it to remove dirt or salt water."
     ],
     "steps": [
       {
         "title": "Keep it unpowered",
-        "detail": "Unplug it and leave it off; powering a wet drive can short the board or scratch the disk. If it is inside a wet or burned laptop, unplug the charger and stay away from a swollen, hot or smoking battery, which can catch fire."
+        "detail": "Power into a wet drive can short the board or scratch the disk. If the drive is inside a laptop or PC, the battery or power supply can be a hazard too.",
+        "how": [
+          "Unplug the power and data cables. For a laptop, unplug the charger and do not press the power button.",
+          "Stay away from a swollen, hot or smoking battery. It can catch fire, so move it outdoors on a non-flammable surface if it is safe to do so.",
+          "Do not plug it in anywhere to see if it works."
+        ]
       },
       {
         "title": "Note what happened",
-        "detail": "Was it clean water, salt water, a sugary drink, flood mud, smoke or flames? This matters, because salt and mud corrode quickly."
+        "detail": "What touched the drive decides how fast it corrodes and what the lab needs to do first.",
+        "how": [
+          "Write down whether it was clean water, salt water, a sugary drink, flood mud, smoke or flames, and how long ago.",
+          "Take a photo of the drive as it is now, if it is safe to do so."
+        ]
       },
       {
         "title": "Keep it damp if it came from a flood",
-        "detail": "If it is muddy or salty, sealing it in a plastic bag without drying it can slow corrosion until an expert sees it. Do not let it dry out in the open."
+        "detail": "Salt and mud eat metal quickly once they dry. Keeping the drive damp stops that until an expert can clean it. Do not dry it out in the open.",
+        "how": [
+          "If it is muddy or salty, place it in a sealed plastic bag as it is. Do not rinse it and do not wipe it.",
+          "If it was clean water or a small spill, still do not try to dry it. Just bag it and keep it still."
+        ]
       },
       {
         "title": "Pack it gently",
-        "detail": "Wrap it in a soft cloth, put it in a box with padding, and avoid bumps or heat."
+        "detail": "Knocks can scratch a disk that has been stopped, and heat can warp it.",
+        "how": [
+          "Wrap the drive, still bagged, in a soft cloth.",
+          "Put it in a box with padding on all sides and keep it away from heat and sun."
+        ]
       },
       {
         "title": "Contact a professional soon",
-        "detail": "Corrosion keeps spreading with time, so do not wait. Choose a lab that works in a cleanroom and ask about their policy before you pay."
+        "detail": "Corrosion keeps spreading, so waiting makes recovery harder. Only a lab with a cleanroom can safely open, clean and read the drive.",
+        "how": [
+          "Search for data recovery labs with a cleanroom and ask for a quote before you ship anything.",
+          "Ask about their price, their policy if they cannot recover anything, and whether they offer free evaluation.",
+          "Send it with tracking and insurance."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
       }
     ],
     "tools": [],
@@ -389,54 +637,97 @@
       },
       {
         "q": "Can I dry it with a hair dryer?",
-        "a": "No. Heat can warp parts and drive moisture further inside. Leave drying and cleaning to an expert."
+        "a": "No. Heat can warp parts and push moisture further inside. Leave drying and cleaning to an expert."
       },
       {
-        "q": "What if it was fully dry and looks fine?",
-        "a": "Looking fine is not proof it is safe, because residue can short the board. Powering it is a gamble, so a professional is safer for important data."
+        "q": "What if it dried and looks fine?",
+        "a": "Looking fine does not prove it is safe, because leftover residue can short the board. Powering it on is a gamble, so a professional is safer for important data."
       }
     ]
   },
   "corrupted": {
     "title": "Fix a Corrupted or Unreadable Hard Drive",
     "metaDescription": "Hard drive corrupted, shows RAW, asks to format, or has read errors? Image it with ddrescue first, then recover files with TestDisk or PhotoRec safely.",
-    "summary": "Corruption means the drive's file records are damaged, often after a power loss, a bad shutdown, or failing sectors. The files may still be there. Do not run repair tools on the original first, because they can change data.",
+    "summary": "Corrupted means the drive's records of where each file is are damaged, often after a power cut, a bad shutdown or failing parts. The files are often still there. Do not run repair tools on the original first, because they can change your data.",
     "risk": 3,
-    "riskNote": "The drive may be weakening, and repair tools like CHKDSK on the original can change data before you have a copy.",
+    "riskNote": "The drive may be weakening, and repair tools such as CHKDSK on the original can change data before you have a copy.",
     "successOdds": "Medium",
     "stopFirst": [
-      "Do not run CHKDSK, fsck, or Disk Utility repair on the original before copying your data. Repairs can rewrite data.",
+      "Do not run CHKDSK, fsck or Disk Utility's First Aid on the original before copying your data. Repairs can rewrite data.",
       "Do not click Format when Windows says the drive needs to be formatted.",
       "Do not install recovery software onto the affected drive, and do not save recovered files back to it."
     ],
     "steps": [
       {
         "title": "Stop using the drive",
-        "detail": "Shut down or unmount it. If it is making noises, read the clicking guide instead."
+        "detail": "Every extra read or write on a damaged drive risks more damage.",
+        "how": [
+          "Windows: close the drive's folders, then right-click the drive in File Explorer and choose Eject. Mac: drag it to the Trash or click the Eject button in Finder.",
+          "Then shut down. If the drive is making clicking or grinding noises, read our clicking guide instead."
+        ]
       },
       {
         "title": "Check its health",
-        "detail": "Use CrystalDiskInfo (Windows) or smartmontools to read the SMART report. Reallocated, pending or uncorrectable sectors mean the disk is wearing out."
+        "detail": "The SMART report is the drive's own health record. It shows whether the disk is wearing out, which decides how gently you must treat it.",
+        "how": [
+          "Windows: install and open CrystalDiskInfo, then look at Health Status. Mac or Linux: in a terminal run `smartctl -a /dev/sdX`.",
+          "Reallocated, Pending or Uncorrectable sector counts above zero mean the disk surface is wearing out. Caution or Bad means the drive is failing."
+        ],
+        "learn": [
+          "check-health"
+        ]
       },
       {
         "title": "Get a second drive that is as large",
-        "detail": "You need a different drive at least as big as the damaged one to hold an image of it."
+        "detail": "An image (an exact copy of the whole drive saved as a file) needs as much room as the original drive.",
+        "how": [
+          "Check the damaged drive's size in File Explorer or Disk Utility.",
+          "Use a different drive with at least that much free space."
+        ]
       },
       {
         "title": "Image the drive with ddrescue",
-        "detail": "GNU ddrescue (or HDDSuperClone on Linux) copies the drive, skipping unreadable spots and returning to them later; keep its map file so you can resume. Type the damaged drive first and the destination second; swapping them erases your data."
+        "detail": "ddrescue copies the drive while skipping spots it cannot read and returning to them later. That saves the most data and stresses the drive the least.",
+        "how": [
+          "Boot a live USB if needed (our guide shows how), then open a terminal and run `lsblk` to identify both drives.",
+          "Run `sudo ddrescue -n /dev/sdX /mnt/backup/disk.img /mnt/backup/disk.map`, where sdX is the damaged drive. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
+          "Keep the map file so you can stop and resume. HDDSuperClone is an alternative on Linux."
+        ],
+        "learn": [
+          "image-drive",
+          "live-usb"
+        ]
       },
       {
         "title": "Work on the image, not the original",
-        "detail": "Make a copy of the image if you can. Then run TestDisk to rebuild partitions or restore folders, on the image only."
+        "detail": "The image is expendable. If a tool changes it, you can make a fresh copy and try again.",
+        "how": [
+          "If you have space, copy the image file so you have a spare.",
+          "Run `sudo testdisk disk.img` and follow its menus to rebuild the partition or list the files.",
+          "Copy what you find to a different drive."
+        ],
+        "learn": [
+          "use-testdisk"
+        ]
       },
       {
         "title": "Use PhotoRec as a fallback",
-        "detail": "If the folder structure is too damaged, PhotoRec carves out files by type from the image. Names will be generic."
+        "detail": "If the folder records are too damaged, PhotoRec finds files by their content and saves them with generic names.",
+        "how": [
+          "Run `sudo photorec disk.img` and choose the image file.",
+          "Pick the file types you want, then a destination folder on a different drive, and press `c`."
+        ],
+        "learn": [
+          "use-photorec"
+        ]
       },
       {
         "title": "Store the recovered files safely",
-        "detail": "Save to a third location if you can, and check that the files open correctly."
+        "detail": "Recovered files are only safe once they are in more than one place.",
+        "how": [
+          "Open a few files of each type to check they work.",
+          "Keep a second copy on another drive or in cloud storage."
+        ]
       }
     ],
     "tools": [
@@ -454,7 +745,7 @@
       "dfir-training",
       "nist-cftt"
     ],
-    "callPro": "If imaging keeps stalling, the drive makes noises, or the data is critical, stop and talk to a professional rather than hammering the drive.",
+    "callPro": "If imaging keeps stalling, the drive makes noises, or the data is critical, stop and ask a professional rather than hammering the drive.",
     "faq": [
       {
         "q": "Should I run CHKDSK to fix it?",
@@ -462,11 +753,11 @@
       },
       {
         "q": "What is a disk image?",
-        "a": "It is an exact copy of everything on the drive saved as a file or onto another drive. It lets you try recovery over and over without risking the original."
+        "a": "It is an exact copy of everything on the drive, saved as a file or onto another drive. It lets you try recovery over and over without risking the original."
       },
       {
         "q": "Why does it say the drive is RAW?",
-        "a": "The computer cannot read the file system, usually due to damage. The data is often still there and TestDisk may restore it."
+        "a": "The computer cannot read the drive's file system, which is its way of organising files, usually because of damage. The data is often still there and TestDisk may restore it."
       }
     ]
   },
@@ -478,34 +769,66 @@
     "riskNote": "Unlocking with a known key is low risk, but guessing or tampering with a failing encrypted drive can lock you out for good.",
     "successOdds": "Varies",
     "stopFirst": [
-      "Do not format, reset, or reinstall the operating system. That destroys the encryption headers and your chance of unlocking.",
+      "Do not format, reset or reinstall the operating system. That destroys the encryption headers and your chance of unlocking.",
       "Do not keep guessing passwords on a drive that locks you out after failed tries.",
       "Do not trust tools or sites that claim to crack or brute-force strong encryption."
     ],
     "steps": [
       {
         "title": "Work out which encryption it is",
-        "detail": "On Windows it is often BitLocker, and on a Mac it is FileVault. Others include VeraCrypt, or LUKS on Linux. Each has its own unlock method."
+        "detail": "Each kind unlocks differently, so you need to know which you have first.",
+        "how": [
+          "Windows: open File Explorer. A padlock on the drive icon means BitLocker. Mac: a locked drive asks for a password when you open it in Finder, which means FileVault or Mac encryption.",
+          "If you are asked for a VeraCrypt password, it is VeraCrypt. On Linux, a prompt for a passphrase at boot usually means LUKS."
+        ]
       },
       {
         "title": "Find your recovery key",
-        "detail": "BitLocker keys are often saved to your Microsoft account (account.microsoft.com/devices/recoverykey), a work or school account, a printout, or a USB stick. FileVault can use your Apple Account or a recovery key you saved."
+        "detail": "The recovery key is a long backup code made when encryption was turned on. It unlocks the drive if the password fails.",
+        "how": [
+          "BitLocker: sign in at account.microsoft.com/devices/recoverykey with the Microsoft account you used on the computer. Also check a work or school account.",
+          "FileVault: on a Mac, use Apple Account reset on the login screen, or the recovery key you saved.",
+          "Also look for a printed page or a text file on a USB stick."
+        ]
       },
       {
         "title": "Check old notes and password managers",
-        "detail": "Search email, password managers, printed pages, and cloud storage for a long number or phrase. A recovery key is usually a 48-digit number for BitLocker."
+        "detail": "Many people save the key and forget where.",
+        "how": [
+          "Search your email for BitLocker or recovery key.",
+          "Check your password manager, printed papers, cloud storage and old USB sticks.",
+          "A BitLocker key is a 48-digit number in groups of six digits."
+        ]
       },
       {
         "title": "Unlock a healthy drive and copy the files",
-        "detail": "Use the key to unlock the drive in the normal system, then copy your files to a different drive."
+        "detail": "With the key, the drive behaves normally once unlocked, so you can simply copy your files out.",
+        "how": [
+          "Windows: open the drive in File Explorer, click More options, Enter recovery key, and type it in. Mac: enter the password when asked.",
+          "Copy your files to a different drive, then open a few to check them."
+        ]
       },
       {
         "title": "If the drive is also failing, image it first",
-        "detail": "Only worth it if you have the key. Use ddrescue to copy the encrypted drive to another drive and unlock the copy later. Type the failing drive first and the destination second; swapping them erases your data."
+        "detail": "An image (an exact copy of the whole drive saved as a file) of an encrypted drive stays encrypted, and you unlock the copy later. Only do this if you hold the key.",
+        "how": [
+          "Follow our imaging guide with ddrescue. Always type the failing drive first and the empty destination second. If you swap them, the copy erases your data.",
+          "Then unlock the image or a copy with the same key, and copy files out."
+        ],
+        "learn": [
+          "image-drive"
+        ]
       },
       {
         "title": "Accept the limit if no key exists",
-        "detail": "Without the password or recovery key, modern encryption cannot be reasonably broken. Recovery tools like PhotoRec will only return scrambled data."
+        "detail": "Modern encryption is designed so that nobody can open it without the key. Recovery tools such as PhotoRec will only return scrambled data.",
+        "how": [
+          "If you have no password and no key, the data cannot realistically be recovered.",
+          "If the drive is damaged and you do hold the key, a professional can image it for you."
+        ],
+        "learn": [
+          "find-a-pro"
+        ]
       }
     ],
     "tools": [
@@ -517,7 +840,7 @@
       "dfir-training",
       "brett-shavers"
     ],
-    "callPro": "If you hold the key but the drive is also failing or damaged, a professional can image it for you; without the key, no one can realistically recover the data.",
+    "callPro": "If you hold the key but the drive is also failing, a professional can make the copy for you. Without the key, no one can realistically recover the data.",
     "faq": [
       {
         "q": "Where is my BitLocker recovery key?",
@@ -529,7 +852,7 @@
       },
       {
         "q": "What if I forgot my FileVault password?",
-        "a": "Try your Apple Account reset or the recovery key you saved when you turned it on. Without those, the data cannot be unlocked."
+        "a": "Try your Apple Account reset, or the recovery key you saved when you turned it on. Without those, the data cannot be unlocked."
       }
     ]
   }

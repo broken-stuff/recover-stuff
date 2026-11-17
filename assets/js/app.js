@@ -10,6 +10,8 @@
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
+  // escape first, then turn `backtick` spans into <code>
+  function rich(s) { return esc(s).replace(/`([^`]+)`/g, '<code>$1</code>'); }
   function store(key, val) {
     try {
       if (val === undefined) { var v = localStorage.getItem(key); return v ? JSON.parse(v) : null; }
@@ -82,6 +84,15 @@
       '</div><span class="chip">' + n + '/5 · ' + RISK[n] + '</span></div>';
   }
 
+  function learnChips(ids) {
+    var names = (G && G.howto) || {};
+    var list = (ids || []).filter(function (id) { return Object.prototype.hasOwnProperty.call(names, id); });
+    if (!list.length) return '';
+    return '<p class="learn">' + list.map(function (id) {
+      return '<a class="learn-chip" href="' + base + 'guide/how-to/' + esc(id) + '/">Guide: ' + esc(names[id]) + '</a>';
+    }).join('') + '</p>';
+  }
+
   function missionHTML(d, s) {
     var r = G.results[d][s];
     var dv = G.devices.filter(function (x) { return x.id === d; })[0];
@@ -104,11 +115,13 @@
       '<section class="stop" aria-labelledby="stop-h"><h2 id="stop-h"><span aria-hidden="true">✋</span> Stop! Don\'t do this first</h2><ul>' + r.stopFirst.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></section>' +
       '<section aria-labelledby="steps-h"><h2 id="steps-h">Your steps</h2><div class="progress"><div class="bar" role="progressbar" aria-label="Steps completed" aria-valuemin="0" aria-valuemax="' + r.steps.length + '" aria-valuenow="0"><span style="width:0%"></span></div><span class="count" aria-live="polite">0 of ' + r.steps.length + ' done</span></div>' +
       '<ol class="steps">' + r.steps.map(function (st, i) {
-        return '<li><label><input type="checkbox" data-i="' + i + '"><span class="box" aria-hidden="true"></span><span class="txt"><strong>' + esc(st.title) + '</strong><span>' + esc(st.detail) + '</span></span></label></li>';
+        return '<li><label><input type="checkbox" data-i="' + i + '"><span class="box" aria-hidden="true"></span><span class="txt"><strong>' + esc(st.title) + '</strong><span>' + rich(st.detail) + '</span></span></label>' +
+          '<details class="how"><summary>Show me how</summary><ol>' + (st.how || []).map(function (h) { return '<li>' + rich(h) + '</li>'; }).join('') + '</ol></details>' +
+          learnChips(st.learn) + '</li>';
       }).join('') + '</ol><div class="win" hidden role="status"><strong>Mission complete! 🎉</strong> Check your recovered files open properly, then back them up in two places.</div></section>' +
       (toolCards ? '<section aria-labelledby="tools-h"><h2 id="tools-h">Tools you\'ll use</h2><div class="grid">' + toolCards + '</div></section>' : '') +
       (resCards ? '<section aria-labelledby="res-h"><h2 id="res-h">Learn from the experts</h2><div class="grid">' + resCards + '</div></section>' : '') +
-      '<section class="pro" aria-labelledby="pro-h"><h2 id="pro-h"><span aria-hidden="true">🧑‍🔧</span> When to call a pro</h2><p>' + esc(r.callPro) + '</p></section>' +
+      '<section class="pro" aria-labelledby="pro-h"><h2 id="pro-h"><span aria-hidden="true">🧑‍🔧</span> When to call a pro</h2><p>' + esc(r.callPro) + '</p><p class="findpro"><a href="' + base + 'guide/how-to/find-a-pro/">How to find a trustworthy pro →</a></p></section>' +
       '<section aria-labelledby="faq-h"><h2 id="faq-h">Questions people ask</h2><div class="faq">' + r.faq.map(function (f) { return '<details><summary>' + esc(f.q) + '</summary><p>' + esc(f.a) + '</p></details>'; }).join('') + '</div></section>' +
       '<p class="disclaimer inline"><strong>Before you start:</strong> ' + esc(DISCLAIMER) + '</p>' +
       '<div class="navrow"><button class="btn ghost" type="button" data-nav="back">← Back</button><button class="btn ghost" type="button" data-nav="restart">Start over</button>' +
@@ -133,7 +146,10 @@
     var st = parse(), html, step, title = 'Recover Stuff: free step-by-step DIY data recovery guide';
     if (!st.d) {
       step = 1;
-      html = '<h1 tabindex="-1">Step 1: Pick your device</h1><p class="lead">Which one lost its files? Tap a card to start your quest.</p><div class="cards">' +
+      html = '<section class="intro-panel" aria-label="About this site"><p>Recover Stuff is a free, step-by-step guide that helps everyday people try to get files back from hard drives, SSDs, USB sticks, SD cards and external drives. Pick your device, then pick what happened, and you get a plain-language plan with free tools and safety warnings.</p>' +
+        '<p class="rule"><strong>Most important rule:</strong> stop using the device right now.</p>' +
+        '<p class="intro-links"><a href="' + base + 'guide/how-to/glossary/">New here? Key terms (glossary)</a> <a href="' + base + 'guide/how-to/find-a-pro/">Need a professional?</a></p></section>' +
+        '<h1 tabindex="-1">Step 1: Pick your device</h1><p class="lead">Which one lost its files? Tap a card to start your quest.</p><div class="cards">' +
         G.devices.map(function (d) {
           return '<button class="pick" type="button" data-d="' + d.id + '"><span class="ico" aria-hidden="true">' + d.icon + '</span><span class="t">' + esc(d.name) + '</span><span class="b">' + esc(d.blurb) + '</span></button>';
         }).join('') + '</div>' +

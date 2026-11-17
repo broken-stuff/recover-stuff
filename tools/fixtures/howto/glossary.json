@@ -1,0 +1,16 @@
+{
+ "id": "glossary",
+ "title": "Key terms",
+ "metaDescription": "Fixture description for Key terms.",
+ "intro": "Intro for Key terms. Use `testdisk` carefully.",
+ "terms": [
+  {
+   "term": "Image",
+   "def": "A full copy of a drive saved as one file."
+  },
+  {
+   "term": "Partition",
+   "def": "A section of a drive, like `C:`."
+  }
+ ]
+}
