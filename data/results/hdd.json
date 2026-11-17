@@ -4,7 +4,7 @@
     "metaDescription": "Deleted files on a hard drive are often still there until overwritten. Learn how to stop the damage and safely recover them with free tools like PhotoRec.",
     "summary": "When you delete a file, the computer usually just marks its space as free. The data stays on the disk until something new is written over it. The sooner you stop using the drive, the better your chances.",
     "risk": 1,
-    "riskNote": "The drive is healthy, so recovery only reads data, as long as you save results to a different drive.",
+    "riskNote": "If the drive is healthy, recovery only reads data, as long as you save results to a different drive.",
     "successOdds": "High",
     "stopFirst": [
       "Stop saving, downloading, installing or browsing on this drive right now. New data can overwrite your deleted files.",
@@ -54,7 +54,7 @@
     "faq": [
       {
         "q": "Can I get back files I emptied from the Recycle Bin?",
-        "a": "Often yes. Emptying the bin only frees the space. Recovery works if nothing new has overwritten it, so stop using the drive right away."
+        "a": "Often yes, because emptying the bin only frees the space, so stop using the drive right away. Some newer SMR drives clear freed space like an SSD does, which lowers the odds."
       },
       {
         "q": "Why did my recovered files lose their names?",
@@ -101,7 +101,7 @@
       },
       {
         "title": "Check what you got",
-        "detail": "Open a few files of each type. If many are damaged or missing, the drive may have been fully formatted or overwritten."
+        "detail": "Open a few files of each type. If many are damaged or missing, the drive may have been fully formatted or overwritten, or it may be a newer SMR drive that clears freed space."
       }
     ],
     "tools": [
@@ -121,7 +121,7 @@
       },
       {
         "q": "Did reinstalling Windows destroy my files?",
-        "a": "It overwrote part of the drive, so some files are lost. Others may still be recoverable, so stop and scan with PhotoRec."
+        "a": "It overwrote part of the drive, so some files are lost. Others may still be there, so stop using it and scan it from another computer with PhotoRec."
       },
       {
         "q": "Will I get my folders and file names back?",
@@ -144,11 +144,11 @@
     "steps": [
       {
         "title": "Listen and feel",
-        "detail": "A healthy drive spins up with a soft hum. If you hear clicking, grinding or beeping, or smell something burnt, stop here and read the clicking guide instead."
+        "detail": "A healthy drive spins up with a soft hum. If you hear clicking, grinding or beeping, stop and read the clicking guide; if you smell burning, unplug it and read the won't-power-on guide."
       },
       {
         "title": "Check the BIOS or UEFI",
-        "detail": "Restart and open the BIOS screen. If the drive is listed there, the hardware is talking to the computer and the problem is likely software or partition related."
+        "detail": "Restart and open the BIOS screen. If the drive is listed with its correct model and size, the hardware is talking to the computer and the problem is likely software or partition related."
       },
       {
         "title": "Swap the cable and port",
@@ -164,7 +164,7 @@
       },
       {
         "title": "Copy the data off or make an image",
-        "detail": "If the drive is readable but weak, make an image with ddrescue onto another drive first. Then use TestDisk or PhotoRec on the image, not the original."
+        "detail": "If the drive is readable but weak, image it with ddrescue onto another drive, then use TestDisk or PhotoRec on the image, not the original. Type the failing drive first and the destination second; swapping them erases your data."
       },
       {
         "title": "Stop if it still does not appear",
@@ -187,7 +187,7 @@
     "faq": [
       {
         "q": "My drive shows up but says Raw or needs formatting. What now?",
-        "a": "Do not format it. The file table may be damaged, and TestDisk or PhotoRec can often still reach your files."
+        "a": "Do not format it. The file table may be damaged, and TestDisk or PhotoRec can often still reach your files, ideally working on an image."
       },
       {
         "q": "Could it just be a cable?",
@@ -195,7 +195,7 @@
       },
       {
         "q": "Can I fix it by swapping the circuit board?",
-        "a": "Not reliably. Boards hold drive-specific data, and a mismatched board can make things worse. It is best left to specialists."
+        "a": "Not as a DIY fix. Each board has a ROM chip with data unique to that drive, which must be moved onto the new board, so leave it to specialists."
       }
     ]
   },
@@ -210,7 +210,7 @@
       "Power it off and leave it off. Do not keep trying, because each power-up can scratch the platters.",
       "Do not put the drive in the freezer, tap it, or shake it. The freezer trick is a myth that can cause condensation damage.",
       "Never open the drive. Dust in a normal room ruins the platters.",
-      "Do not run recovery software or repair tools on it. Heavy scanning stresses a failing drive."
+      "Do not run recovery scans, CHKDSK or other repair tools on it. Heavy reading stresses a failing drive; imaging (below) is the only DIY step worth trying."
     ],
     "steps": [
       {
@@ -222,16 +222,16 @@
         "detail": "If it is irreplaceable, the safest choice is a professional lab with a cleanroom. If it is replaceable or you accept the risk, read on."
       },
       {
-        "title": "Check for easy causes",
-        "detail": "Make sure the clicking is from the drive and not a fan. Try a different power connector or cable once, in case low power is the cause."
+        "title": "Check the noise source",
+        "detail": "Make sure the noise really came from the drive and not a fan. Do not keep testing cables and power on an internal drive, because clicking is rarely a cable problem."
       },
       {
         "title": "Try one careful attempt, if you accept the risk",
-        "detail": "Connect it to a computer that is not booting from it. If it spins up and appears, immediately start imaging with ddrescue or HDDSuperClone onto a different healthy drive."
+        "detail": "Boot a second computer from a Linux live USB and connect the drive once. If it spins up and appears, start imaging right away with HDDSuperClone or ddrescue (both run on Linux) onto a different healthy drive."
       },
       {
         "title": "Image, don't copy",
-        "detail": "ddrescue first reads the easy parts and skips the bad areas, so the most data is saved before the drive gets worse. Be ready to stop if it clicks again."
+        "detail": "These tools read the easy areas first and skip bad spots, saving the most data before the drive gets worse. Type the failing drive first and the destination second; swapping them erases your data."
       },
       {
         "title": "Recover from the image",
@@ -267,7 +267,7 @@
       },
       {
         "q": "Is it worth trying once myself?",
-        "a": "It can be if the data is not critical, but keep it to one or two careful attempts and image the drive immediately if it works."
+        "a": "Only if the data is not critical. Keep it to one careful attempt, and image the drive immediately if it works."
       }
     ]
   },
@@ -282,7 +282,7 @@
       "Unplug it right away if you smell burning or see scorch marks. Do not power it up again.",
       "Do not power-cycle it again and again hoping it starts. Limit yourself to one or two careful tries.",
       "Do not use the freezer trick, and never open the drive. It needs a cleanroom.",
-      "Do not swap circuit boards yourself. Boards hold drive-specific data and mismatches cause problems."
+      "Do not swap circuit boards yourself. Each board has a ROM chip with drive-specific data that must be moved over, which is a job for a lab."
     ],
     "steps": [
       {
@@ -290,20 +290,20 @@
         "detail": "Check the circuit board on the underside for burn marks, a burnt chip, or a burnt smell. If you see or smell any, leave it unplugged."
       },
       {
-        "title": "Test the power source",
-        "detail": "Try a different power connector, a different SATA power cable, or a different computer. A weak power supply is a common cause."
+        "title": "Try one other power source",
+        "detail": "Use a different SATA power connector, or try the drive in a different computer. A weak power supply is a common cause."
       },
       {
-        "title": "Try another cable and port",
-        "detail": "Swap the data cable and the port. If the drive is in a desktop, check that other drives get power from the same cable."
+        "title": "Use a good cable for that same try",
+        "detail": "Swap the data cable and port at the same time, so one attempt tests everything. In a desktop, check that other drives on the same power cable work."
       },
       {
         "title": "Listen for spin-up",
-        "detail": "Rest your hand lightly on the drive when you power it on. A faint hum or vibration means it spins. Silence means a power, board or motor issue."
+        "detail": "During that try, rest your hand lightly on the drive. A faint hum or vibration means it spins. Silence means a power, board or motor issue."
       },
       {
         "title": "If it spins and shows up, image it",
-        "detail": "Use ddrescue or HDDSuperClone to copy it to a different drive. Do not install software on the affected drive."
+        "detail": "Use HDDSuperClone (Linux) or ddrescue to copy it to a different drive. Type the failing drive first and the destination second; swapping them erases your data."
       },
       {
         "title": "Recover from the image",
@@ -333,7 +333,7 @@
       },
       {
         "q": "Can I replace the circuit board myself?",
-        "a": "It is risky. Modern boards hold unique adaptive data, so a swap often fails unless that data is moved too. Experts do this with special tools."
+        "a": "Not as a DIY fix. The board's ROM chip holds unique data for that drive and must be moved to the new board, which experts do with special tools."
       },
       {
         "q": "Is a burnt smell always the end?",
@@ -350,14 +350,14 @@
     "successOdds": "Low",
     "stopFirst": [
       "Do not power it on. Not even once to see if it works.",
-      "Do not dry it with a hair dryer, oven, or heater, and do not bury it in rice. Heat and rice make corrosion and dust worse.",
+      "Do not dry it with a hair dryer, oven or heater, and do not bury it in rice. Heat can warp parts, and rice adds dust and starch without drying the inside.",
       "Do not open the drive or try to clean the platters.",
       "Do not shake it or rinse it to remove dirt or salt water."
     ],
     "steps": [
       {
         "title": "Keep it unpowered",
-        "detail": "Unplug it and leave it off. Turning it on while wet can cause a short that fries the board or scratches the disk."
+        "detail": "Unplug it and leave it off; powering a wet drive can short the board or scratch the disk. If it is inside a wet or burned laptop, unplug the charger and stay away from a swollen, hot or smoking battery, which can catch fire."
       },
       {
         "title": "Note what happened",
@@ -374,16 +374,9 @@
       {
         "title": "Contact a professional soon",
         "detail": "Corrosion keeps spreading with time, so do not wait. Choose a lab that works in a cleanroom and ask about their policy before you pay."
-      },
-      {
-        "title": "Only if the data is not critical",
-        "detail": "If the drive was only splashed and is fully dry after several days, some people try one careful power-up with a spare cable. Be aware this can destroy it, and stop at the first odd sound."
       }
     ],
-    "tools": [
-      "ddrescue",
-      "smartmontools"
-    ],
+    "tools": [],
     "resources": [
       "hddguru-forum",
       "dfir-training"
@@ -431,7 +424,7 @@
       },
       {
         "title": "Image the drive with ddrescue",
-        "detail": "GNU ddrescue copies the drive to a file or another drive, skipping unreadable spots and coming back to them later. HDDSuperClone is an alternative. Save the log file so you can resume."
+        "detail": "GNU ddrescue (or HDDSuperClone on Linux) copies the drive, skipping unreadable spots and returning to them later; keep its map file so you can resume. Type the damaged drive first and the destination second; swapping them erases your data."
       },
       {
         "title": "Work on the image, not the original",
@@ -492,7 +485,7 @@
     "steps": [
       {
         "title": "Work out which encryption it is",
-        "detail": "On Windows it is often BitLocker. On Mac it is FileVault. Others include VeraCrypt or LUKS on Linux. Each has its own unlock method."
+        "detail": "On Windows it is often BitLocker, and on a Mac it is FileVault. Others include VeraCrypt, or LUKS on Linux. Each has its own unlock method."
       },
       {
         "title": "Find your recovery key",
@@ -508,7 +501,7 @@
       },
       {
         "title": "If the drive is also failing, image it first",
-        "detail": "Use ddrescue to make a raw copy of the encrypted drive to another drive. You can unlock the copy later with the key. Do not decrypt or repair the original."
+        "detail": "Only worth it if you have the key. Use ddrescue to copy the encrypted drive to another drive and unlock the copy later. Type the failing drive first and the destination second; swapping them erases your data."
       },
       {
         "title": "Accept the limit if no key exists",
@@ -524,7 +517,7 @@
       "dfir-training",
       "brett-shavers"
     ],
-    "callPro": "If the drive is also failing or damaged and you hold the key, a professional can image it for you. Without the key, no one can realistically recover the data.",
+    "callPro": "If you hold the key but the drive is also failing or damaged, a professional can image it for you; without the key, no one can realistically recover the data.",
     "faq": [
       {
         "q": "Where is my BitLocker recovery key?",

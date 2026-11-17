@@ -4,13 +4,13 @@
     { "id": "ssd", "name": "SSD (SATA and NVMe)", "icon": "⚡", "blurb": "Flash-based internal drive. Deleted data can be hard to get back because of TRIM." },
     { "id": "usb", "name": "USB flash drive", "icon": "🔌", "blurb": "Small thumb drive plugged into a USB port. Simple to image and often easy to rescue." },
     { "id": "sd", "name": "SD / microSD card", "icon": "📸", "blurb": "Memory card from cameras, phones and drones. Usually recoverable with the right tools." },
-    { "id": "external", "name": "External / portable drive", "icon": "🧳", "blurb": "Hard drive or SSD in a USB enclosure. Check the enclosure and the drive separately." }
+    { "id": "external", "name": "External / portable drive", "icon": "🧳", "blurb": "Hard drive or SSD in a USB case. Read the guide before taking it out of the case." }
   ],
   "symptoms": [
     { "id": "deleted", "name": "Deleted files", "icon": "🗑️", "blurb": "Files were removed or emptied from the trash. The data may still be on the drive.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
-    { "id": "formatted", "name": "Accidentally formatted", "icon": "🧹", "blurb": "You formatted the drive by mistake. A quick format usually leaves files in place.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
+    { "id": "formatted", "name": "Accidentally formatted", "icon": "🧹", "blurb": "You formatted the drive by mistake. A quick format often leaves files, except on SSDs.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
     { "id": "not-detected", "name": "Not detected / not showing up", "icon": "🔍", "blurb": "Your computer does not see the drive at all. The cause may be cable, port or power.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
-    { "id": "clicking", "name": "Clicking or grinding noises", "icon": "🔊", "blurb": "A repeated click or grind from a spinning drive. Power it off soon to limit damage.", "devices": ["hdd", "external"] },
+    { "id": "clicking", "name": "Clicking or grinding noises", "icon": "🔊", "blurb": "A repeated click or grind from a spinning drive. Power it off now to limit damage.", "devices": ["hdd", "external"] },
     { "id": "no-power", "name": "Won't power on / dead", "icon": "🪫", "blurb": "The drive shows no lights, no spin or no response when connected.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
     { "id": "liquid-fire", "name": "Water, fire or physical damage", "icon": "🔥", "blurb": "The drive was wet, burned, dropped or crushed. Do not power it on again.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
     { "id": "corrupted", "name": "Corrupted / RAW / asks to format", "icon": "🧩", "blurb": "Windows or macOS says the drive needs formatting or shows as RAW.", "devices": ["hdd", "ssd", "usb", "sd", "external"] },
@@ -71,7 +71,7 @@
       "docsUrl": "https://crystalmark.info/en/software/crystaldiskinfo/",
       "desc": "Free Windows app that shows a drive's S.M.A.R.T. health status, temperature and other key attributes.",
       "os": ["Windows"],
-      "cost": "Free"
+      "cost": "Free (open source)"
     },
     "f3": {
       "name": "F3 (Fight Flash Fraud)",
@@ -85,7 +85,7 @@
       "name": "H2testw",
       "url": "https://www.heise.de/download/product/h2testw-50539",
       "docsUrl": "https://www.heise.de/download/product/h2testw-50539",
-      "desc": "Free Windows tool that writes and verifies test files to check that a flash drive stores data correctly.",
+      "desc": "Free Windows tool that fills a drive with test data and checks it, to reveal fake capacity or bad memory.",
       "os": ["Windows"],
       "cost": "Free"
     }

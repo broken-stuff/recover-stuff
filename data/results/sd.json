@@ -14,8 +14,8 @@
     "steps": [
       {"title": "Remove the card", "detail": "Turn off the camera or phone and take the card out. Even just leaving it in can sometimes write small files."},
       {"title": "Check backups", "detail": "Look for cloud backups, a second memory card slot, or copies on your phone or computer."},
-      {"title": "Use a card reader", "detail": "Plug the card into a computer with a USB card reader. For a full-size SD card, make sure the little lock switch is not accidentally set."},
-      {"title": "Image the card", "detail": "Use ddrescue to copy the whole card to an image file on your computer. Work from the image, not the card."},
+      {"title": "Use a card reader", "detail": "Plug the card into a computer with a USB card reader. On a full-size SD card or adapter, slide the lock switch down to Lock so the computer treats it as read-only, though some readers ignore it."},
+      {"title": "Image the card", "detail": "Use ddrescue to copy the whole card to an image file on your computer, then work from the image. Type the card first and the image file second; swapping them erases the card."},
       {"title": "Try TestDisk", "detail": "Run TestDisk on the image to look for deleted files with their names. This is quick and worth trying."},
       {"title": "Run PhotoRec", "detail": "PhotoRec can recover photos and videos, including many camera RAW formats, even if the file list is gone."},
       {"title": "Save somewhere else", "detail": "Pick a folder on your computer or another drive as the destination. Never save back onto the card."}
@@ -31,7 +31,7 @@
   "formatted": {
     "title": "Recover Photos from a Formatted SD or microSD Card",
     "metaDescription": "Formatted an SD or microSD card by mistake? A quick format usually leaves photos recoverable. Image first, then use TestDisk and PhotoRec.",
-    "summary": "Formatting in a camera or phone usually clears the file list but leaves most photos on the card. Formatting in a phone, a full format in Windows, or a camera's 'low-level' or 'secure' format can erase the data and lowers the odds.",
+    "summary": "Formatting in most cameras clears the file list but leaves most photos on the card. Formatting in a phone, a full format in Windows, or a camera's 'low-level' or 'secure' format often erases the data and lowers the odds.",
     "risk": 2,
     "riskNote": "Recovery scans are safe on a copy, but taking new photos or formatting again overwrites the old data.",
     "successOdds": "Varies",
@@ -42,8 +42,8 @@
     ],
     "steps": [
       {"title": "Remove the card", "detail": "Switch off the device and take the card out so nothing new is written."},
-      {"title": "Connect with a card reader", "detail": "Use a USB card reader on a computer. Check that the lock switch on a full-size SD card is not engaged."},
-      {"title": "Image the card", "detail": "Use ddrescue to copy the entire card to a file on another disk. All the work after this is done on the copy."},
+      {"title": "Connect with a card reader", "detail": "Use a USB card reader on a computer. On a full-size SD card or adapter, slide the lock switch down to Lock so the computer treats it as read-only, though some readers ignore it."},
+      {"title": "Image the card", "detail": "Use ddrescue to copy the entire card to a file on another disk, then do all later work on the copy. Type the card first and the image file second; swapping them erases the card."},
       {"title": "Look for the old layout", "detail": "Run TestDisk on the image and use Analyse. It may find the old partition and let you copy files with names."},
       {"title": "Scan with PhotoRec", "detail": "If TestDisk cannot, PhotoRec pulls out photos, videos and documents by their contents."},
       {"title": "Save to another drive", "detail": "Recover to a folder on your computer, then open sample files to confirm they are intact."}
@@ -70,23 +70,22 @@
     ],
     "steps": [
       {"title": "Try another reader", "detail": "Use a different USB card reader and port, ideally on another computer. Many 'dead' cards are really bad readers."},
-      {"title": "Check the lock switch", "detail": "On full-size SD cards, a small switch on the side sets the card to read-only. Slide it to the unlocked position."},
       {"title": "Look in Disk Management", "detail": "On Windows use Disk Management, on Mac use Disk Utility. A card with no drive letter or showing RAW may still hold your data."},
       {"title": "Clean gently", "detail": "Wipe the gold contacts with a dry, soft lint-free cloth. Do not use liquid."},
-      {"title": "Image if it responds", "detail": "If the card shows up at all, use ddrescue to copy it right away. Cards that fail often get worse."},
+      {"title": "Image if it responds", "detail": "If the card shows up at all, copy it right away with ddrescue, because failing cards often get worse. Type the card first and the destination second; swapping them erases the card."},
       {"title": "Recover from the image", "detail": "Run TestDisk and PhotoRec on the copy, saving to another drive."}
     ],
     "tools": ["ddrescue", "testdisk", "photorec"],
     "resources": ["cgsecurity-forum", "dfir-training"],
-    "callPro": "If the card is not detected by any reader, or reports a tiny size such as 0 MB, the controller or memory has likely failed and a professional with chip-off tools is needed.",
+    "callPro": "If no reader detects the card, or it reports a tiny size such as 0 MB, the controller or memory has likely failed and needs a lab with flash recovery tools, since most microSD cards are sealed monolith chips.",
     "faq": [
       {"q": "Why does my microSD card show nothing in the reader?", "a": "The reader, adapter or card contacts may be bad, or the card's controller may have failed. Try a different reader first."},
-      {"q": "Can a dead SD card be recovered?", "a": "Sometimes, by professionals reading the memory chip directly, but it is costly and not guaranteed."}
+      {"q": "Can a dead SD card be recovered?", "a": "Sometimes, by labs that read the memory directly, often by soldering to tiny test points on monolith cards. It is costly and not guaranteed."}
     ]
   },
   "no-power": {
     "title": "SD or microSD Card Dead and Not Responding",
-    "metaDescription": "SD or microSD card completely dead? Rule out the reader and adapter, then learn why a failed controller needs a professional with chip-off tools.",
+    "metaDescription": "SD or microSD card completely dead? Rule out the reader and adapter, then learn why a failed controller needs a lab with special flash recovery tools.",
     "summary": "A card cannot show a light or sound, so a dead card just does not respond anywhere. Check the reader, adapter and contacts first. If it is still dead, the controller is likely broken and the data can only be read with special equipment.",
     "risk": 4,
     "riskNote": "A cracked or shorted card can be damaged further by repeated tries, and DIY opening or soldering destroys it.",
@@ -99,14 +98,13 @@
     "steps": [
       {"title": "Swap the reader and adapter", "detail": "For a microSD card, test a different adapter as well as a different reader. Test the reader with another card to be sure."},
       {"title": "Check the card visually", "detail": "Look for cracks, bent plastic, burn marks or missing contacts. If damaged, stop here."},
-      {"title": "Check the lock switch", "detail": "On full-size cards, make sure the lock is not set. A locked card is read-only but still visible."},
       {"title": "Try a second computer", "detail": "Use a different computer and operating system if you can."},
-      {"title": "Image if it responds", "detail": "If the card appears even once, immediately copy it with ddrescue to another disk."},
+      {"title": "Image if it responds", "detail": "If the card appears even once, immediately copy it with ddrescue to another disk. Type the card first and the destination second; swapping them erases the card."},
       {"title": "Recover from the copy", "detail": "Use TestDisk and PhotoRec on the image."}
     ],
     "tools": ["ddrescue", "testdisk", "photorec"],
     "resources": ["dfir-training", "nist-cftt"],
-    "callPro": "If the card is dead in every reader, monolithic or controller failure usually needs chip-off recovery by a professional.",
+    "callPro": "If the card is dead in every reader, a controller or monolith chip failure usually needs a lab with special flash recovery tools.",
     "faq": [
       {"q": "Is a dead microSD card always lost?", "a": "No, but DIY options are limited. If the memory chip is intact, a lab with special tools may read it."},
       {"q": "Could it just be my card reader?", "a": "Yes, that is common. Try a different reader and adapter before giving up."}
@@ -125,11 +123,11 @@
       "Do not scrub the contacts or take the card apart."
     ],
     "steps": [
-      {"title": "Keep it out of devices", "detail": "Do not test it in any device until it is clean and fully dry."},
+      {"title": "Keep it out of devices", "detail": "Do not test it in any device until it is fully dry and you have inspected it."},
       {"title": "Do not rinse or clean it", "detail": "If it got salt water, mud or soda on it, leave it as it is. Cleaning off residue safely takes lab tools, so a professional should do it."},
-      {"title": "Air dry", "detail": "Let it dry for several days at room temperature on a clean towel. No heat."},
+      {"title": "Air dry only after clean water", "detail": "If it only got fresh water, let it dry for several days at room temperature on a clean towel, with no heat. After salt water, soda, mud or fire, skip this and go to a professional."},
       {"title": "Inspect it", "detail": "Look for corrosion, residue, cracks and warping. If you see any, do not insert it."},
-      {"title": "Image it first", "detail": "If it looks clean and shows up in a reader, copy it at once with ddrescue to another disk."},
+      {"title": "Image it first", "detail": "If it looks clean and shows up in a reader, copy it at once with ddrescue to another disk. Type the card first and the destination second; swapping them erases the card."},
       {"title": "Recover from the image", "detail": "Use TestDisk and PhotoRec on the copy."}
     ],
     "tools": ["ddrescue", "testdisk", "photorec"],
@@ -154,8 +152,8 @@
     ],
     "steps": [
       {"title": "Stop and remove the card", "detail": "Turn off the camera and take the card out. Avoid any prompt to fix or format it."},
-      {"title": "Use a card reader", "detail": "Put the card in a USB reader. On a full-size SD card, check the lock switch is not set."},
-      {"title": "Image the card", "detail": "Use ddrescue to copy the card to an image file on another disk. It also handles bad spots without stopping."},
+      {"title": "Use a card reader", "detail": "Put the card in a USB reader. On a full-size SD card or adapter, slide the lock switch down to Lock so the computer treats it as read-only, though some readers ignore it."},
+      {"title": "Image the card", "detail": "Use ddrescue to copy the card to an image file on another disk; it handles bad spots without stopping. Type the card first and the image file second; swapping them erases the card."},
       {"title": "Try TestDisk", "detail": "Run TestDisk on the image to repair the partition or boot sector, or to browse the files."},
       {"title": "Use PhotoRec", "detail": "If folders are lost, PhotoRec recovers photos and videos by type from the image."},
       {"title": "Save to a different drive", "detail": "Recover only to your computer or another disk, never the card."},
@@ -174,7 +172,7 @@
     "metaDescription": "Encrypted SD or microSD card from a phone or VeraCrypt? Without the key recovery is not realistic. Learn where keys and backups are often kept.",
     "summary": "Some phones, cameras and apps encrypt memory cards, tying them to a device, a password or a key. If you do not have the key, recovery is not realistically possible. If you do, the data can usually be unlocked on the right device.",
     "risk": 3,
-    "riskNote": "Resetting the phone, formatting the card or removing the card's encryption can permanently destroy the key link and the data.",
+    "riskNote": "Resetting the phone, formatting the card or tapping 'Forget' on it in Android settings can delete the key and make the data unreadable for good.",
     "successOdds": "Varies",
     "stopFirst": [
       "Do not format the card or reset the phone or camera it was used in.",
@@ -186,14 +184,14 @@
       {"title": "Keep the original device", "detail": "Some Android phones tie the key to the phone. Keep the phone and its lock-screen PIN or password."},
       {"title": "Find the password or key", "detail": "Search your password manager, notes and emails. For BitLocker, check your Microsoft account for a recovery key."},
       {"title": "Unlock with the right tool", "detail": "Use the same app or system that encrypted it, then copy files to another drive."},
-      {"title": "Image if the card is damaged", "detail": "Use ddrescue to copy the encrypted card first, keeping your key safe."},
+      {"title": "Image if the card is damaged", "detail": "Only useful if you can still unlock it, with the key or the original phone. Use ddrescue to copy the card first. Type the card first and the destination second; swapping them erases the card."},
       {"title": "Recover after unlocking", "detail": "Use TestDisk or PhotoRec on the unlocked volume if files are missing."}
     ],
     "tools": ["ddrescue", "testdisk", "photorec"],
     "resources": ["dfir-training", "brett-shavers"],
     "callPro": "If the card is both encrypted and damaged, or you lost the key, a professional can only say whether anything is possible, and often it is not.",
     "faq": [
-      {"q": "Can I read an encrypted SD card without the key?", "a": "Realistically no. Modern encryption cannot be guessed or bypassed, so be wary of anyone who says otherwise."},
+      {"q": "Can I read an encrypted SD card without the key?", "a": "Realistically no. Modern encryption with a strong password cannot be guessed or bypassed, so be wary of anyone who says otherwise."},
       {"q": "Will a new phone read my encrypted card?", "a": "Often not, if the key was tied to the old phone. Keep the old device until you have copied your files."}
     ]
   }
