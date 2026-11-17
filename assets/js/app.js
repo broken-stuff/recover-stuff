@@ -67,6 +67,7 @@
   if (!app) { enhanceMission(document); return; }
 
   var base = location.pathname.replace(/[^/]*$/, '');
+  function ico(src, px) { return '<img class="pxi" src="' + esc(base + src) + '" alt="" width="' + px + '" height="' + px + '">'; }
   var G = null;
 
   function stepperHTML(active) {
@@ -108,7 +109,7 @@
       return '<article class="card res"><span class="tag">' + esc(x.type) + '</span><h3><a href="' + esc(x.url) + '" target="_blank" rel="noopener noreferrer">' + esc(x.name) + '</a></h3><p>' + esc(x.desc) + '</p></article>';
     }).join('');
     return '<article class="mission" data-key="' + esc(d + '/' + s) + '">' +
-      '<p class="eyebrow">' + esc(dv.icon) + ' ' + esc(dv.name) + ' · ' + esc(sy.icon) + ' ' + esc(sy.name) + '</p>' +
+      '<p class="eyebrow">' + ico(dv.icon, 24) + ' ' + esc(dv.name) + ' · ' + ico(sy.icon, 24) + ' ' + esc(sy.name) + '</p>' +
       '<h1 tabindex="-1">' + esc(r.title) + '</h1><p class="lead">' + esc(r.summary) + '</p>' +
       '<div class="badges">' + riskMeter(r.risk) + '<span class="odds">Success odds: <strong>' + esc(r.successOdds) + '</strong></span></div>' +
       '<p class="risknote">' + esc(r.riskNote) + '</p>' +
@@ -151,7 +152,7 @@
         '<p class="intro-links"><a href="' + base + 'guide/how-to/glossary/">New here? Key terms (glossary)</a> <a href="' + base + 'guide/how-to/find-a-pro/">Need a professional?</a></p></section>' +
         '<h1 tabindex="-1">Step 1: Pick your device</h1><p class="lead">Which one lost its files? Tap a card to start your quest.</p><div class="cards">' +
         G.devices.map(function (d) {
-          return '<button class="pick" type="button" data-d="' + d.id + '"><span class="ico" aria-hidden="true">' + d.icon + '</span><span class="t">' + esc(d.name) + '</span><span class="b">' + esc(d.blurb) + '</span></button>';
+          return '<button class="pick" type="button" data-d="' + d.id + '"><span class="ico" aria-hidden="true">' + ico(d.icon, 48) + '</span><span class="t">' + esc(d.name) + '</span><span class="b">' + esc(d.blurb) + '</span></button>';
         }).join('') + '</div>' +
         '<p class="intro small">Free and educational. Nothing you click here touches your files.</p>';
     } else if (!st.s) {
@@ -160,7 +161,7 @@
       title = dv.name + ' data recovery | Recover Stuff';
       html = '<h1 tabindex="-1">Step 2: What happened to your ' + esc(dv.name.toLowerCase()) + '?</h1><p class="lead">Pick the closest match.</p><div class="cards">' +
         G.symptoms.filter(function (s) { return G.results[st.d][s.id]; }).map(function (s) {
-          return '<button class="pick" type="button" data-s="' + s.id + '"><span class="ico" aria-hidden="true">' + s.icon + '</span><span class="t">' + esc(s.name) + '</span><span class="b">' + esc(s.blurb) + '</span></button>';
+          return '<button class="pick" type="button" data-s="' + s.id + '"><span class="ico" aria-hidden="true">' + ico(s.icon, 48) + '</span><span class="t">' + esc(s.name) + '</span><span class="b">' + esc(s.blurb) + '</span></button>';
         }).join('') + '</div><div class="navrow"><button class="btn ghost" type="button" data-nav="back">← Back</button><button class="btn ghost" type="button" data-nav="restart">Start over</button></div>';
     } else {
       step = 3;

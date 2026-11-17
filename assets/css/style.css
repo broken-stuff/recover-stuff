@@ -89,6 +89,8 @@ p { margin: 0 0 1em; }
 .pick:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--edge); }
 .pick:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--edge); }
 .pick .ico { font-size: 2.6rem; line-height: 1.1; }
+.pxi { image-rendering: pixelated; vertical-align: middle; flex: none; }
+.pick .ico .pxi { display: block; }
 .pick .t { font: 400 .75rem/1.5 var(--pixel); }
 .pick .b { color: var(--muted); font-size: .98rem; }
 .pick .risk { margin-top: 8px; }

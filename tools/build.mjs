@@ -216,12 +216,14 @@ function learnChips(ids, rel) {
   return list.length ? `<p class="learn">${list.map((id) => `<a class="learn-chip" href="${rel}guide/how-to/${id}/">Guide: ${esc(howto[id].title)}</a>`).join('')}</p>` : '';
 }
 
+const iconImg = (src, rel, px) => `<img class="pxi" src="${rel}${esc(src)}" alt="" width="${px}" height="${px}">`;
+
 function resultBody(d, s, r, rel) {
   const dv = dev(d), sy = symMap[s];
   const key = `${d}/${s}`;
   return `<article class="mission" data-key="${key}">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="${rel}">Home</a> <span aria-hidden="true">›</span> <a href="${rel}guide/${d}/">${esc(dv.name)}</a> <span aria-hidden="true">›</span> <span>${esc(sy.name)}</span></nav>
-<p class="eyebrow">${dv.icon} ${esc(dv.name)} · ${sy.icon} ${esc(sy.name)}</p>
+<p class="eyebrow">${iconImg(dv.icon, rel, 24)} ${esc(dv.name)} · ${iconImg(sy.icon, rel, 24)} ${esc(sy.name)}</p>
 <h1 tabindex="-1">${esc(r.title)}</h1>
 <p class="lead">${esc(r.summary)}</p>
 <div class="badges">${riskMeter(r.risk)}<span class="odds o-${r.successOdds.toLowerCase()}">Success odds: <strong>${esc(r.successOdds)}</strong></span></div>
@@ -259,10 +261,10 @@ for (const dv of devices) {
     const title = `${dv.name} data recovery: what went wrong? | ${SITE_NAME}`;
     const desc = `Pick what happened to your ${dv.name.toLowerCase()} and get a step-by-step DIY recovery plan with a risk rating, free tools and expert resources.`;
     const body = `<nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">›</span> <span>${esc(dv.name)}</span></nav>
-<p class="eyebrow">${dv.icon} ${esc(dv.name)}</p>
+<p class="eyebrow">${iconImg(dv.icon, '../../', 24)} ${esc(dv.name)}</p>
 <h1 tabindex="-1">${esc(dv.name)} data recovery: what happened?</h1>
 <p class="lead">${esc(dv.blurb)} Choose the problem that sounds most like yours.</p>
-<div class="cards">${syms.map((s) => `<a class="pick" href="${s}/"><span class="ico" aria-hidden="true">${symMap[s].icon}</span><span class="t">${esc(symMap[s].name)}</span><span class="b">${esc(symMap[s].blurb)}</span>${riskMeter(results[dv.id][s].risk)}</a>`).join('')}</div>
+<div class="cards">${syms.map((s) => `<a class="pick" href="${s}/"><span class="ico" aria-hidden="true">${iconImg(symMap[s].icon, '../../', 48)}</span><span class="t">${esc(symMap[s].name)}</span><span class="b">${esc(symMap[s].blurb)}</span>${riskMeter(results[dv.id][s].risk)}</a>`).join('')}</div>
 <p class="actions"><a class="btn ghost" href="../../?d=${dv.id}">Open in the interactive guide</a> <a class="btn ghost" href="../../">Pick a different device</a></p>
 <p class="disclaimer inline">${esc(DISCLAIMER)}</p>`;
     write(path + 'index.html', layout({
