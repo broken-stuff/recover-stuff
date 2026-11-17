@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fix a Corrupted SD or microSD Card Without Losing Photos | Recover Stuff</title>
+<meta name="description" content="SD card says unreadable, RAW or asks to format? Image it first, then use TestDisk and PhotoRec. Skip format and chkdsk until your files are safe.">
+<link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/sd/corrupted/">
+<meta name="theme-color" content="#5b3df5">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Recover Stuff">
+<meta property="og:title" content="Fix a Corrupted SD or microSD Card Without Losing Photos | Recover Stuff">
+<meta property="og:description" content="SD card says unreadable, RAW or asks to format? Image it first, then use TestDisk and PhotoRec. Skip format and chkdsk until your files are safe.">
+<meta property="og:url" content="https://broken-stuff.github.io/recover-stuff/guide/sd/corrupted/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fix a Corrupted SD or microSD Card Without Losing Photos | Recover Stuff">
+<meta name="twitter:description" content="SD card says unreadable, RAW or asks to format? Image it first, then use TestDisk and PhotoRec. Skip format and chkdsk until your files are safe.">
+<link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"SD / microSD card","item":"https://broken-stuff.github.io/recover-stuff/guide/sd/"},{"@type":"ListItem","position":3,"name":"Corrupted / RAW / asks to format","item":"https://broken-stuff.github.io/recover-stuff/guide/sd/corrupted/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Fix a Corrupted SD or microSD Card Without Losing Photos","description":"A card can become corrupted when removed during a write, when power dies, or when it wears out. The photos are often still there even if the camera shows an error. Making a copy before any repair keeps your options open.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/corrupted/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"},{"@type":"HowToTool","name":"F3 (Fight Flash Fraud)"},{"@type":"HowToTool","name":"H2testw"}],"step":[{"@type":"HowToStep","position":1,"name":"Stop and remove the card","text":"Turn off the camera and take the card out. Avoid any prompt to fix or format it.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/corrupted/#steps-h"},{"@type":"HowToStep","position":2,"name":"Use a card reader","text":"Put the card in a USB reader. On a full-size SD card, check the lock switch is not set.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/corrupted/#steps-h"},{"@type":"HowToStep","position":3,"name":"Image the card","text":"Use ddrescue to copy the card to an image file on another disk. It also handles bad spots without stopping.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/corrupted/#steps-h"},{"@type":"HowToStep","position":4,"name":"Try TestDisk","text":"Run TestDisk on the image to repair the partition or boot sector, or to browse the files.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/corrupted/#steps-h"},{"@type":"HowToStep","position":5,"name":"Use PhotoRec","text":"If folders are lost, PhotoRec recovers photos and videos by type from the image.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/corrupted/#steps-h"},{"@type":"HowToStep","position":6,"name":"Save to a different drive","text":"Recover only to your computer or another disk, never the card.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/corrupted/#steps-h"},{"@type":"HowToStep","position":7,"name":"Check the card for fakes","text":"Once recovered, test the card with f3 or h2testw. These write test data, so only run them after your files are safe. A fake-capacity card often gets corrupted.","url":"https://broken-stuff.github.io/recover-stuff/guide/sd/corrupted/#steps-h"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does my camera say the card needs formatting?","acceptedAnswer":{"@type":"Answer","text":"The file system is damaged or unreadable. Your photos may still be on the card, so do not format yet."}},{"@type":"Question","name":"Could my SD card be counterfeit?","acceptedAnswer":{"@type":"Answer","text":"It might be, especially if the price was too good. Fake cards claim more space than they have, so test with f3 or h2testw after recovery."}}]}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="../../../"><span aria-hidden="true">🛟</span> Recover Stuff</a>
+    <ol class="stepper" aria-label="Progress"><li class="is-done"><span class="dot" aria-hidden="true">1</span><span class="lbl">Pick your device</span></li><li class="is-done"><span class="dot" aria-hidden="true">2</span><span class="lbl">What happened?</span></li><li class="is-current" aria-current="step"><span class="dot" aria-hidden="true">3</span><span class="lbl">Your mission</span></li></ol>
+  </div>
+</header>
+<main id="main" class="wrap" tabindex="-1">
+<article class="mission" data-key="sd/corrupted">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">›</span> <a href="../../../guide/sd/">SD / microSD card</a> <span aria-hidden="true">›</span> <span>Corrupted / RAW / asks to format</span></nav>
+<p class="eyebrow">📸 SD / microSD card · 🧩 Corrupted / RAW / asks to format</p>
+<h1 tabindex="-1">Fix a Corrupted SD or microSD Card Without Losing Photos</h1>
+<p class="lead">A card can become corrupted when removed during a write, when power dies, or when it wears out. The photos are often still there even if the camera shows an error. Making a copy before any repair keeps your options open.</p>
+<div class="badges"><div class="risk r3" role="img" aria-label="Risk level 3 of 5: Take care"><div class="meter" aria-hidden="true"><i class="on r1"></i><i class="on r2"></i><i class="on r3"></i><i class=""></i><i class=""></i></div><span class="chip">3/5 · Take care</span></div><span class="odds o-medium">Success odds: <strong>Medium</strong></span></div>
+<p class="risknote">Formatting, chkdsk or the camera&#39;s &#39;repair&#39; prompts can overwrite the information needed to get your files back.</p>
+<section class="stop" aria-labelledby="stop-h"><h2 id="stop-h"><span aria-hidden="true">✋</span> Stop! Don't do this first</h2><ul><li>Do not click Format when the camera or computer asks to.</li><li>Do not run chkdsk or any &#39;repair&#39; prompt before making an image.</li><li>Do not take more photos with the card.</li></ul></section>
+<section aria-labelledby="steps-h"><h2 id="steps-h">Your steps</h2>
+<div class="progress"><div class="bar" role="progressbar" aria-label="Steps completed" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><span style="width:0%"></span></div><span class="count" aria-live="polite">0 of 7 done</span></div>
+<ol class="steps"><li><label><input type="checkbox" data-i="0"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Stop and remove the card</strong><span>Turn off the camera and take the card out. Avoid any prompt to fix or format it.</span></span></label></li><li><label><input type="checkbox" data-i="1"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Use a card reader</strong><span>Put the card in a USB reader. On a full-size SD card, check the lock switch is not set.</span></span></label></li><li><label><input type="checkbox" data-i="2"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Image the card</strong><span>Use ddrescue to copy the card to an image file on another disk. It also handles bad spots without stopping.</span></span></label></li><li><label><input type="checkbox" data-i="3"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Try TestDisk</strong><span>Run TestDisk on the image to repair the partition or boot sector, or to browse the files.</span></span></label></li><li><label><input type="checkbox" data-i="4"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Use PhotoRec</strong><span>If folders are lost, PhotoRec recovers photos and videos by type from the image.</span></span></label></li><li><label><input type="checkbox" data-i="5"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Save to a different drive</strong><span>Recover only to your computer or another disk, never the card.</span></span></label></li><li><label><input type="checkbox" data-i="6"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Check the card for fakes</strong><span>Once recovered, test the card with f3 or h2testw. These write test data, so only run them after your files are safe. A fake-capacity card often gets corrupted.</span></span></label></li></ol>
+<div class="win" hidden role="status"><strong>Mission complete! 🎉</strong> Check your recovered files open properly, then back them up in two places.</div>
+</section>
+<section aria-labelledby="tools-h"><h2 id="tools-h">Tools you'll use</h2><div class="grid"><article class="card tool"><h3>GNU ddrescue</h3><p>Copies a failing drive to an image file, retrying bad areas so you work from a copy, not the original.</p>
+<ul class="meta"><li>Linux · macOS</li><li>Free (open source)</li></ul>
+<p class="links"><a href="https://www.gnu.org/software/ddrescue/" target="_blank" rel="noopener noreferrer">Website</a><a href="https://www.gnu.org/software/ddrescue/manual/ddrescue_manual.html" target="_blank" rel="noopener noreferrer">Docs</a></p></article><article class="card tool"><h3>TestDisk</h3><p>Free open-source tool that finds lost partitions and repairs boot sectors so files can be read again.</p>
+<ul class="meta"><li>Windows · macOS · Linux</li><li>Free (open source)</li></ul>
+<p class="links"><a href="https://www.cgsecurity.org/wiki/TestDisk" target="_blank" rel="noopener noreferrer">Website</a><a href="https://www.cgsecurity.org/wiki/TestDisk_Step_By_Step" target="_blank" rel="noopener noreferrer">Docs</a></p></article><article class="card tool"><h3>PhotoRec</h3><p>Free open-source file carver that recovers files by signature, even when the file system is damaged.</p>
+<ul class="meta"><li>Windows · macOS · Linux</li><li>Free (open source)</li></ul>
+<p class="links"><a href="https://www.cgsecurity.org/wiki/PhotoRec" target="_blank" rel="noopener noreferrer">Website</a><a href="https://www.cgsecurity.org/wiki/PhotoRec_Step_By_Step" target="_blank" rel="noopener noreferrer">Docs</a></p></article><article class="card tool"><h3>F3 (Fight Flash Fraud)</h3><p>Free open-source tool that tests flash drives and cards for fake capacity, so you know what they really hold.</p>
+<ul class="meta"><li>Windows · macOS · Linux</li><li>Free (open source)</li></ul>
+<p class="links"><a href="https://github.com/AltraMayor/f3" target="_blank" rel="noopener noreferrer">Website</a><a href="https://fight-flash-fraud.readthedocs.io/" target="_blank" rel="noopener noreferrer">Docs</a></p></article><article class="card tool"><h3>H2testw</h3><p>Free Windows tool that writes and verifies test files to check that a flash drive stores data correctly.</p>
+<ul class="meta"><li>Windows</li><li>Free</li></ul>
+<p class="links"><a href="https://www.heise.de/download/product/h2testw-50539" target="_blank" rel="noopener noreferrer">Website</a><a href="https://www.heise.de/download/product/h2testw-50539" target="_blank" rel="noopener noreferrer">Docs</a></p></article></div></section>
+<section aria-labelledby="res-h"><h2 id="res-h">Learn from the experts</h2><div class="grid"><article class="card res"><span class="tag">Community</span><h3><a href="https://forum.cgsecurity.org/" target="_blank" rel="noopener noreferrer">CGSecurity Forum</a></h3><p>Official community forum for TestDisk and PhotoRec, where users ask questions and share results.</p></article><article class="card res"><span class="tag">Reference</span><h3><a href="https://www.sleuthkit.org/" target="_blank" rel="noopener noreferrer">The Sleuth Kit / Autopsy</a></h3><p>Open-source digital forensics toolkit and its Autopsy graphical interface, used to analyze disk images.</p></article></div></section>
+<section class="pro" aria-labelledby="pro-h"><h2 id="pro-h"><span aria-hidden="true">🧑‍🔧</span> When to call a pro</h2><p>If the card disconnects often, reports the wrong size, or imaging fails, stop and ask a professional.</p></section>
+<section aria-labelledby="faq-h"><h2 id="faq-h">Questions people ask</h2><div class="faq"><details><summary>Why does my camera say the card needs formatting?</summary><p>The file system is damaged or unreadable. Your photos may still be on the card, so do not format yet.</p></details><details><summary>Could my SD card be counterfeit?</summary><p>It might be, especially if the price was too good. Fake cards claim more space than they have, so test with f3 or h2testw after recovery.</p></details></div></section>
+<p class="disclaimer inline"><strong>Before you start:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
+<p class="actions"><a class="btn" href="../../../guide/sd/">← Other problems with this device</a> <a class="btn ghost" href="../../../?d=sd&amp;s=corrupted">Open in the interactive guide</a> <a class="btn ghost" href="../../../">Start over</a></p>
+</article>
+</main>
+<footer class="foot">
+  <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+</footer>
+<script src="../../../assets/js/app.js" defer></script>
+</body>
+</html>

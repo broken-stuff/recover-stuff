@@ -1,0 +1,542 @@
+{
+  "deleted": {
+    "title": "Recover Deleted Files From an External Hard Drive",
+    "metaDescription": "Deleted files from a USB external hard drive are often still there until overwritten. Stop using it and recover with free tools like PhotoRec and TestDisk.",
+    "summary": "Deleting a file usually just marks its space as free, so the data stays until new files overwrite it. Files deleted from an external drive skip the Recycle Bin, so recovery tools are your main option.",
+    "risk": 1,
+    "riskNote": "The drive is healthy, so recovery only reads data, as long as you save results to a different drive.",
+    "successOdds": "High",
+    "stopFirst": [
+      "Stop copying, saving or editing files on this drive now. New data can overwrite your deleted files.",
+      "Do not install recovery software onto the affected drive. Install it on your computer's own drive.",
+      "Do not save recovered files back to the same drive. Pick a different drive."
+    ],
+    "steps": [
+      {
+        "title": "Unplug or stop writing to the drive",
+        "detail": "Safely eject it. Even opening files can write small bits of data in some programs, so keep it idle until you are ready to scan."
+      },
+      {
+        "title": "Check for backups",
+        "detail": "Look in cloud backups, File History, Time Machine, or another copy. Deleted files on external drives do not go to the Recycle Bin, so check elsewhere too."
+      },
+      {
+        "title": "Prepare a destination",
+        "detail": "Use your computer's internal drive or another drive with enough free space as the place to save recovered files."
+      },
+      {
+        "title": "Connect the external drive directly",
+        "detail": "Plug it straight into a USB port on your computer, not through a hub. Leave it in its enclosure. You do not need to take it out."
+      },
+      {
+        "title": "Run TestDisk for folders and names",
+        "detail": "TestDisk can list recently deleted files with original names on some file systems. Copy what you find to the destination drive."
+      },
+      {
+        "title": "Use PhotoRec for the rest",
+        "detail": "PhotoRec scans for file types such as photos, videos and documents and saves them to your destination. Names are usually lost."
+      },
+      {
+        "title": "Verify the results",
+        "detail": "Open a sample of recovered files to check they work before you wipe or reuse the drive."
+      }
+    ],
+    "tools": [
+      "testdisk",
+      "photorec",
+      "smartmontools",
+      "crystaldiskinfo"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "dfir-training"
+    ],
+    "callPro": "If the drive starts clicking, disconnecting, or the files are irreplaceable and scans find nothing, stop and ask a professional.",
+    "faq": [
+      {
+        "q": "Are deleted files on an external drive in the Recycle Bin?",
+        "a": "Usually not. Files deleted from external drives are removed right away, so use recovery software and stop writing to the drive."
+      },
+      {
+        "q": "Do I need to take the drive out of its case?",
+        "a": "No. Scan it while it is still in the enclosure. Removing it is not needed and can cause problems with some models."
+      },
+      {
+        "q": "Why are recovered file names missing?",
+        "a": "PhotoRec finds files by content, not by their table entry, so names and folders are often lost. TestDisk can sometimes keep them."
+      }
+    ]
+  },
+  "formatted": {
+    "title": "Recover Files From a Formatted External Drive",
+    "metaDescription": "Formatted your external hard drive ? Quick format is often recoverable, full format on Windows is not. Learn which tools to use and what to avoid.",
+    "summary": "A quick format erases the drive's table of contents but usually leaves your data in place, so recovery is often possible. A full format on Windows Vista and later writes zeros, and that data is gone for good.",
+    "risk": 2,
+    "riskNote": "Scanning only reads the drive, but saving anything new onto it can overwrite what is left.",
+    "successOdds": "Varies",
+    "stopFirst": [
+      "Do not copy any new files onto the formatted drive. New data overwrites what you want back.",
+      "Do not format it again, even to a different file system.",
+      "Do not install recovery software onto the formatted drive."
+    ],
+    "steps": [
+      {
+        "title": "Figure out the format type",
+        "detail": "A quick format takes seconds to minutes. A full format takes hours. On Windows Vista and later, a full format writes zeros, so the old files cannot be recovered."
+      },
+      {
+        "title": "Stop using the drive",
+        "detail": "Safely eject it and leave it alone. Do not set it up again with a new backup or file copy."
+      },
+      {
+        "title": "Connect it directly",
+        "detail": "Plug it into a USB port on your computer, leaving it in its enclosure. Prepare a separate drive with enough free space for the results."
+      },
+      {
+        "title": "Run TestDisk",
+        "detail": "TestDisk can search for the lost partition and may restore your folders with their original names, especially after a quick format."
+      },
+      {
+        "title": "Use PhotoRec if TestDisk cannot help",
+        "detail": "PhotoRec carves files out by type and saves them to your other drive. Expect generic names that you sort afterwards."
+      },
+      {
+        "title": "Check your files",
+        "detail": "Open a few of each type. If many are blank or damaged, the drive may have been fully formatted or overwritten."
+      }
+    ],
+    "tools": [
+      "testdisk",
+      "photorec",
+      "smartmontools",
+      "crystaldiskinfo"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "brett-shavers"
+    ],
+    "callPro": "If the drive drops out, makes noises, or the data is critical and software scans come up empty, stop and consult a professional.",
+    "faq": [
+      {
+        "q": "Can I recover data after a full format?",
+        "a": "On Windows Vista and later, no. A full format writes zeros over the drive. A quick format is often recoverable."
+      },
+      {
+        "q": "Did reformatting for a Mac or PC erase my files?",
+        "a": "Reformatting to another file system is a format, so the old data is just hidden if it was a quick format. Stop using the drive and scan it right away."
+      },
+      {
+        "q": "Will I keep my folders?",
+        "a": "Sometimes with TestDisk. With PhotoRec, files usually come back sorted by type with generic names."
+      }
+    ]
+  },
+  "not-detected": {
+    "title": "External Hard Drive Not Showing Up or Detected",
+    "metaDescription": "External hard drive not showing up or recognized? Check cable, port and power first, then learn about enclosure faults, soldered USB ports and encryption.",
+    "summary": "An external drive has a hard drive inside plus a small bridge board that turns USB into the drive's own connection. The fault could be the cable, the port, the bridge board, or the drive itself. Start with cheap, safe checks.",
+    "risk": 3,
+    "riskNote": "Cable and software checks are safe, but taking the drive out of its case can lock encrypted data or damage it.",
+    "successOdds": "Varies",
+    "stopFirst": [
+      "Do not format or initialize the drive if the computer offers to. That can erase the data.",
+      "Do not keep plugging and unplugging if you hear clicking or the drive feels hot. That adds wear.",
+      "Do not open the drive's case yet. Many portable drives are encrypted or have USB soldered to the drive, so removing it can make data unreadable."
+    ],
+    "steps": [
+      {
+        "title": "Try another cable and port",
+        "detail": "USB cables fail a lot. Use a different cable and a different port directly on the computer, not through a hub. For desktop drives, check the power adapter."
+      },
+      {
+        "title": "Try a second computer",
+        "detail": "If it works elsewhere, the problem is your computer, drivers or port. If it fails everywhere, the drive or its bridge board is the likely cause."
+      },
+      {
+        "title": "Check Disk Management or Disk Utility",
+        "detail": "The drive may be listed but have no letter, or show as Raw or Unallocated. If so, do not format it. Use TestDisk instead."
+      },
+      {
+        "title": "Listen and feel",
+        "detail": "A spinning drive hums softly. Clicking, grinding or silence points to a drive fault, so read the clicking or no-power guide instead."
+      },
+      {
+        "title": "Understand the enclosure",
+        "detail": "If the drive is detected by USB but no storage shows up, the bridge board may have failed. Do not assume the drive inside is bad."
+      },
+      {
+        "title": "Know the risk of opening the case",
+        "detail": "Many WD and Seagate portables have the USB port soldered right onto the drive's board, so there is no standard SATA port. Many WD My Passport and My Book drives encrypt data with a key tied to the bridge board, so a different adapter can show unreadable data."
+      },
+      {
+        "title": "If it is readable, image it",
+        "detail": "If the drive appears but has errors, check SMART with CrystalDiskInfo or smartmontools, then make an image with ddrescue before using TestDisk or PhotoRec."
+      }
+    ],
+    "tools": [
+      "smartmontools",
+      "crystaldiskinfo",
+      "ddrescue",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "hddguru-forum",
+      "cgsecurity-forum",
+      "dfir-training"
+    ],
+    "callPro": "If it is not detected on any computer with a good cable, or it is a soldered or encrypted portable model with important data, stop and consider a professional.",
+    "faq": [
+      {
+        "q": "Can I just take the drive out and plug it into my computer?",
+        "a": "Sometimes, but not always. Some portables have no standard SATA port, and some encrypt data using the original enclosure's board, so the data may look blank outside it."
+      },
+      {
+        "q": "How do I tell a bad enclosure from a bad drive?",
+        "a": "If the drive spins and sounds normal but no disk appears on any computer, the bridge board may be bad. Clicking, grinding or silence points to the drive itself."
+      },
+      {
+        "q": "Should I format it when Windows asks?",
+        "a": "No. Formatting can erase the data you want to save. Use TestDisk first."
+      }
+    ]
+  },
+  "clicking": {
+    "title": "External Hard Drive Clicking, Grinding or Beeping",
+    "metaDescription": "External hard drive clicking, grinding or beeping? It is likely mechanical failure. Learn what not to do, why not to open it, and when to get help.",
+    "summary": "Clicking, grinding or beeping from the drive inside usually means the read/write heads or motor are failing. Each time you power it on, the damage can grow, and portable drives are easily hurt by drops.",
+    "risk": 5,
+    "riskNote": "Mechanical faults worsen with every power-up, and real repairs need a cleanroom.",
+    "successOdds": "Low",
+    "stopFirst": [
+      "Unplug it and leave it off. Do not keep trying, because each power-up can scratch the platters.",
+      "Do not use the freezer trick, tap it, or shake it. These are myths that can do harm.",
+      "Never open the drive itself. Dust ruins the platters, and it needs a cleanroom.",
+      "Do not run recovery or repair software on a clicking drive. Heavy scanning stresses it."
+    ],
+    "steps": [
+      {
+        "title": "Unplug it now",
+        "detail": "Disconnect the drive. Note what you heard: clicking, grinding, beeping, or nothing."
+      },
+      {
+        "title": "Rule out a power problem",
+        "detail": "For one attempt, use a different cable or a powered USB hub or the original power adapter. Low power from a USB port can cause clicking on some portable drives."
+      },
+      {
+        "title": "Judge how much the data matters",
+        "detail": "If the files are irreplaceable, the safest choice is a professional with a cleanroom. If you accept the risk, continue carefully."
+      },
+      {
+        "title": "Be careful about the enclosure",
+        "detail": "Do not remove the drive from its case yet. Many WD and Seagate portables have USB soldered on, and many WD drives use encryption tied to the bridge board. Removing it can make data unreadable even if the drive is fine."
+      },
+      {
+        "title": "Try one careful connection",
+        "detail": "If it spins and appears, copy only the most important files first, or immediately image it with ddrescue or HDDSuperClone onto a different healthy drive."
+      },
+      {
+        "title": "Recover from the image",
+        "detail": "Run TestDisk or PhotoRec on the image, not on the original drive."
+      },
+      {
+        "title": "Stop at the first relapse",
+        "detail": "If the clicking returns or it vanishes, power off. More attempts reduce what a professional can save."
+      }
+    ],
+    "tools": [
+      "ddrescue",
+      "hddsuperclone",
+      "ddrescueview",
+      "smartmontools",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "hddguru-forum",
+      "dfir-training",
+      "nist-cftt"
+    ],
+    "callPro": "If it clicks, grinds, beeps or will not spin and the data matters, stop and have a professional with a cleanroom look at it.",
+    "faq": [
+      {
+        "q": "Is clicking caused by the USB enclosure?",
+        "a": "Usually no. The sound comes from the drive's moving parts. A weak power supply can trigger it on some portables, so trying a better power source once is reasonable."
+      },
+      {
+        "q": "Can I put it in the freezer?",
+        "a": "No. It is a myth that can cause condensation damage. Experts advise against it."
+      },
+      {
+        "q": "Can I swap it into another enclosure?",
+        "a": "It will not fix a mechanical fault, and some drives have soldered USB or encryption tied to the original board. Avoid it unless you know the model."
+      }
+    ]
+  },
+  "no-power": {
+    "title": "External Hard Drive Not Spinning or Won't Power On",
+    "metaDescription": "External hard drive dead, no lights, not spinning, or smells burnt? Check the cable and power, learn about bridge board faults, and know when to stop.",
+    "summary": "If an external drive has no lights or sound, the cause may be a bad cable, a dead power adapter, a failed bridge board, or a failed drive. A burnt smell suggests an electrical fault, so stop trying.",
+    "risk": 4,
+    "riskNote": "Cable and adapter checks are safe, but repeated attempts on a drive with an electrical or motor fault can make things worse.",
+    "successOdds": "Low",
+    "stopFirst": [
+      "Unplug it if you smell burning or see scorch marks. Do not power it up again.",
+      "Do not keep power-cycling it hoping it starts.",
+      "Do not use the freezer trick, and never open the drive. It needs a cleanroom.",
+      "Do not use a power adapter that does not match the one it came with. The wrong voltage can burn the board."
+    ],
+    "steps": [
+      {
+        "title": "Check the power source",
+        "detail": "Try another USB cable, a different port, and another computer. For desktop drives, check that the wall adapter is the original one and the outlet works."
+      },
+      {
+        "title": "Look for lights and listen",
+        "detail": "Note whether the LED turns on and whether you hear a faint spin-up. Lights but no spin suggest a drive or motor fault. No lights suggest cable, power or bridge board trouble."
+      },
+      {
+        "title": "Look and smell for damage",
+        "detail": "Check the USB port on the drive for bent or loose pins, and sniff for a burnt smell. Loose or broken ports are common on portables."
+      },
+      {
+        "title": "Understand what might be inside",
+        "detail": "A bridge board fault can leave a healthy drive inside. But many portables have the USB connector soldered on, and many WD drives encrypt data tied to the bridge board, so swapping parts is risky."
+      },
+      {
+        "title": "Avoid DIY surgery on soldered or encrypted models",
+        "detail": "Do not pry the drive out unless you know it has a normal SATA connector and is not hardware encrypted. Prying can break clips and cause damage."
+      },
+      {
+        "title": "If it spins and appears, image it",
+        "detail": "Copy it to another drive with ddrescue, then run TestDisk or PhotoRec on the image."
+      },
+      {
+        "title": "Stop if it stays dead",
+        "detail": "If nothing works after a good cable and power source, it needs hardware repair by a professional."
+      }
+    ],
+    "tools": [
+      "ddrescue",
+      "smartmontools",
+      "crystaldiskinfo",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "hddguru-forum",
+      "dfir-training"
+    ],
+    "callPro": "If there are no lights or spin after good cable and power checks, or there is a burnt smell, stop and use a professional.",
+    "faq": [
+      {
+        "q": "No lights at all. Is the drive dead?",
+        "a": "Not necessarily. A broken cable, adapter, USB port or bridge board can look the same. Try other cables and computers before giving up."
+      },
+      {
+        "q": "Can I take the drive out and connect it directly?",
+        "a": "Only if it has a standard SATA connector and is not encrypted by the enclosure. Many portables do not, so check the model first."
+      },
+      {
+        "q": "Is a loose USB port fixable?",
+        "a": "It can be, but soldering needs skill, and a poor repair can damage the board. Ask an expert for valuable data."
+      }
+    ]
+  },
+  "liquid-fire": {
+    "title": "Water, Liquid or Fire Damaged External Drive",
+    "metaDescription": "External hard drive got wet, flooded or burned? Do not power it on, do not use rice or heat. Here is what to do and why a professional is the safe choice.",
+    "summary": "Liquid can short the bridge board and drive board, and corrosion starts quickly. Fire and heat can warp parts. Powering it on can destroy what is left, so keep it off and get professional help.",
+    "risk": 5,
+    "riskNote": "Power, heat, or opening the case can turn recoverable damage into permanent loss.",
+    "successOdds": "Low",
+    "stopFirst": [
+      "Do not plug it in or power it on, not even once to test.",
+      "Do not dry it with a hair dryer, oven or heater, and do not put it in rice. Heat and rice cause more harm.",
+      "Do not open the drive or try to clean the platters.",
+      "Do not shake it or rinse it to remove dirt or salt."
+    ],
+    "steps": [
+      {
+        "title": "Unplug and leave it off",
+        "detail": "Remove the cable and power adapter. Powering a wet drive can short the board and scratch the disk."
+      },
+      {
+        "title": "Note what happened",
+        "detail": "Write down if it was clean water, salt water, a sugary drink, flood mud, smoke or flames. Salt and mud corrode fast."
+      },
+      {
+        "title": "Do not take the drive out of the case yourself",
+        "detail": "Prying it open can break parts, and many portables have soldered USB or encryption tied to the enclosure board, which makes data unreadable if separated."
+      },
+      {
+        "title": "Pack it carefully",
+        "detail": "Wrap it in a soft cloth and put it in a padded box. If it came from a flood and is muddy or salty, keep it damp in a sealed bag rather than letting it dry."
+      },
+      {
+        "title": "Contact a professional soon",
+        "detail": "Corrosion spreads with time, so do not wait. Choose a lab that uses a cleanroom and ask how it handles your drive before paying."
+      }
+    ],
+    "tools": [
+      "ddrescue",
+      "smartmontools"
+    ],
+    "resources": [
+      "hddguru-forum",
+      "dfir-training"
+    ],
+    "callPro": "Liquid, smoke or fire damage should go to a professional with a cleanroom before anyone powers the drive on.",
+    "faq": [
+      {
+        "q": "Can rice dry out a wet external drive?",
+        "a": "No. Rice does not remove moisture well and can add dust. Keep the drive off and get professional help."
+      },
+      {
+        "q": "It only got a splash. Can I try it once it dries?",
+        "a": "It is a gamble. Residue can short the board and a power-up can scratch the disk, so use a professional for important data."
+      },
+      {
+        "q": "Will the enclosure protect the drive?",
+        "a": "Not against liquid. Most enclosures are not sealed, and water can reach the board and drive."
+      }
+    ]
+  },
+  "corrupted": {
+    "title": "Fix a Corrupted or Unreadable External Hard Drive",
+    "metaDescription": "External hard drive shows RAW, asks to format, or has read errors? Image it with ddrescue first, then recover files with TestDisk or PhotoRec on the copy.",
+    "summary": "Corruption often follows pulling the cable without ejecting, a power cut, or failing parts. The files may still be there. Do not run repair tools on the original first, because they can change data.",
+    "risk": 3,
+    "riskNote": "The drive may be weak, and repair tools like CHKDSK on the original can change data before you have a copy.",
+    "successOdds": "Medium",
+    "stopFirst": [
+      "Do not run CHKDSK, fsck, or Disk Utility repair on the original before copying your data.",
+      "Do not click Format when the computer says the drive needs formatting.",
+      "Do not install recovery software onto the affected drive or save files back to it."
+    ],
+    "steps": [
+      {
+        "title": "Stop using the drive",
+        "detail": "Eject it safely if you can. Check whether it is making noises. If it clicks or grinds, read the clicking guide instead."
+      },
+      {
+        "title": "Check its health",
+        "detail": "Use CrystalDiskInfo or smartmontools to read the SMART report. Some USB cases hide SMART, so a missing report does not mean it is fine."
+      },
+      {
+        "title": "Try a different cable and port",
+        "detail": "A bad cable can mimic corruption. Plug directly into the computer, not through a hub, and keep the drive in its enclosure."
+      },
+      {
+        "title": "Get a destination drive",
+        "detail": "You need a different drive at least as big as the damaged one for the image."
+      },
+      {
+        "title": "Image with ddrescue",
+        "detail": "GNU ddrescue copies the drive while skipping unreadable spots and returning to them later. HDDSuperClone is an alternative. Keep the log file."
+      },
+      {
+        "title": "Recover from the image",
+        "detail": "Run TestDisk on the image to rebuild partitions or list files, then PhotoRec if needed. Never work on the original."
+      },
+      {
+        "title": "Do not break the enclosure link",
+        "detail": "Keep it in the enclosure while imaging. Many WD drives use encryption tied to the bridge board, and some portables have soldered USB."
+      }
+    ],
+    "tools": [
+      "ddrescue",
+      "ddrescueview",
+      "hddsuperclone",
+      "smartmontools",
+      "crystaldiskinfo",
+      "testdisk",
+      "photorec"
+    ],
+    "resources": [
+      "cgsecurity-forum",
+      "brett-shavers",
+      "dfir-training",
+      "nist-cftt"
+    ],
+    "callPro": "If imaging keeps stalling, the drive makes noises, or the data is critical, stop and talk to a professional.",
+    "faq": [
+      {
+        "q": "Should I run CHKDSK first?",
+        "a": "No. It can rewrite damaged data. Image the drive first and repair or recover from the copy."
+      },
+      {
+        "q": "Why does it say the drive is RAW?",
+        "a": "The computer cannot read the file system, often because of an unsafe unplug or damage. TestDisk can often restore it."
+      },
+      {
+        "q": "Why can't I see SMART data?",
+        "a": "Many USB enclosures do not pass it through. That is common and does not mean the drive is healthy."
+      }
+    ]
+  },
+  "encrypted": {
+    "title": "Recover Data From an Encrypted External Drive",
+    "metaDescription": "Locked out of an encrypted external drive such as WD My Passport, BitLocker or FileVault? Find your key first. Without it, recovery is not realistic.",
+    "summary": "Many external drives encrypt data, either with software like BitLocker and FileVault or with built-in hardware encryption, as on many WD My Passport and My Book drives. Without the password or recovery key, recovery is not realistic.",
+    "risk": 2,
+    "riskNote": "Unlocking with a known key is low risk, but taking a hardware-encrypted drive out of its enclosure can make the data unreadable.",
+    "successOdds": "Varies",
+    "stopFirst": [
+      "Do not remove the drive from its enclosure if it uses hardware encryption. The key may be tied to the bridge board, and a different adapter can show unreadable data.",
+      "Do not format or reset it. That destroys the key and the data.",
+      "Do not trust tools or people claiming to crack or brute-force strong encryption."
+    ],
+    "steps": [
+      {
+        "title": "Find out what kind of encryption it is",
+        "detail": "Look at the model and software. WD My Passport and My Book often use hardware encryption, even if you never set a password. Others use BitLocker, FileVault or VeraCrypt."
+      },
+      {
+        "title": "Find your recovery key",
+        "detail": "BitLocker keys are often saved in your Microsoft account (account.microsoft.com/devices/recoverykey), a work or school account, a printout or a file. FileVault can use your Apple Account or the recovery key saved at setup."
+      },
+      {
+        "title": "Use the vendor's unlock tool",
+        "detail": "For password-protected WD drives, use the manufacturer's unlock software with your password while the drive stays in its original enclosure."
+      },
+      {
+        "title": "Keep the original enclosure and cable",
+        "detail": "If the drive is hardware encrypted, keep it connected through the original bridge board. A spare adapter or direct SATA connection may show scrambled data."
+      },
+      {
+        "title": "Copy data after unlocking",
+        "detail": "Once unlocked, copy your files to a different drive. If the drive is also faulty, image it with ddrescue while it is unlocked, still through the enclosure."
+      },
+      {
+        "title": "Accept the limit if the key is lost",
+        "detail": "Without the password or recovery key, strong encryption cannot be broken in practice. Recovery tools will only find scrambled data."
+      }
+    ],
+    "tools": [
+      "ddrescue",
+      "smartmontools",
+      "crystaldiskinfo"
+    ],
+    "resources": [
+      "dfir-training",
+      "brett-shavers",
+      "ncfi"
+    ],
+    "callPro": "If the drive or its board is damaged and you hold the password or key, a professional may be able to help. Without the key, no one can realistically recover the data.",
+    "faq": [
+      {
+        "q": "Why is my WD drive unreadable outside its case?",
+        "a": "Many WD My Passport and My Book drives encrypt data using a key tied to the bridge board. A different adapter can leave the data unreadable."
+      },
+      {
+        "q": "Where is my BitLocker recovery key?",
+        "a": "Often in your Microsoft account online, a work or school account, a printed page or a saved file."
+      },
+      {
+        "q": "Can someone crack it for me?",
+        "a": "Not realistically. Strong encryption is designed to resist this, so be wary of anyone who says otherwise."
+      }
+    ]
+  }
+}

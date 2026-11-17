@@ -1,0 +1,200 @@
+{
+  "deleted": {
+    "title": "Recover Deleted Files from a USB Flash Drive",
+    "metaDescription": "Deleted files on a USB flash drive can often be recovered with PhotoRec if you stop using it. Safe step-by-step guide for beginners.",
+    "summary": "When you delete a file from a USB drive, the data usually stays until new files overwrite it. Most flash drives do not use TRIM, so recovery chances are often good if you act quickly. Every new file you save lowers the odds.",
+    "risk": 2,
+    "riskNote": "Scanning from a copy is safe, but saving anything new to the drive can overwrite the deleted files.",
+    "successOdds": "High",
+    "stopFirst": [
+      "Stop saving or copying anything to the USB drive.",
+      "Do not install recovery software onto the USB drive.",
+      "Do not format the drive, even if Windows asks you to."
+    ],
+    "steps": [
+      {"title": "Unplug and stop", "detail": "Safely eject the drive and put it aside. Do not use it again until recovery is done."},
+      {"title": "Check the Recycle Bin and backups", "detail": "Files deleted from a USB drive usually skip the Recycle Bin, but check anyway, along with cloud or backup copies."},
+      {"title": "Make an image", "detail": "Plug the drive into a computer and use ddrescue to copy the whole drive to a file on another disk. This protects the original."},
+      {"title": "Try TestDisk first", "detail": "Run TestDisk on the image and use its undelete function. It can bring back files with their original names and folders."},
+      {"title": "Use PhotoRec next", "detail": "If TestDisk does not find them, run PhotoRec on the image. It recovers files by type and works even after the file list is gone."},
+      {"title": "Save to a different drive", "detail": "Choose a folder on your computer or another drive as the destination, never the USB stick itself."},
+      {"title": "Sort and check", "detail": "PhotoRec names files with numbers. Sort by type and open samples to make sure they work."}
+    ],
+    "tools": ["ddrescue", "testdisk", "photorec"],
+    "resources": ["cgsecurity-forum", "dfir-training"],
+    "callPro": "If the drive is unstable, disconnects while copying, or the files are critical and scans find nothing, stop and ask a professional.",
+    "faq": [
+      {"q": "Why can I recover deleted files from a flash drive?", "a": "Deleting usually just removes the file's listing. The data stays on the drive until something new is written over it."},
+      {"q": "Do deleted USB files go to the Recycle Bin?", "a": "Usually not. Files deleted from removable drives are removed right away, so use a recovery tool."}
+    ]
+  },
+  "formatted": {
+    "title": "Recover Files from a Formatted USB Drive",
+    "metaDescription": "Formatted a USB flash drive by mistake? A quick format often leaves data recoverable. Learn the safe order: image first, then TestDisk or PhotoRec.",
+    "summary": "A quick format only wipes the file list, so much of the data is usually still on the USB drive. A full format may overwrite more, and especially on Windows can erase data. Recovery works best if you have not copied anything new onto it.",
+    "risk": 2,
+    "riskNote": "The scans are safe when run on a copy, but writing new files or formatting again reduces what can come back.",
+    "successOdds": "High",
+    "stopFirst": [
+      "Do not copy new files onto the drive.",
+      "Do not format it again or change its file system.",
+      "Do not install recovery software onto the USB drive."
+    ],
+    "steps": [
+      {"title": "Stop using the drive", "detail": "Eject it and do not write anything more. If you made a quick format, the old data is probably still there."},
+      {"title": "Image the drive", "detail": "Use ddrescue to copy the whole USB drive into an image file on another disk. Work on that image from now on."},
+      {"title": "Try TestDisk to find the old partition", "detail": "Run TestDisk on the image and use Analyse. If the old layout is found, you can list and copy files with names and folders."},
+      {"title": "Run PhotoRec if needed", "detail": "If TestDisk cannot find the old structure, PhotoRec can pull out photos, documents and videos by their contents."},
+      {"title": "Save to another drive", "detail": "Pick a destination folder on a different disk with enough space."},
+      {"title": "Review and organize", "detail": "Open some recovered files. If many are broken, the drive may have been fully formatted or heavily reused."}
+    ],
+    "tools": ["ddrescue", "testdisk", "photorec"],
+    "resources": ["cgsecurity-forum", "dfir-training", "brett-shavers"],
+    "callPro": "If the drive was fully formatted, repartitioned many times, or you need legal-grade results, a professional may do better than DIY.",
+    "faq": [
+      {"q": "Is a quick format recoverable?", "a": "Often yes. A quick format clears the file list but leaves most of the data in place until it is overwritten."},
+      {"q": "Does a full format erase everything?", "a": "It can, especially on newer Windows versions, which may overwrite data. Recovery chances then are much lower."}
+    ]
+  },
+  "not-detected": {
+    "title": "USB Flash Drive Not Detected or Not Showing",
+    "metaDescription": "USB drive not showing up? Try simple checks first, image it if it appears, and learn when a broken connector or dead controller needs a pro.",
+    "summary": "A USB drive may not appear because of a bad port, a missing drive letter, damaged files, a worn connector or a failed controller chip. Many cases are simple to check. Real hardware failure is harder and often needs a specialist.",
+    "risk": 3,
+    "riskNote": "Basic checks are safe, but forcing a damaged connector or soldering without experience can break the drive for good.",
+    "successOdds": "Varies",
+    "stopFirst": [
+      "Do not click Format if Windows offers it.",
+      "Do not keep bending or wiggling the plug.",
+      "Do not use heat, glue or a soldering iron unless you have experience."
+    ],
+    "steps": [
+      {"title": "Try another port and computer", "detail": "Plug the drive into a different USB port, ideally directly on the computer, then try a different computer."},
+      {"title": "Look in Disk Management", "detail": "On Windows, open Disk Management. On a Mac, use Disk Utility. A drive with no letter or a RAW label may still hold your data."},
+      {"title": "Inspect the connector", "detail": "Check for a bent, loose or cracked plug. A broken connector may be re-soldered, but the risk of damage is high for beginners."},
+      {"title": "Image whatever works", "detail": "If the drive appears even briefly, use ddrescue to copy it to another disk right away."},
+      {"title": "Recover from the copy", "detail": "Run TestDisk on the image to find a lost partition, then PhotoRec for file contents."},
+      {"title": "Know the limits", "detail": "If the drive never appears, or shows as 0 MB or an unknown device, the controller or memory chip is likely failing."}
+    ],
+    "tools": ["ddrescue", "testdisk", "photorec"],
+    "resources": ["cgsecurity-forum", "dfir-training"],
+    "callPro": "If the drive is not detected on any computer, or the plug is broken, ask a professional, who may use a chip-off or monolithic recovery.",
+    "faq": [
+      {"q": "Why does my USB drive show 0 bytes?", "a": "The controller often cannot read the memory chip properly. This is usually a hardware fault and not fixable with software."},
+      {"q": "Can a broken USB plug be fixed?", "a": "Sometimes by soldering a new connector, but it takes skill and the risk of damaging the drive is high."}
+    ]
+  },
+  "no-power": {
+    "title": "USB Flash Drive Dead or No Light",
+    "metaDescription": "USB drive with no light or no response? Rule out ports and cables, then learn when a failed controller means chip-off recovery by a professional.",
+    "summary": "A USB drive that does nothing, with no light and no sound, may have a broken connector, a short or a failed controller. First rule out the port and computer. If it is dead everywhere, it may need hardware-level work.",
+    "risk": 4,
+    "riskNote": "A drive that is hot or shorted can be damaged more by repeated plugging, and DIY soldering is easy to get wrong.",
+    "successOdds": "Low",
+    "stopFirst": [
+      "Do not keep plugging it in if it gets hot or smells burnt.",
+      "Do not try to power it with a different charger or battery.",
+      "Do not open the case or touch the chips with a soldering iron."
+    ],
+    "steps": [
+      {"title": "Test the port", "detail": "Plug in another USB device to confirm the port and computer work, then try the drive in other ports and computers."},
+      {"title": "Check for a light or warmth", "detail": "If the drive gets hot, unplug it right away. Heat means a short circuit."},
+      {"title": "Inspect the plug", "detail": "Look for bent metal, cracks, loose parts or dirt. Gently clean dust with a dry soft brush, not liquid."},
+      {"title": "Image if it responds at all", "detail": "If it shows up even briefly, copy it with ddrescue before doing anything else."},
+      {"title": "Run recovery on the copy", "detail": "Use TestDisk and PhotoRec on the image."},
+      {"title": "Consider a professional", "detail": "If it stays dead, a lab can sometimes read the memory chip directly, but results vary."}
+    ],
+    "tools": ["ddrescue", "testdisk", "photorec"],
+    "resources": ["dfir-training", "nist-cftt"],
+    "callPro": "A drive that is dead on every computer usually needs chip-off or soldering repair by a professional.",
+    "faq": [
+      {"q": "Is a dead USB drive always lost?", "a": "No. If the memory chip is fine, a specialist can sometimes read it directly, though that costs time and money."},
+      {"q": "Can I fix a broken USB connector myself?", "a": "It is possible with soldering skills, but the DIY risk is high. A mistake can destroy the data."}
+    ]
+  },
+  "liquid-fire": {
+    "title": "USB Flash Drive Damaged by Water or Heat",
+    "metaDescription": "Washed or burned a USB flash drive? Do not plug it in or heat-dry it. Learn the safest way to handle it and when to call a professional.",
+    "summary": "USB flash drives are fairly tough, and some survive a wash. Liquid, heat or fire can still corrode the board or short the chip. Plugging it in before it is clean and dry can cause a short that ruins it.",
+    "risk": 4,
+    "riskNote": "Powering on a wet or contaminated drive can short it, and heating it can damage the memory chip.",
+    "successOdds": "Varies",
+    "stopFirst": [
+      "Do not plug it in while it is wet or dirty.",
+      "Do not dry it with a hair dryer, oven, microwave or rice.",
+      "Do not scrub the contacts or open the case."
+    ],
+    "steps": [
+      {"title": "Keep it unplugged", "detail": "Do not try the drive in a computer, even if it looks fine."},
+      {"title": "Rinse only if needed", "detail": "If it has salt water, mud, sugar or sticky liquid, a gentle rinse in clean distilled water can help. Skip this if you are unsure."},
+      {"title": "Air dry for a few days", "detail": "Let it dry at room temperature with the plug facing down. No heat sources."},
+      {"title": "Inspect before using", "detail": "Look for rust, residue, cracks or burn marks. If any are present, do not plug it in."},
+      {"title": "Image right away if it works", "detail": "If it looks clean and dry and shows up, copy it immediately with ddrescue to another disk."},
+      {"title": "Recover from the copy", "detail": "Use TestDisk and PhotoRec on the image."}
+    ],
+    "tools": ["ddrescue", "testdisk", "photorec"],
+    "resources": ["dfir-training", "fbi-rcfl"],
+    "callPro": "If the drive is burned, cracked, corroded or does not show up after drying, stop and contact a professional rather than plugging it in again.",
+    "faq": [
+      {"q": "Can a USB drive survive the washing machine?", "a": "Often yes, if it is fully dried before use. Waiting several days is safer than plugging it in right away."},
+      {"q": "Is heat drying safe for a flash drive?", "a": "No. Heat can damage the memory chip and the solder joints."}
+    ]
+  },
+  "corrupted": {
+    "title": "Fix a Corrupted USB Flash Drive Without Data Loss",
+    "metaDescription": "USB drive says RAW, asks to format, or files will not open? Image it first, then use TestDisk and PhotoRec. Do not format or run chkdsk yet.",
+    "summary": "A corrupted USB drive has damaged file information, often after being pulled out too early or from a worn memory. The files are often still there. Making a copy before any repair keeps your options open.",
+    "risk": 3,
+    "riskNote": "Formatting or running chkdsk can overwrite the information you need, and a failing drive may get worse with each use.",
+    "successOdds": "Medium",
+    "stopFirst": [
+      "Do not click Format when Windows asks you to.",
+      "Do not run chkdsk or any 'repair' prompt before making an image.",
+      "Do not install recovery software onto the USB drive."
+    ],
+    "steps": [
+      {"title": "Stop and unplug", "detail": "Do not click anything that offers to repair or format the drive."},
+      {"title": "Image the drive", "detail": "Use ddrescue to copy the full drive to a file on another disk. This also tells you if the drive has unreadable areas."},
+      {"title": "Try TestDisk on the image", "detail": "Use Analyse to find the lost partition or repair the boot sector. If your folders appear, you can copy the files out."},
+      {"title": "Use PhotoRec if folders are lost", "detail": "PhotoRec recovers files by type from the image, though names and folders are not kept."},
+      {"title": "Save to a different drive", "detail": "Write all recovered files to your computer or another drive."},
+      {"title": "Fix the USB last", "detail": "After everything is safe, format the flash drive. If it keeps corrupting, replace it, since flash memory wears out."},
+      {"title": "Test for fakes later", "detail": "A drive that keeps failing may be fake-capacity. After recovery, test it with f3 or h2testw, which write test data and should only be used on a drive you have emptied."}
+    ],
+    "tools": ["ddrescue", "testdisk", "photorec", "f3", "h2testw"],
+    "resources": ["cgsecurity-forum", "sleuthkit-autopsy"],
+    "callPro": "If the imaging keeps failing, the drive disconnects, or it reports the wrong size, stop and consult a professional.",
+    "faq": [
+      {"q": "Why does my USB say I need to format the disk?", "a": "The file system information is damaged. Your files may still be present, so do not format until you have a copy."},
+      {"q": "Could my flash drive be fake?", "a": "Possibly. Counterfeit drives claim more space than they have and corrupt data. Test with f3 or h2testw after you recover your files."}
+    ]
+  },
+  "encrypted": {
+    "title": "Recover Data from an Encrypted USB Drive",
+    "metaDescription": "Locked USB drive from BitLocker To Go, VeraCrypt or a hardware PIN? Without the key recovery is not realistic. Learn where keys are often saved.",
+    "summary": "Encrypted USB drives scramble data so it cannot be read without the password or recovery key. If you do not have either, recovery is not realistic. Many people can find the key in a Microsoft account or a password manager.",
+    "risk": 4,
+    "riskNote": "Wrong resets or an erase on a hardware-encrypted stick can destroy the key and make the data permanently unreadable.",
+    "successOdds": "Varies",
+    "stopFirst": [
+      "Do not reset or erase the drive if it has a PIN pad or reset option.",
+      "Do not format it to get access.",
+      "Do not use tools that claim to crack or guess encryption."
+    ],
+    "steps": [
+      {"title": "Identify the type", "detail": "Windows BitLocker To Go shows a lock icon, VeraCrypt uses a separate app, and some drives have a keypad or vendor software."},
+      {"title": "Find the key", "detail": "For BitLocker, check your Microsoft account recovery keys, a work or school account, a printout or a saved text file."},
+      {"title": "Search your passwords", "detail": "Check your password manager, notes and emails for the drive's password."},
+      {"title": "Unlock normally", "detail": "Use the right tool and key on a working computer, then copy files to another drive."},
+      {"title": "Image if the drive is damaged", "detail": "Use ddrescue to copy the encrypted drive, then unlock the copy with your key."},
+      {"title": "Run recovery after unlocking", "detail": "If files are missing, use TestDisk or PhotoRec on the unlocked volume or its image."}
+    ],
+    "tools": ["ddrescue", "testdisk", "photorec"],
+    "resources": ["dfir-training", "brett-shavers"],
+    "callPro": "If the drive is both encrypted and physically failing, or uses hardware encryption and the controller has died, stop and ask a professional, and expect that it may not be possible.",
+    "faq": [
+      {"q": "Can I recover files from a locked USB without the password?", "a": "Realistically no. Good encryption cannot be bypassed, and anyone who promises otherwise should be treated with caution."},
+      {"q": "Where is my BitLocker key stored?", "a": "Often in your Microsoft account online, in a work or school account, on a printout or in a file you saved earlier."}
+    ]
+  }
+}

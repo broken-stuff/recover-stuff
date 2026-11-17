@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>USB Flash Drive Not Detected or Not Showing | Recover Stuff</title>
+<meta name="description" content="USB drive not showing up? Try simple checks first, image it if it appears, and learn when a broken connector or dead controller needs a pro.">
+<link rel="canonical" href="https://broken-stuff.github.io/recover-stuff/guide/usb/not-detected/">
+<meta name="theme-color" content="#5b3df5">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Recover Stuff">
+<meta property="og:title" content="USB Flash Drive Not Detected or Not Showing | Recover Stuff">
+<meta property="og:description" content="USB drive not showing up? Try simple checks first, image it if it appears, and learn when a broken connector or dead controller needs a pro.">
+<meta property="og:url" content="https://broken-stuff.github.io/recover-stuff/guide/usb/not-detected/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="USB Flash Drive Not Detected or Not Showing | Recover Stuff">
+<meta name="twitter:description" content="USB drive not showing up? Try simple checks first, image it if it appears, and learn when a broken connector or dead controller needs a pro.">
+<link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://broken-stuff.github.io/recover-stuff/"},{"@type":"ListItem","position":2,"name":"USB flash drive","item":"https://broken-stuff.github.io/recover-stuff/guide/usb/"},{"@type":"ListItem","position":3,"name":"Not detected / not showing up","item":"https://broken-stuff.github.io/recover-stuff/guide/usb/not-detected/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"USB Flash Drive Not Detected or Not Showing","description":"A USB drive may not appear because of a bad port, a missing drive letter, damaged files, a worn connector or a failed controller chip. Many cases are simple to check. Real hardware failure is harder and often needs a specialist.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/not-detected/","tool":[{"@type":"HowToTool","name":"GNU ddrescue"},{"@type":"HowToTool","name":"TestDisk"},{"@type":"HowToTool","name":"PhotoRec"}],"step":[{"@type":"HowToStep","position":1,"name":"Try another port and computer","text":"Plug the drive into a different USB port, ideally directly on the computer, then try a different computer.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/not-detected/#steps-h"},{"@type":"HowToStep","position":2,"name":"Look in Disk Management","text":"On Windows, open Disk Management. On a Mac, use Disk Utility. A drive with no letter or a RAW label may still hold your data.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/not-detected/#steps-h"},{"@type":"HowToStep","position":3,"name":"Inspect the connector","text":"Check for a bent, loose or cracked plug. A broken connector may be re-soldered, but the risk of damage is high for beginners.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/not-detected/#steps-h"},{"@type":"HowToStep","position":4,"name":"Image whatever works","text":"If the drive appears even briefly, use ddrescue to copy it to another disk right away.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/not-detected/#steps-h"},{"@type":"HowToStep","position":5,"name":"Recover from the copy","text":"Run TestDisk on the image to find a lost partition, then PhotoRec for file contents.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/not-detected/#steps-h"},{"@type":"HowToStep","position":6,"name":"Know the limits","text":"If the drive never appears, or shows as 0 MB or an unknown device, the controller or memory chip is likely failing.","url":"https://broken-stuff.github.io/recover-stuff/guide/usb/not-detected/#steps-h"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does my USB drive show 0 bytes?","acceptedAnswer":{"@type":"Answer","text":"The controller often cannot read the memory chip properly. This is usually a hardware fault and not fixable with software."}},{"@type":"Question","name":"Can a broken USB plug be fixed?","acceptedAnswer":{"@type":"Answer","text":"Sometimes by soldering a new connector, but it takes skill and the risk of damaging the drive is high."}}]}</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="../../../"><span aria-hidden="true">🛟</span> Recover Stuff</a>
+    <ol class="stepper" aria-label="Progress"><li class="is-done"><span class="dot" aria-hidden="true">1</span><span class="lbl">Pick your device</span></li><li class="is-done"><span class="dot" aria-hidden="true">2</span><span class="lbl">What happened?</span></li><li class="is-current" aria-current="step"><span class="dot" aria-hidden="true">3</span><span class="lbl">Your mission</span></li></ol>
+  </div>
+</header>
+<main id="main" class="wrap" tabindex="-1">
+<article class="mission" data-key="usb/not-detected">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">›</span> <a href="../../../guide/usb/">USB flash drive</a> <span aria-hidden="true">›</span> <span>Not detected / not showing up</span></nav>
+<p class="eyebrow">🔌 USB flash drive · 🔍 Not detected / not showing up</p>
+<h1 tabindex="-1">USB Flash Drive Not Detected or Not Showing</h1>
+<p class="lead">A USB drive may not appear because of a bad port, a missing drive letter, damaged files, a worn connector or a failed controller chip. Many cases are simple to check. Real hardware failure is harder and often needs a specialist.</p>
+<div class="badges"><div class="risk r3" role="img" aria-label="Risk level 3 of 5: Take care"><div class="meter" aria-hidden="true"><i class="on r1"></i><i class="on r2"></i><i class="on r3"></i><i class=""></i><i class=""></i></div><span class="chip">3/5 · Take care</span></div><span class="odds o-varies">Success odds: <strong>Varies</strong></span></div>
+<p class="risknote">Basic checks are safe, but forcing a damaged connector or soldering without experience can break the drive for good.</p>
+<section class="stop" aria-labelledby="stop-h"><h2 id="stop-h"><span aria-hidden="true">✋</span> Stop! Don't do this first</h2><ul><li>Do not click Format if Windows offers it.</li><li>Do not keep bending or wiggling the plug.</li><li>Do not use heat, glue or a soldering iron unless you have experience.</li></ul></section>
+<section aria-labelledby="steps-h"><h2 id="steps-h">Your steps</h2>
+<div class="progress"><div class="bar" role="progressbar" aria-label="Steps completed" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><span style="width:0%"></span></div><span class="count" aria-live="polite">0 of 6 done</span></div>
+<ol class="steps"><li><label><input type="checkbox" data-i="0"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Try another port and computer</strong><span>Plug the drive into a different USB port, ideally directly on the computer, then try a different computer.</span></span></label></li><li><label><input type="checkbox" data-i="1"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Look in Disk Management</strong><span>On Windows, open Disk Management. On a Mac, use Disk Utility. A drive with no letter or a RAW label may still hold your data.</span></span></label></li><li><label><input type="checkbox" data-i="2"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Inspect the connector</strong><span>Check for a bent, loose or cracked plug. A broken connector may be re-soldered, but the risk of damage is high for beginners.</span></span></label></li><li><label><input type="checkbox" data-i="3"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Image whatever works</strong><span>If the drive appears even briefly, use ddrescue to copy it to another disk right away.</span></span></label></li><li><label><input type="checkbox" data-i="4"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Recover from the copy</strong><span>Run TestDisk on the image to find a lost partition, then PhotoRec for file contents.</span></span></label></li><li><label><input type="checkbox" data-i="5"><span class="box" aria-hidden="true"></span><span class="txt"><strong>Know the limits</strong><span>If the drive never appears, or shows as 0 MB or an unknown device, the controller or memory chip is likely failing.</span></span></label></li></ol>
+<div class="win" hidden role="status"><strong>Mission complete! 🎉</strong> Check your recovered files open properly, then back them up in two places.</div>
+</section>
+<section aria-labelledby="tools-h"><h2 id="tools-h">Tools you'll use</h2><div class="grid"><article class="card tool"><h3>GNU ddrescue</h3><p>Copies a failing drive to an image file, retrying bad areas so you work from a copy, not the original.</p>
+<ul class="meta"><li>Linux · macOS</li><li>Free (open source)</li></ul>
+<p class="links"><a href="https://www.gnu.org/software/ddrescue/" target="_blank" rel="noopener noreferrer">Website</a><a href="https://www.gnu.org/software/ddrescue/manual/ddrescue_manual.html" target="_blank" rel="noopener noreferrer">Docs</a></p></article><article class="card tool"><h3>TestDisk</h3><p>Free open-source tool that finds lost partitions and repairs boot sectors so files can be read again.</p>
+<ul class="meta"><li>Windows · macOS · Linux</li><li>Free (open source)</li></ul>
+<p class="links"><a href="https://www.cgsecurity.org/wiki/TestDisk" target="_blank" rel="noopener noreferrer">Website</a><a href="https://www.cgsecurity.org/wiki/TestDisk_Step_By_Step" target="_blank" rel="noopener noreferrer">Docs</a></p></article><article class="card tool"><h3>PhotoRec</h3><p>Free open-source file carver that recovers files by signature, even when the file system is damaged.</p>
+<ul class="meta"><li>Windows · macOS · Linux</li><li>Free (open source)</li></ul>
+<p class="links"><a href="https://www.cgsecurity.org/wiki/PhotoRec" target="_blank" rel="noopener noreferrer">Website</a><a href="https://www.cgsecurity.org/wiki/PhotoRec_Step_By_Step" target="_blank" rel="noopener noreferrer">Docs</a></p></article></div></section>
+<section aria-labelledby="res-h"><h2 id="res-h">Learn from the experts</h2><div class="grid"><article class="card res"><span class="tag">Community</span><h3><a href="https://forum.cgsecurity.org/" target="_blank" rel="noopener noreferrer">CGSecurity Forum</a></h3><p>Official community forum for TestDisk and PhotoRec, where users ask questions and share results.</p></article><article class="card res"><span class="tag">Training</span><h3><a href="https://www.dfir.training/" target="_blank" rel="noopener noreferrer">DFIR.training</a></h3><p>Digital forensics and incident response training and resources, run by Brett Shavers.</p></article></div></section>
+<section class="pro" aria-labelledby="pro-h"><h2 id="pro-h"><span aria-hidden="true">🧑‍🔧</span> When to call a pro</h2><p>If the drive is not detected on any computer, or the plug is broken, ask a professional, who may use a chip-off or monolithic recovery.</p></section>
+<section aria-labelledby="faq-h"><h2 id="faq-h">Questions people ask</h2><div class="faq"><details><summary>Why does my USB drive show 0 bytes?</summary><p>The controller often cannot read the memory chip properly. This is usually a hardware fault and not fixable with software.</p></details><details><summary>Can a broken USB plug be fixed?</summary><p>Sometimes by soldering a new connector, but it takes skill and the risk of damaging the drive is high.</p></details></div></section>
+<p class="disclaimer inline"><strong>Before you start:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
+<p class="actions"><a class="btn" href="../../../guide/usb/">← Other problems with this device</a> <a class="btn ghost" href="../../../?d=usb&amp;s=not-detected">Open in the interactive guide</a> <a class="btn ghost" href="../../../">Start over</a></p>
+</article>
+</main>
+<footer class="foot">
+  <div class="wrap"><p class="disclaimer"><strong>Heads up:</strong> Educational DIY guide, no warranty. DIY recovery can cause permanent data loss. If the data is valuable, consider a professional first.</p>
+  <p class="small">Recover Stuff is an independent project. Tool and resource links go to their own sites.</p></div>
+</footer>
+<script src="../../../assets/js/app.js" defer></script>
+</body>
+</html>
