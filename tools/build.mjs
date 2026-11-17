@@ -145,7 +145,7 @@ function layout({ title, desc, path, rel, body, ld = [], step = 0, extraHead = '
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${canonical}">
-<meta name="theme-color" content="#4b3a8c">
+<meta name="theme-color" content="#1c4bd8">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="${SITE_NAME}">
 <meta property="og:title" content="${esc(title)}">
