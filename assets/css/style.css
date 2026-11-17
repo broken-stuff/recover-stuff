@@ -1,6 +1,6 @@
 /* Bold retro 16/64-bit console palette: vivid color blocks, hard pixel shadows. All pairs verified by tools/contrast-check.mjs */
 :root {
-  --bg: #f8f9ff; --bg2: #eceffd; --surface: #ffffff; --ink: #0d0b2a; --muted: #2c2a52; --line: #6f76b5; --edge: #0d0b2a;
+  --bg: #ffffff; --bg2: #eceffd; --surface: #ffffff; --ink: #0d0b2a; --muted: #2c2a52; --line: #6f76b5; --edge: #0d0b2a;
   --brand: #1c4bd8; --brand-ink: #ffffff; --brand-soft: #dfe6ff; --accent: #e0202e; --focus: #6a1bd6; --focus-top: #ffd60a;
   --btn-bg: #1c4bd8; --btn-ink: #ffffff;
   --red: #e0202e; --yellow: #ffd60a; --green: #2ee66b; --blue: #2a6bff;
@@ -18,7 +18,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #060a1f; --bg2: #0b1230; --surface: #0f1736; --ink: #f5f7ff; --muted: #c4cbf2; --line: #4a5aa8; --edge: #6f8cff;
+    --bg: #000000; --bg2: #0b1230; --surface: #0f1736; --ink: #f5f7ff; --muted: #c4cbf2; --line: #4a5aa8; --edge: #6f8cff;
     --brand: #2b1fb8; --brand-ink: #ffffff; --brand-soft: #1b2560; --accent: #ffe14a; --focus: #ffe14a; --focus-top: #ffe14a;
     --btn-bg: #ffe14a; --btn-ink: #0a0f24;
     --red: #ff5c5c; --yellow: #ffe14a; --green: #39ff88; --blue: #4da3ff;
@@ -36,11 +36,11 @@
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background-color: var(--bg);
-  background-image: conic-gradient(var(--bg2) 25%, transparent 0 50%, var(--bg2) 0 75%, transparent 0); background-size: 16px 16px; color: var(--ink);
+  color: var(--ink);
   font: 400 1.0625rem/1.55 Nunito, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   min-height: 100vh; display: flex; flex-direction: column;
 }
-body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 40; background: repeating-linear-gradient(0deg, var(--scan) 0 1px, transparent 1px 3px); }
+body::after { content: none; }
 main { flex: 1; outline: none; }
 .wrap { width: 100%; max-width: 960px; margin: 0 auto; padding: 0 16px; }
 a { color: var(--link); text-underline-offset: 3px; }
